@@ -1,0 +1,54 @@
+<template>
+    <header class="v-app-header app-flex app-flex--row app-flex--justify_space-between app-flex--align_center"
+    >
+        <div class="app-flex">
+            <img
+                class="v-app-header__icon"
+                src="../assets/icons/leCinematographe-icon.svg"
+                alt="logo cinematographe.ch"
+            />
+            <img
+                class="v-app-header__logo"
+                src="../assets/icons/leCinematographe-logo_type.svg"
+                alt="logo cinematographe.ch"
+            />
+        </div>
+        <div class="app-flex">
+            <div>accessibilité</div>
+            <div>menu</div>
+            <div>icon</div>
+        </div>
+    </header>
+</template>
+
+
+
+
+
+<script lang="ts" setup>
+
+</script>
+
+
+
+
+
+<style lang="scss" scoped >
+.v-app-header {
+    border-radius: var(--lc-header-height);
+    background-color: var(--lc-color--pastel--purple);
+    height: var(--lc-header-height);
+    color: black;
+}
+
+.v-app-header__icon {
+    display: block;
+    height: 1rem;
+}
+
+.v-app-header__logo {
+    display: block;
+    height: 1rem;
+    margin: 0 auto;
+}
+</style>

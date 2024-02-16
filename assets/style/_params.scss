@@ -1,0 +1,30 @@
+:root {
+
+  --lc-color--blue: #0438D6;
+  --lc-color--pink: #FF10ED;
+  --lc-color--blue-light: #436AED;
+  --lc-color--orange: #FF6464;
+  --lc-color--green: #A7FF00;
+
+  --lc-color--pastel--green:  #BDE4D5;
+  --lc-color--pastel--yellow: #E8CC96;
+  --lc-color--pastel--pink:   #E4A8A8;
+  --lc-color--pastel--purple: #C3BDE4;
+  --lc-color--pastel--blue:   #ACDEED;
+
+  --lc-header-height: 2rem;
+
+
+  font-family: "DIN Dong", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #FFF;
+  background-color: #000;
+
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}

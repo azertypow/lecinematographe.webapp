@@ -1,0 +1,38 @@
+@import "grid";
+@import "params";
+@import "typography";
+
+@font-face {
+  font-family: "DIN Dong";
+  src:  url('../fonts/DINdong.woff2') format("woff2"),
+        url("../fonts/DINdong.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+html {
+  font-size: 36px;
+  padding: 0;
+  margin: 0;
+
+  @media (max-width: 750px) {
+    font-size: 29px;
+  }
+}
+
+body {
+  font-size: .75rem;
+  line-height: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  margin: 0 auto;
+  max-width: 1280px;
+  box-sizing: border-box;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
