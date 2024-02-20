@@ -1,4 +1,4 @@
-import type {IFilmListResponse, ITicketFilm} from "~/utils/apiTicket";
+import type {IFilmListResponse, ITicketFilm} from "~/_utils/apiTicket";
 
 export default defineEventHandler((event) => {
     return {

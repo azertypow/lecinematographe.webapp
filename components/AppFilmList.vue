@@ -50,6 +50,7 @@ const props = defineProps<{
     width: 25%;
     background: linear-gradient(to right, black, #00000000);
     height: 100%;
+    pointer-events: none;
 }
 
 .v-app-film-list__films-container {

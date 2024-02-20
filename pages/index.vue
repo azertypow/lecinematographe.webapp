@@ -24,6 +24,9 @@
                         :ticket-film-array="data.filmlist"
                     />
                 </div>
+                <div class="v-index__section-calendra">
+                    <AppCalendar/>
+                </div>
             </div>
         </div>
         <AppFooter/>

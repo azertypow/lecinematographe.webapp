@@ -5,10 +5,6 @@
             backgroundImage: ``,
         }"
     >
-        <img
-            :src="ticketFilm.ur_affiche"
-            @load="(e) => setGradientColor(e.target)"
-        />
         <div class="v-app-film-min__cover__text app-flex app-flex--column app-flex--justify_space-between">
             <div
                 style="background: linear-gradient(to bottom, var(--lc-color--orange), #ffffff00)"
@@ -20,6 +16,11 @@
             <div style="background: linear-gradient(to top, var(--lc-color--orange), #ffffff00)">
                 <p>un film de {{ticketFilm.tx_realisateur}}</p>
             </div>
+            <img class="v-app-film-min__cover__img"
+                :alt="`image de couverture de ${ticketFilm.tx_titre_ori}`"
+                :src="ticketFilm.ur_affiche"
+                @load="(e) => setGradientColor(e.target)"
+            />
 
         </div>
     </section>
@@ -39,24 +40,6 @@ const props = defineProps<{
 }>()
 
 async function setGradientColor(imageElement: HTMLImageElement) {
-
-    // Créer un élément canvas
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-
-    // Définir les dimensions du canvas pour correspondre à celles de l'image
-    canvas.width = imageElement.width
-    canvas.height = imageElement.height
-
-    // Dessiner l'image sur le canvas
-    ctx!.drawImage(imageElement, 0, 0)
-
-    // Obtenir les données de l'image sous forme de imageData
-    const imageData = ctx!.getImageData(0, 0, canvas.width, canvas.height)
-
-    // imageData contient maintenant les données de l'image
-    console.log(imageData)
-
     console.log(imageElement)
     // const color = await average(imageElement)
     // console.log(color) // [241, 221, 63]
@@ -71,11 +54,21 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 .v-app-film-min {
     width: 100%;
     aspect-ratio: 454/606;
-    background-size: cover;
     text-align: center;
+    position: relative;
 }
 
 .v-app-film-min__cover__text {
     height: 100%;
+}
+
+.v-app-film-min__cover__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
 }
 </style>

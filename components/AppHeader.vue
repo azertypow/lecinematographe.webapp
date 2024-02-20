@@ -1,5 +1,5 @@
 <template>
-    <header class="v-app-header app-flex app-flex--row app-flex--justify_space-between app-flex--align_center"
+    <header class="v-app-header app-flex app-flex--row app-flex--justify_space-between app-flex--align_center app-width-gutter"
     >
         <div class="app-flex">
             <img
@@ -13,7 +13,7 @@
                 alt="logo cinematographe.ch"
             />
         </div>
-        <div class="app-flex">
+        <div class="app-flex app-flex--gap_regular">
             <div>accessibilité</div>
             <div>menu</div>
             <div>icon</div>
