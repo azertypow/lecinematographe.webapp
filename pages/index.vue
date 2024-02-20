@@ -27,6 +27,9 @@
                 <div class="v-index__section-calendra">
                     <AppCalendar/>
                 </div>
+                <div class="v-index__section-calendra">
+                    <AppFilmDetails/>
+                </div>
             </div>
         </div>
         <AppFooter/>

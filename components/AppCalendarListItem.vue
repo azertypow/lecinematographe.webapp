@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import type {ITicketFilm} from "~/_utils/apiTicket";
 
 const props = defineProps<{
     title: string,

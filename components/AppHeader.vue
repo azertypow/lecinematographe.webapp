@@ -36,9 +36,13 @@
 <style lang="scss" scoped >
 .v-app-header {
     border-radius: var(--lc-header-height);
-    background-color: var(--lc-color--pastel--purple);
     height: var(--lc-header-height);
     color: black;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(11.1px);
+    -webkit-backdrop-filter: blur(11.1px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .v-app-header__icon {
