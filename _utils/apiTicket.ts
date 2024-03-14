@@ -1,21 +1,94 @@
-export async function gapiGetFilmList(): Promise<IFilmListResponse> {
+async function fetchFromTicketAPI<T>(endPoint: string): Promise<T> {
     const myHeaders = new Headers()
     myHeaders.append("Accept", "application/json")
     myHeaders.append("Accept-Language", "fr")
 
     const requestOptions: RequestInit = {
-        method:     'GET',
-        headers:    myHeaders,
-        redirect:   'manual'
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow',
     }
 
-    return fetch("api/films/list/city/1", requestOptions)
-    // return fetch("https://wkheops.cinemotion.ch/wkh/ajax/WwtLstFilm2.php?WwtVille=1&WwtTrie=4&WwtIsActu=1", requestOptions)
-        .then(response => response.json())
-        .then(result => result as IFilmListResponse)
-        .catch(error => ({error: error} as IFilmListResponse))
+    try {
+        const response = await fetch(`https://wkheops.lecinematographe.ch/wkh${endPoint}`, requestOptions)
+        return await response.json() as T;
+    } catch (error) {
+        return ({error: error} as T);
+    }
 }
 
+export async function apiGetFilmList() {
+    return fetchFromTicketAPI<IFilmListResponse>('/ajax/WwtLstFilm.php?WwtVille=1&WwtIsSo=4&WwtTrie=4&WwtLimi=60')
+
+}
+
+export async function apiGetFilmById(filmId: number) {
+    return fetchFromTicketAPI<IFilmListResponse>(`/films/list/${filmId}`)
+    //https://wkheops.lecinematographe.ch/cgi-bin/wwtRest.fcgi?action=filmlist&idfilm=3
+}
+
+export async function apiGetUrlOfFilm(filmId: number) {
+    return fetchFromTicketAPI<any>(`/ajax/WwtLstUrl.php?WwtFilm=${filmId}`)
+}
+
+export async function apiGetSeancesOfFilm(filmID: number) {
+    return fetchFromTicketAPI<ISeancesOfFilm>(`/ws/WwtLstSeanceAct.php?WwtFilm=${filmID}&WwtLimi=30`)
+}
+
+export async function apiGetListOfFilmByDate(date: Date) {
+    return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtVille=1&WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
+}
+
+export interface ISeancesOfFilm {
+    seance: ISeance[]
+}
+
+export interface ISeance {
+    "id_seance":               number
+    "id_horaire":              number
+    "id_film":                 number
+    "id_ctr":                  number
+    "id_ville":                number
+    "id_site":                 number
+    "id_salle":                number
+    "id_date":                 string //"2024-03-08"
+    "sean_dep":                string //"20:15"
+    "id_heure":                number
+    "id_version":              number
+    "id_typseance":            number
+    "is_so":                   number //"is_so": 1,
+    "is_ap":                   number //"is_ap": 0,
+    "is_3d":                   number //"is_3d": 0,
+    "is_hfr":                  number //"is_hfr": 0,
+    "is_resa":                 number //"is_resa": 0,
+    "is_vente":                number //"is_vente": 0,
+    "is_web":                  number //"is_web": 1,
+    "tx_age":                  string
+    "tx_titre_lng":            string
+    "tx_titre_ori":            string
+    "tx_titre_ver":            string
+    "tx_billet":               string
+    "tx_ville":                string
+    "tx_site":                 string
+    "tx_salle":                string
+    "tx_date":                 string
+    "tx_heure":                string
+    "tx_vers":                 string
+    "tx_vers_abr":             string
+    "tx_typseance":            string
+    "tx_seance":               string
+    "ur_vignette":             string
+    "ur_affiche":              string
+    "ur_isap":                 string
+    "ur_is3d":                 string
+    "ur_ishfr":                string
+    "ur_complet":              string
+    "va_place":                string
+    "va_alerte":               string
+    "va_spect":                number
+    "va_solde":                string
+    "va_etat":                 number
+}
 
 export interface ITicketFilm {
     id_film: number
@@ -35,8 +108,11 @@ export interface ITicketFilm {
     nb_note: number
     ur_vignette: string
     ur_affiche: string
-    id_vision: number
-    da_depart: string
+    id_vision: 21 | 11 | 1 | 2 | 12 | 3 | 99 //11 avant premiere, 21 event, 1 premiere suire, 2 premiere, 3 2e vision, 12 cycle, 99 autre
+    da_depart?: string
+    ur_cover?: string
+    ur_images?: string[]
+    da_fin?: string
 }
 
 export interface IFilmListResponse {

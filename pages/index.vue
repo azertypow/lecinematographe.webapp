@@ -1,7 +1,6 @@
 <template>
     <div class="lc-page"
     >
-
         <div v-if="data === null"
              class="app-flex app-flex--justify_center app-flex--align_center"
         >
@@ -24,28 +23,89 @@
                         :ticket-film-array="data.filmlist"
                     />
                 </div>
-                <div class="v-index__section-calendra">
+                <div class="v-index__section-calendar">
                     <AppCalendar/>
                 </div>
-                <div class="v-index__section-calendra">
-                    <AppFilmDetails/>
+
+                <div class="v-index__section-film-details app-flex app-flex--column app-flex app-flex--gap_regular">
+                    <div v-for="filmData of data.filmlist">
+                        <AppFilmDetails
+                            :ticket-film="filmData"
+                        />
+                    </div>
+                </div>
+
+                <div class="v-index__section-fil-vignette app-flex app-grid--column-2 app-grid--gap_regular">
+                    <div v-for="filmVignette of specialEventsInFilmList">
+                        <AppFilmVignette
+                            :da_depart="filmVignette.filmData.da_depart"
+                            :tx_description="filmVignette.txt"
+                            :tx_titre_lng="filmVignette.filmData.tx_titre_lng"
+                            :ur_vignette="filmVignette.filmData.ur_vignette"
+                        />
+                    </div>
+                </div>
+
+                <div class="v-index__section-fil-event app-flex app-grid--column-1 app-grid--gap_regular">
+                    <AppEventDetails/>
                 </div>
             </div>
         </div>
-        <AppFooter/>
     </div>
 </template>
 <script setup lang="ts">
-import type {Ref, UnwrapRef} from "vue";
-import {gapiGetFilmList, type IFilmListResponse} from "~/_utils/apiTicket";
+import type {ComputedRef, Ref, UnwrapRef} from "vue";
+import {
+    apiGetListOfFilmByDate,
+    apiGetSeancesOfFilm,
+    apiGetFilmList,
+    type IFilmListResponse,
+    apiGetUrlOfFilm, type ITicketFilm
+} from "~/_utils/apiTicket";
 
-const data: Ref<UnwrapRef<null| IFilmListResponse>> = ref(null)
+const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const specialEventsInFilmList: Ref<UnwrapRef<{ txt: string; filmData: ITicketFilm }[] | null>> = ref(null)
 
 onMounted(async () => {
-    data.value = await gapiGetFilmList()
+    data.value = await apiGetFilmList()
+    specialEventsInFilmList.value = await loadSpecialEventsInFilmList()
+
+    console.log( 'data.value -> apiGetFilmList()', data.value )
+    console.log('apiGetSeancesOfFilm', await apiGetSeancesOfFilm(3))
+    console.log('apiGetUrlOfFilm', await apiGetUrlOfFilm(1))
+    console.log('apiGetListOfFilmByDate', await apiGetListOfFilmByDate(new Date('2024-03-20')))
+
 })
+
+async function loadSpecialEventsInFilmList(): Promise<any[] | { txt: string; filmData: ITicketFilm }[]> {
+    if(data.value === null) return []
+    if(!data.value.filmlist) return []
+
+    const toReturn: {
+        txt: string,
+        filmData: ITicketFilm,
+    }[] = []
+
+    for (const filmData of data.value.filmlist) {
+        const filmEvent = await apiGetSeancesOfFilm(filmData.id_film)
+        filmEvent.seance.forEach(seance => {
+            if( seance.tx_seance.length < 1 ) return
+            toReturn.push({
+                txt: seance.tx_seance,
+                filmData: filmData,
+            })
+        })
+    }
+
+    console.log('loadSpecialEventsInFilmList', toReturn)
+
+    return toReturn
+}
 
 </script>
 
 <style lang="scss" scoped >
+.v-index__section-fil-vignette {
+    padding: var(--app-gutter_regular);
+}
 </style>

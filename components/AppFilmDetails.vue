@@ -1,15 +1,79 @@
 <template>
     <section
         class="v-app-film-details app-flex app-flex--justify_center"
+        :style="{background: colorBG ? `rgb(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]})` : 'rgb(0, 0, 0)'}"
     >
-        <h3 class="v-app-film-details__date" >DIMANCHE 7 AVRIL 2023</h3>
-        <h1 class="v-app-film-details__title" >OUR BODY</h1>
-        <h5 class="v-app-film-details__subtitle" >Un film de Claire Simon</h5>
+<!--        {{ticketFilm}}-->
+        <h3 class="v-app-film-details__date">{{ ticketFilm.da_depart }}</h3>
+        <h1 class="v-app-film-details__title">{{ticketFilm.tx_titre_lng}}</h1>
+        <h5 class="v-app-film-details__subtitle">Un film de {{ticketFilm.tx_realisateur}}</h5>
         <div class="v-app-film-details__cover">
-            <img style="display: block; width: 100%" src="https://source.unsplash.com/random" />
+            <img alt="image de couverture pour le film"
+                 :src="ticketFilm.ur_cover"
+                 @load="(e) => setGradientColor(e.target)"
+            />
         </div>
-        <div class="v-app-film-details__details" >
-            <p>Une adolescente est assise dans le cabinet de consultation d’un médecin, la caméra la filme de dos pour préserver son anonymat. Elle raconte au docteur comment elle est tombée enceinte. Son petit ami l’avait assurée qu’il prendrait ses précautions. Maintenant, elle doit prendre une décision difficile. On ressent son angoisse dans chaque phrase qu’elle prononce. Et le petit ami est introuvable. Ceci est l’une des premières scènes du remarquable documentaire « Notre corps » de Claire Simon. Avec un regard empli de tendresse, la réalisatrice française explore une clinique gynécologique à Paris, capturant des scènes d’accouchements, de diagnostics de cancer, de consultations sur l’endométriose et de thérapie hormonale pour une femme trans plus âgée. Le film qui en découle est d’abord observationnel, puis devient de plus en plus personnel, un film sur ce que cela signifie de vivre dans un corps de femme et un magnifique exemple de la puissance du cinéma documentaire. « Notre corps » rassemble des expériences avec lesquelles on se sent généralement isolé; il met en évidence les structures qui considèrent les problèmes comme individuels; il révèle à quel point les choses dont nous n’osons pas parler ont une dimension sociétale et nécessitent d’être discutées.</p>
+        <div class="v-app-film-details__details"
+             v-html="ticketFilm.tx_comment"
+        ></div>
+
+        <div class="v-app-film-details__details"
+        >
+            <div class="v-app-film-details__details__header app-flex app-flex--align_center app-flex--gap_regular app-flex--nowrap">
+                <div class="v-app-film-details__details__header__icon">
+                    <img
+                        alt="icon séance"
+                        src="../assets/icons/seance.svg"
+                    />
+                </div>
+                <h3 class="v-app-film-details__details__header__title">{{ticketFilm.tx_titre_lng}}</h3>
+            </div>
+            <div>Un film de {{ticketFilm.tx_realisateur}}</div>
+            <div class="v-app-film-details__details__info">
+                <div class="v-app-film-details__details__info__item">
+                    <div>Date (départ)</div>
+                    <div>{{ticketFilm.da_depart}}</div>
+                </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Pays</div>
+                    <div>{{ticketFilm.tx_pays}}</div>
+                </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Acteur·ice·x·s</div>
+                    <div>{{ticketFilm.tx_acteur}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="v-app-film-details__details"
+             v-if="nextSeances"
+        >
+            <div class="v-app-film-details__details__header app-flex app-flex--align_center app-flex--gap_regular app-flex--nowrap">
+                <div class="v-app-film-details__details__header__icon">
+                    <img
+                        alt="icon séance"
+                        src="../assets/icons/material-date-range--white.svg"
+                    />
+                </div>
+                <h3 class="v-app-film-details__details__header__title">SÉANCES</h3>
+            </div>
+            <div class="v-app-film-details__details__info"
+            >
+                <div class="v-app-film-details__details__info__item"
+                     v-for="nextSeance of nextSeances.seance"
+                >
+                    <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsDay) }}</div>
+                </div>
+            </div>
+
+            <div v-if="linksOfFilm">
+                <h3>LIENS</h3>
+                <a v-for="link of linksOfFilm.url"
+                   :href="link.ur_url"
+                   target="_blank"
+                >
+                    {{link.tx_url}}
+                </a>
+            </div>
         </div>
     </section>
 </template>
@@ -19,12 +83,43 @@
 
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-import type {ITicketFilm} from "~/_utils/apiTicket";
+import {defineProps, type Ref, type UnwrapRef} from 'vue'
+import {
+    apiGetSeancesOfFilm,
+    apiGetUrlOfFilm,
+    type ISeancesOfFilm,
+    type ITicketFilm
+} from "~/_utils/apiTicket";
+import {average} from "color.js";
 
 const props = defineProps<{
-    filmData: ITicketFilm
+    ticketFilm: ITicketFilm
 }>()
+
+const nextSeances: Ref<UnwrapRef<null | ISeancesOfFilm>> = ref(null)
+
+const linksOfFilm: Ref<UnwrapRef<null | {url: {id_film: string, ty_url: string, tx_url: string, ur_url: string}[]}>> = ref(null)
+
+const dateOptionsDay: Intl.DateTimeFormatOptions = {
+    weekday: 'long', // Jour de la semaine au format long (ex: "lundi")
+    day: 'numeric', // Jour du mois au format numérique (ex: 13)
+    month: 'long', // Mois au format long (ex: "janvier")
+    hour: 'numeric', // Heure au format numérique (ex: 20)
+    minute: 'numeric', // Minute au format numérique (ex: 30)
+    hour12: false // Format de l'heure en 24 heures (ex: 20h30)
+}
+
+onMounted(async () => {
+    nextSeances.value = await apiGetSeancesOfFilm(props.ticketFilm.id_film)
+    linksOfFilm.value = await apiGetUrlOfFilm(props.ticketFilm.id_film)
+})
+
+const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
+
+async function setGradientColor(imageElement: HTMLImageElement) {
+    colorBG.value = (await average(imageElement, {format: 'array'}) as [])
+}
+
 </script>
 
 
@@ -32,11 +127,19 @@ const props = defineProps<{
 
 
 <style lang="scss" scoped >
+.v-app-film-details__cover {
+    img {
+        display: block;
+        width: 100%;
+        border-radius: var(--lc-radius);
+    }
+}
+
 .v-app-film-details {
     position: relative;
-    background: var(--lc-color--pastel--green);
+    background: black;
     border-radius: var(--lc-radius);
-    padding-top: 4em;
+    padding: 4em .5em .5em;
 }
 
 .v-app-film-details__date {
@@ -46,15 +149,62 @@ const props = defineProps<{
     margin: 0;
 }
 
-.v-app-film-details__title,
-.v-app-film-details__subtitle,
+.v-app-film-details__title {
+    margin: 0;
+    flex-basis: calc(100% / 12 * 12);
+    font-size: 1.75rem;
+    line-height: 1em;
+
+    @container (width < 1000px) {
+        font-size: 1.2rem;
+        line-height: 1em;
+    }
+}
+
+.v-app-film-details__subtitle {
+    margin: 0;
+    margin-bottom: .5rem;
+    flex-basis: calc(100% / 12 * 12);
+}
 .v-app-film-details__details {
     margin: 0;
     flex-basis: calc(100% / 12 * 8);
 }
 
+.v-app-film-details__details__header {
+    border-bottom: solid 1px white;
+    padding-top: 2rem;
+    box-sizing: border-box;
+    max-width: 30em;
+}
+
+.v-app-film-details__details__header__title {
+    font-size: 1rem;
+    line-height: 1.25em;
+    margin: 0;
+
+}
+
+.v-app-film-details__details__info {
+    padding-left: 2rem;
+    padding-top: .5rem;
+    box-sizing: border-box;
+    max-width: 30em;
+}
+
+.v-app-film-details__details__info__item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
 .v-app-film-details__cover {
     display: block;
     flex-basis: calc(100% / 12 * 10);
+}
+
+.v-app-film-details__details__header__icon {
+    img {
+        display: block;
+    }
 }
 </style>

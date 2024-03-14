@@ -1,21 +1,55 @@
+<script lang="ts" setup>
+import AppNav from "~/components/AppNav.vue";
+
+const menuIsOpen = useMenuIsOpen()
+</script>
+
 <template>
-    <div class="v-app__header-container"
+    <div class="v-app__header-container app-flex app-flex--nowrap app-flex--justify_center"
     >
-        <AppHeader/>
+        <div class="app-flex__basis-16-24" >
+            <AppHeader/>
+        </div>
     </div>
+
+    <transition
+    >
+        <div class="v-app__nav-container app-flex app-flex--nowrap app-flex--justify_center"
+             v-if="useMenuIsOpen().value"
+        >
+            <div class="app-flex__basis-16-24 v-app__nav-container__grid" >
+                <AppNav/>
+            </div>
+        </div>
+    </transition>
 
     <div class="v-app__page-container"
     >
         <NuxtPage/>
     </div>
+
+  <AppFooter/>
 </template>
 <style>
 .v-app__header-container {
     position: fixed;
-    top: 0;
+    top: .5rem;
     left: 0;
     width: 100%;
     z-index: 1000;
+}
+
+.v-app__nav-container {
+    position: fixed;
+    top: .5rem;
+    left: 0;
+    width: 100%;
+    z-index: 500;
+    height: 100%;
+}
+
+.v-app__nav-container__grid {
+    height: 100%;
 }
 
 .v-app__page-container {

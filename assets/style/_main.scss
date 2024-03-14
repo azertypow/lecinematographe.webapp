@@ -12,7 +12,7 @@
 
 
 html {
-  font-size: 36px;
+  font-size: 34px;
   padding: 0;
   margin: 0;
 
@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  font-size: .75rem;
+  font-size: .7rem;
   line-height: 1rem;
   padding: 0;
   margin: 0;
@@ -57,4 +57,57 @@ body {
   background-color: #ffffff;
   border-radius: 10px;
   border: 3px solid #000000;
+}
+
+button,
+.ls-button {
+  all: unset;
+  display: block;
+  cursor: pointer;
+  background: black;
+  color: white;
+  font-size: .5rem;
+  line-height: 1em;
+  white-space: nowrap;
+  padding: .5em 1em;
+  border-radius: var(--lc-radius);
+  text-transform: uppercase;
+
+  &.lc-button--is-negative {
+    color: black;
+    background-color: white;
+  }
+
+  &.lc-button--is-rounded {
+    border-radius: 100%;
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > img {
+      display: block;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+}
+
+
+
+// vue transition
+
+.v-enter-active,
+.v-leave-active {
+  transform-origin: top;
+  transform: translate(0, 0) scale(100%, 100%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: translate(0, 0) scale(100%, 50%);
+  opacity: 0;
 }

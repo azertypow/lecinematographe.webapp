@@ -3,7 +3,7 @@
         <div class="v-app-film-list__title-container"
         >
             <h3>
-                À L’AFFICHE Aujourdhui
+                À L’AFFICHE cette&nbsp;semaine
             </h3>
         </div>
         <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"

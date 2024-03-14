@@ -4,19 +4,19 @@
     >
         <div class="app-flex app-flex--justify_space-between app-flex--nowrap app-flex--gap_regular">
 
-            <div
-                class="app-flex__shrink-0"
-            >icon</div>
+            <button
+                class="app-flex__shrink-0 lc-button--is-negative lc-button--is-rounded"
+            ><img alt="image agenda" src="../assets/icons/material-date-range.svg"></button>
 
-            <div class="app-flex app-flex--gap_regular app-flex__basis-24-24 app-flex--justify_space-between">
-                <button>left</button>
+            <div class="app-flex app-flex--gap_large app-flex__basis-24-24 app-flex--justify_space-between">
+                <button style="font-size: .85rem; letter-spacing: -.2em"><<</button>
                     <div v-for="date of dateRange">
                         <AppCalendarButtonDate
                             @click="selectedDate = date"
                             :date="date"
                         />
                     </div>
-                <button>right</button>
+                <button style="font-size: .85rem; letter-spacing: -.2em">>></button>
             </div>
         </div>
 
@@ -84,7 +84,7 @@ const dateRange = ref(getDatesRange(selectedDate.value, 7))
     box-sizing: border-box;
     border-radius: var(--lc-radius);
     padding: var(--app-gutter_regular);
-    background: var(--lc-color--blue);
+    background: var(--lc-color--blue-light);
     color: white;
     width: min(20rem, 100%);
 

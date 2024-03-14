@@ -6,8 +6,8 @@
             class="v-app-calendar-button-date__button"
         >
 
-            <div>{{['di', 'lu', 'ma', 'me', 'je', 've', 'sa'][date.getDay()]}}</div>
-            <div>{{date.getDate()}}</div>
+            <div class="date-day-day">{{['di', 'lu', 'ma', 'me', 'je', 've', 'sa'][date.getDay()]}}</div>
+            <div class="date-day-number">{{date.getDate()}}</div>
         </div>
     </div>
 </template>
@@ -40,8 +40,8 @@ const props = defineProps<{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 3em;
-    height: 3em;
+    width: 4em;
+    height: 4em;
     font-size: .5rem;
     line-height: 1em;
     border-radius: 100%;
@@ -49,5 +49,14 @@ const props = defineProps<{
     &:hover {
         background: var(--lc-color--orange);
     }
+}
+
+.date-day-day {
+    text-transform: uppercase;
+    padding-bottom: .15rem;
+}
+
+.date-day-number {
+    font-size: .85rem;
 }
 </style>

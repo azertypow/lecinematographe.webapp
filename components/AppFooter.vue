@@ -68,7 +68,9 @@
                         <br>1003 Lausanne
                     </p>
                     <p>
-                        contact@lecinematographe.ch
+                        <a href="mailto:contact@lecinematographe.ch"
+                           target="_blank"
+                        >contact@lecinematographe.ch</a>
                     </p>
 
                 </div>
@@ -81,6 +83,9 @@
                     Développement : Nicolas Baldran
                     <br>Typographie : <a href="https://typotheque.genderfluid.space/DINdong.html" >Dindong</a> par Clara Sambot
                     <br>Graphisme : Clovis Duran
+                </p>
+                <p>
+                  <nuxt-link href="/condition-generales">condition général</nuxt-link> et <nuxt-link href="/politique-de-confidentialite" >Politique de confidentialité</nuxt-link>
                 </p>
             </div>
 
