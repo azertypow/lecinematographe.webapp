@@ -112,6 +112,8 @@ async function loadSpecialEventsInFilmList(): Promise<any[] | { txt: string; fil
 <style lang="scss" scoped >
 .v-index__section--fil-vignette {
     padding: var(--app-gutter_regular);
+    width: min(100%, var(--lc-max-width--lg));
+    margin: auto;
 }
 
 .v-index__section {
