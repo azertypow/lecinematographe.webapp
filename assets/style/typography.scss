@@ -89,6 +89,10 @@ a {
   }
 }
 
+pre {
+  white-space: break-spaces;
+}
+
 .lc-first-letter-to-lowercase {
   &:first-letter {
     text-transform: lowercase;
