@@ -56,7 +56,7 @@
                 <img
                     class="v-app-footer__content__img"
                     alt="photo du cinéma"
-                    src="../assets/cinematographe_web.jpeg"  />
+                    src="../assets/cinematographe_web.png"  />
 
                 <div
                     class="v-app-footer__content__text"
