@@ -8,7 +8,6 @@
         </div>
         <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"
         >
-            <div class="app-flex__shrink-0 app-flex__basis-1-4"></div>
             <div class="app-flex__shrink-0 app-flex__basis-1-4"
                  v-for="film of ticketFilmArray">
                 <AppFilmMin
@@ -44,13 +43,15 @@ const props = defineProps<{
 }
 
 .v-app-film-list__title-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 25%;
+    width: auto;
     background: linear-gradient(to right, black, #00000000);
     height: 100%;
     pointer-events: none;
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: solid 1px;
+    border-radius: 4rem;
 }
 
 .v-app-film-list__films-container {
