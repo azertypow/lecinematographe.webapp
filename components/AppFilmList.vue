@@ -1,8 +1,9 @@
 <template>
     <section class="v-app-film-list">
         <div class="v-app-film-list__title-container"
+             v-if="showTitle"
         >
-            <h3 style="margin: 0">
+            <h3 class="lc-typo-with-dot" style="margin:0 auto">
                 À L’AFFICHE
             </h3>
         </div>
@@ -26,9 +27,11 @@
 import { defineProps } from 'vue'
 import type {ITicketFilm} from "~/_utils/apiTicket";
 
-const props = defineProps<{
-    ticketFilmArray: ITicketFilm[]
-}>()
+const props = withDefaults(defineProps<{
+    ticketFilmArray: ITicketFilm[],
+    showTitle: false
+}>(), {
+})
 </script>
 
 
@@ -50,8 +53,6 @@ const props = defineProps<{
     text-align: center;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    border: solid 1px;
-    border-radius: 4rem;
 }
 
 .v-app-film-list__films-container {

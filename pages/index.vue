@@ -21,6 +21,7 @@
                 <div class="v-index__section v-index__section--today">
                     <AppFilmList
                         :ticket-film-array="data.filmlist"
+                        :show-title="true"
                     />
                 </div>
                 <div class="v-index__section v-index__section--button-agenda">

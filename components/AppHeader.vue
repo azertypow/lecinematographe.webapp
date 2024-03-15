@@ -55,10 +55,9 @@ const menuIsOpen = useMenuIsOpen()
     height: var(--lc-header-height);
     color: white;
     background: rgba(40, 40, 40, 0.2);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(11.1px);
     -webkit-backdrop-filter: blur(11.1px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all .5s ease;
     padding-left: .5rem;
     padding-right: .5rem;

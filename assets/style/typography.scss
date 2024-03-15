@@ -1,9 +1,8 @@
 h1,
 .font-h1 {
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   line-height: 1em;
   font-weight: 400;
-  display: inline-block;
   margin-top: 1rem;
   margin-bottom: 1rem;
   text-transform: uppercase;
@@ -13,9 +12,8 @@ h1,
 h2,
 .font-h2 {
   font-size: 1rem;
-  line-height: 1.15em;
+  line-height: 1em;
   font-weight: 400;
-  display: inline-block;
   margin-top: 1rem;
   margin-bottom: 1rem;
   letter-spacing: .075em;
@@ -79,13 +77,11 @@ h6 {
 
 a {
   color: var(--lc-color--blue-light);
+  text-decoration: none;
 
-  &:before {
-    content: '>';
-  }
 
-  &:after {
-    content: '<';
+  &:hover {
+    border-bottom: dotted 2px;
   }
 }
 
@@ -97,4 +93,14 @@ pre {
   &:first-letter {
     text-transform: lowercase;
   }
+}
+
+
+.lc-typo-with-dot {
+  border-bottom: dotted 2px;
+  border-radius: 0;
+  text-align: center;
+  padding: .25em 0;
+  border-top: dotted 2px;
+  width: min(100%, var(--lc-max-width--reg));
 }

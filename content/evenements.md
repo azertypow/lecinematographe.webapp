@@ -8,8 +8,6 @@ buvette. Bienvenue à tout le monde.
 La programmation 65+ débutera à l'automne 2024. 
 
 
-### Séances à venir
-
 :app-film-list-senior
 
 ## Cycle estival
@@ -20,8 +18,6 @@ ensemble.
 
 Inscrivez-vous à notre newsletter pour être tenus au courant de la sortie de la programmation.
 
-**Inscription newsletter**
-
 
 ## Cours publics
 
@@ -29,8 +25,6 @@ Inscrivez-vous à notre newsletter pour être tenus au courant de la sortie de l
 critiques de cinéma, professionnellexs du cinéma, chercheureusexs et écrivainexs.
 
 Inscrivez-vous à notre newsletter pour être tenus au courant de la sortie de la programmation.
-
-**Inscription newsletter**
 
 
 ## Festivals
