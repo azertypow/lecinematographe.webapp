@@ -180,7 +180,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 }
 .v-app-film-details__details {
     margin: 0;
-    flex-basis: calc(100% / 12 * 8);
+    width: min(100%, var(--lc-max-width--reg));
 }
 
 .v-app-film-details__details__header {
@@ -210,7 +210,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 
 .v-app-film-details__cover {
     display: block;
-    flex-basis: calc(100% / 12 * 10);
+    width: min(100%, var(--lc-max-width--sm));
 }
 
 .v-app-film-details__details__header__icon {
