@@ -8,8 +8,8 @@
                 :alt="`image de couverture de ${title}`"
                 :src="coverUrl"
             />
-            <h1 class="v-app-calendar-list-item__title"
-            >{{title}}</h1>
+            <h3 class="v-app-calendar-list-item__title"
+            >{{title}}</h3>
             <p>{{hour}}</p>
         </div>
     </section>

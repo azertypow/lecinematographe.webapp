@@ -4,9 +4,10 @@
 
 ::AppMap
 
-Location de la salle pour une projection ou un événement public, qui pourrait s’intégrer à la programmation du Cinématographe : écrivez-nous à programmation@lecinematographe.ch.
+Location de la salle pour une projection ou un événement public qui pourrait s’intégrer à la programmation du Cinématographe : écrivez-nous à programmation@lecinematographe.ch.
 
-Location de la salle pour une projection ou un événement privé : écrivez-nous à location@lecinematographe.ch.À noter : la salle n’est disponible pour des séances privées qu’en journée (tous les matins et le lundi, mardi, jeudi et vendredi après-midi).
+Location de la salle pour une projection ou un événement privé : écrivez-nous à location@lecinematographe.ch
+À noter : la salle n’est disponible pour des séances privées qu’en journée (tous les matins et le lundi, mardi, jeudi et vendredi après-midi).
 
 ## Salle de montage
 À venir...

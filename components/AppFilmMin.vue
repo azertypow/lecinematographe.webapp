@@ -5,18 +5,20 @@
             backgroundImage: ``,
         }"
     >
-        <div class="v-app-film-min__cover__text app-flex app-flex--column app-flex--justify_space-between">
+        <div class="v-app-film-min__cover__text app-flex app-flex--column app-flex--justify_space-between app-flex--nowrap">
 
-            <div :style="`background: linear-gradient(to bottom, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
+            <div class="v-app-film-min__title"
+                :style="`background: linear-gradient(to bottom, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
             >
-                <h1 class="v-app-film-min__title"
-                >{{ticketFilm.tx_titre_ori}}</h1>
+                <h2 class="v-app-film-min__title__value"
+                >{{ticketFilm.tx_titre_ori}}</h2>
             </div>
 
-            <div :style="`background: linear-gradient(to top, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
+            <div class="v-app-film-min__description"
+                :style="`background: linear-gradient(to top, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
             >
-                <p class="v-app-film-min__description"
-                >un film de {{ticketFilm.tx_realisateur}}</p>
+                <p class="v-app-film-min__description__value"
+                >un film <span class="cl-min-first-letter">{{ticketFilm.tx_realisateur}}</span></p>
             </div>
             <img class="v-app-film-min__cover__img"
                 :alt="`image de couverture de ${ticketFilm.tx_titre_ori}`"
@@ -62,20 +64,38 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     overflow: hidden;
 }
 
-.v-app-film-min__cover__text {
-    height: 100%;
-}
-
 .v-app-film-min__title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     padding-top: .5rem;
     padding-bottom: 3rem;
     margin: 0;
     text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.v-app-film-min__title__value {
+    margin: 0;
 }
 
 .v-app-film-min__description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     padding-top: 3rem;
     padding-bottom: .5rem;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.v-app-film-min__description__value {
     margin: 0;
 }
 

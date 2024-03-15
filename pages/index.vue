@@ -17,17 +17,22 @@
         </div>
         <div v-else
         >
-            <div>
-                <div class="v-index__section-today">
+            <div class="app-grid--column-24">
+                <div class="v-index__section v-index__section--today">
                     <AppFilmList
                         :ticket-film-array="data.filmlist"
                     />
                 </div>
-                <div class="v-index__section-calendar">
+                <div class="v-index__section v-index__section--button-agenda">
+                    <button
+                        class="app-flex__shrink-0 lc-button--is-negative lc-button--is-rounded"
+                    ><img alt="image agenda" style="height: .75rem; width: .75rem" src="../assets/icons/material-date-range.svg"></button>
+                </div>
+                <div class="v-index__section v-index__section--calendar">
                     <AppCalendar/>
                 </div>
 
-                <div class="v-index__section-film-details app-flex app-flex--column app-flex app-flex--gap_regular">
+                <div class="v-index__section v-index__section--film-details app-flex app-flex--column app-flex app-flex--gap_regular">
                     <div v-for="filmData of data.filmlist">
                         <AppFilmDetails
                             :ticket-film="filmData"
@@ -35,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="v-index__section-fil-vignette app-flex app-grid--column-2 app-grid--gap_regular">
+                <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--gap_regular">
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
                             :da_depart="filmVignette.filmData.da_depart"
@@ -46,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="v-index__section-fil-event app-flex app-grid--column-1 app-grid--gap_regular">
+                <div class="v-index__section v-index__section--fil-event app-flex app-grid--column-1 app-grid--gap_regular">
                     <AppEventDetails/>
                 </div>
             </div>
@@ -105,7 +110,20 @@ async function loadSpecialEventsInFilmList(): Promise<any[] | { txt: string; fil
 </script>
 
 <style lang="scss" scoped >
-.v-index__section-fil-vignette {
+.v-index__section--fil-vignette {
     padding: var(--app-gutter_regular);
+}
+
+.v-index__section {
+  grid-column: 1 / span 24;
+}
+
+.v-index__section--button-agenda {
+    grid-column: 3 / span 2;
+    justify-self: center;
+}
+
+.v-index__section--calendar {
+  grid-column: 5 / span 16;
 }
 </style>

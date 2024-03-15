@@ -18,9 +18,8 @@
                 alt="logo cinematographe.ch"
             />
         </nuxt-link>
-        <div class="app-flex app-flex--gap_regular">
-            <div>Accessibilité</div>
-            <button class="app-header__icon-menu"
+        <div class="app-flex">
+            <button class="app-header__icon-menu app-flex app-flex--gap_large app-flex--align_center"
                 @click="menuIsOpen = !menuIsOpen"
             >Menu
                 <img class="app-header__icon-menu__img"
@@ -61,6 +60,8 @@ const menuIsOpen = useMenuIsOpen()
     -webkit-backdrop-filter: blur(11.1px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all .5s ease;
+    padding-left: .5rem;
+    padding-right: .5rem;
 
     &.is-open {
         background: rgba(40, 40, 40, 0);
@@ -91,19 +92,17 @@ const menuIsOpen = useMenuIsOpen()
 }
 
 .app-header__icon-menu {
-    all: unset;
     border: none;
     background: transparent;
     display: flex;
     user-select: none;
-    gap: .5em;
     cursor: pointer;
 }
 
 .app-header__icon-menu__img {
     display: block;
-    height: 1rem;
-    width: 1rem;
+    height: .65rem;
+    width: .65rem;
     object-fit: contain;
 }
 </style>

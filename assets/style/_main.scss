@@ -111,3 +111,9 @@ button,
   transform: translate(0, 0) scale(100%, 50%);
   opacity: 0;
 }
+
+.cl-min-first-letter {
+  &:first-letter {
+    text-transform: lowercase;
+  }
+}

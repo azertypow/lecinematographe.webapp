@@ -1,6 +1,7 @@
 <template>
     <a class="v-app-map"
        href="https://google.com/"
+       target="_blank"
     >
         <img
             alt="image carte"

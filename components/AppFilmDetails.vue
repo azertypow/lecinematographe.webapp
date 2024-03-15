@@ -1,12 +1,17 @@
 <template>
-    <section
-        class="v-app-film-details app-flex app-flex--justify_center"
-        :style="{background: colorBG ? `rgb(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]})` : 'rgb(0, 0, 0)'}"
+    <section class="v-app-film-details app-flex app-flex--justify_center"
+        :style="{
+            background: colorBG ? `rgb(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]})` : 'rgb(0, 0, 0)',
+        }"
     >
-<!--        {{ticketFilm}}-->
+        <div class="v-app-film-details__background-img"
+             :style="{
+                backgroundImage: `url(${ticketFilm.ur_cover})`,
+            }"
+        ></div>
         <h3 class="v-app-film-details__date">{{ ticketFilm.da_depart }}</h3>
         <h1 class="v-app-film-details__title">{{ticketFilm.tx_titre_lng}}</h1>
-        <h5 class="v-app-film-details__subtitle">Un film de {{ticketFilm.tx_realisateur}}</h5>
+        <h5 class="v-app-film-details__subtitle">Un film <span class="lc-first-letter-to-lowercase">{{ticketFilm.tx_realisateur}}</span></h5>
         <div class="v-app-film-details__cover">
             <img alt="image de couverture pour le film"
                  :src="ticketFilm.ur_cover"
@@ -64,16 +69,6 @@
                     <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsDay) }}</div>
                 </div>
             </div>
-
-            <div v-if="linksOfFilm">
-                <h3>LIENS</h3>
-                <a v-for="link of linksOfFilm.url"
-                   :href="link.ur_url"
-                   target="_blank"
-                >
-                    {{link.tx_url}}
-                </a>
-            </div>
         </div>
     </section>
 </template>
@@ -127,19 +122,36 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 
 
 <style lang="scss" scoped >
+.v-app-film-details {
+    position: relative;
+    background: black;
+    border-radius: var(--lc-radius);
+    padding: 4em .5em .5em;
+    transform: translate3d(0, 0, 0);
+    overflow: hidden;
+}
+
+.v-app-film-details__background-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: .5;
+    mix-blend-mode: multiply;
+    filter: blur(50px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    //background-image: url(../assets/background.jpeg);
+}
+
 .v-app-film-details__cover {
     img {
         display: block;
         width: 100%;
         border-radius: var(--lc-radius);
     }
-}
-
-.v-app-film-details {
-    position: relative;
-    background: black;
-    border-radius: var(--lc-radius);
-    padding: 4em .5em .5em;
 }
 
 .v-app-film-details__date {
@@ -182,7 +194,6 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     font-size: 1rem;
     line-height: 1.25em;
     margin: 0;
-
 }
 
 .v-app-film-details__details__info {

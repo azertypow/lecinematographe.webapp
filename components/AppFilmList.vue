@@ -2,8 +2,8 @@
     <section class="v-app-film-list">
         <div class="v-app-film-list__title-container"
         >
-            <h3>
-                À L’AFFICHE cette&nbsp;semaine
+            <h3 style="margin: 0">
+                À L’AFFICHE
             </h3>
         </div>
         <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"

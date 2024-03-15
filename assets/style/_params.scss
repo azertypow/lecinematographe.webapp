@@ -1,5 +1,9 @@
 :root {
 
+  --app-flex--gap_half: .5rem;
+  --app-gutter_regular: .75rem;
+  --app-gutter_large: 1rem;
+
   --lc-color--blue: #0438D6;
   --lc-color--pink: #FF10ED;
   --lc-color--blue-light: #436AED;
@@ -17,6 +21,8 @@
 
   --lc-radius: .25rem;
   --lc-radius--min: .15rem;
+
+  --lc-max-width--reg: 35rem;
 
   font-family: "DIN Dong", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

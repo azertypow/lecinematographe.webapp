@@ -109,6 +109,7 @@
 
 <style lang="scss" scoped >
 .v-app-footer {
+    width: min(var(--lc-max-width--reg), 100%);
 }
 
 .v-app-footer__newsletter-container {
@@ -122,7 +123,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: .5rem .5rem;
+    padding: .25rem .25rem;
     box-sizing: border-box;
 
     h4 {

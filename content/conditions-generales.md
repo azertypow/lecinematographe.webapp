@@ -1,6 +1,6 @@
 # Conditions Générales
 
-## Conditions de vente pour les achats en ligne des cinémas Le Cinematographe
+## Conditions de vente pour les achats en ligne du Cinématographe.
 L’achat de billets de cinéma en ligne est un service qui permet d’acquérir à l’avance des
 places de cinéma pour les séances programmées dans les salles Le Cinematographe de
 Lausanne.
@@ -37,10 +37,10 @@ désirée.
 
 ## Échange et remboursement
 Les billets achetés ne sont ni échangés, ni remboursés. Seul un problème technique grave
-dans la sphère de responsabilité de la société Le Cinematographe-Rex Sàrl impliquant l’annulation
+dans la sphère de responsabilité du Collectif du nouveau Cinématographe impliquant l’annulation
 de la séance peut donner lieu au remboursement de billets.
+
 Protection des données
-   
 Toutes les données à caractère personnel seront considérées comme confidentielles et
 traitées conformément aux prescriptions de la LPD. Le Cinematographe prend des mesures pour
 protéger son réseau. Une protection absolue contre les interventions et les écoutes illicites
@@ -50,28 +50,30 @@ engagée pour de telles ingérences.
 
 ## Droit applicable et for juridique
 Les présentes conditions générales de vente sont soumises au droit suisse. Faute de
-règlement à l’amiable, tout litige sera porté devant le tribunal du siège de la société
-Le Cinematographe-Rex Sàrl. Le for juridique est à Lausanne.
+règlement à l’amiable, tout litige sera porté devant le tribunal du siège du Collectif 
+du nouveau Cinématographe. 
+Le for juridique est à Lausanne.
 
 ###### Lausanne, le 13.09.2021/modification le 17.02.2022
 
 
 ## Mentions légales
-LE CINÉMATOGRAPHE
-Casino de Montbenon
-All. Ernest-Ansermet 3
+Collectif du nouveau Cinématographe 
+All. Ernest-Ansermet 3 
 1003 Lausanne
 
-La société est représentée par xxx, gérant ayant le pouvoir de représenter la
-société individuellement.
+La société est représentée par Mélanie Boss, 
+gérant ayant le pouvoir de représenter l’association individuellement.
+
 
 
 ## Responsabilités
-La société n’assume aucune responsabilité quant à l’actualité, l’exactitude et l’exhaustivité
-des informations fournies. Il en va de même pour toutes les autres pages web auxquelles
-il est renvoyé au moyen de liens. Le Cinematographe-Rex Sàrl n’est pas responsable du contenu
-des pages web pouvant être consultées au moyen de tels liens. Le Cinematographe-Rex Sàrl se
-réserve en outre le droit de procéder à des modifications et à des compléments des
-informations mises à disposition. Tous les contenus sont protégés par le droit d’auteur et
-les autres lois, également sans mention spéciale ; ils ne peuvent être utilisés sans le
-consentement du titulaire des droits concernés.
+L’association n’assume aucune responsabilité quant à l’actualité, l’exactitude et l’exhaustivité 
+des informations fournies. Il en va de même pour toutes les autres pages web auxquelles 
+il est renvoyé au moyen de liens. Le Collectif du nouveau Cinématographe n’est pas responsable 
+du contenu des pages web pouvant être consultées au moyen de tels liens. 
+Le Collectif du nouveau Cinématographe réserve en outre le droit de procéder à des modifications 
+et à des compléments des informations mises à disposition. Tous les contenus sont protégés par 
+le droit d’auteur et les autres lois, également sans mention spéciale ; ils ne peuvent être 
+utilisés sans le consentement du titulaire des droits concernés.
+

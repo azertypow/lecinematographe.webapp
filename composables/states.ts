@@ -6,56 +6,28 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
     return {
         pages: [
             {
-                title: 'À l’affiche',
-                slug: '/',
+                title: 'Événements',
+                slug: '/evenements',
                 subsections: [],
             },
             {
-                title: 'Jeune public',
+                title: 'Infos',
+                slug: '/infos',
+                subsections: [],
+            },
+            {
+                title: 'Jeune Public',
                 slug: '/jeune-public',
                 subsections: [],
             },
             {
-                title: 'Événements',
-                slug: '/evenements',
-                subsections: [
-                    "Événements spéciaux",
-                    "65+",
-                    "Cycle estival",
-                    "Cours publics",
-                    "Festivals",
-                ],
-            },
-            {
-                title: "Infos",
-                slug: "infos",
-                subsections: [
-                    "Tarifs",
-                    "Accès",
-                    "Accès",
-                    "Buvette",
-                    "Équipe",
-                    "Histoire",
-                    "Soutiens",
-                ]
-            },
-            {
-                title:  "Médias",
-                slug:   "medias",
+                title: 'Location',
+                slug: '/location',
                 subsections: [],
             },
             {
-                title:  "Location",
-                slug:   "location",
-                subsections: [
-                    "Salle de cinéma",
-                    "Salle de montage",
-                    "Séances scolaires",
-                ],
-            },
-            {
-                title:  "Archives",
-                slug:   "archives",
+                title: 'Médias',
+                slug: '/media',
                 subsections: [],
             },
         ]

@@ -1,6 +1,9 @@
 <template>
     <div
-            class="v-app-calendar-button-date"
+            class="v-app-calendar-button-date app-flex app-flex--align_center app-flex--column"
+            :class="{
+              'is-active': isActive
+            }"
     >
         <div
             class="v-app-calendar-button-date__button"
@@ -9,6 +12,7 @@
             <div class="date-day-day">{{['di', 'lu', 'ma', 'me', 'je', 've', 'sa'][date.getDay()]}}</div>
             <div class="date-day-number">{{date.getDate()}}</div>
         </div>
+      <div class="v-app-calendar-button-date__triangle" ></div>
     </div>
 </template>
 
@@ -21,6 +25,7 @@ import { defineProps } from 'vue'
 
 const props = defineProps<{
     date: Date
+    isActive: boolean
 }>()
 </script>
 
@@ -45,12 +50,30 @@ const props = defineProps<{
     font-size: .5rem;
     line-height: 1em;
     border-radius: 100%;
+    margin-bottom: var(--app-flex--gap_half);
 
     &:hover {
+      background: var(--lc-color--orange);
+    }
+
+    .is-active & {
         background: var(--lc-color--orange);
     }
 }
 
+.v-app-calendar-button-date__triangle {
+  width: 0;
+  height: 0;
+  border-left: .35rem solid transparent;
+  border-right: .35rem solid transparent;
+  border-bottom: .35rem solid;
+  border-bottom-color: transparent;
+  position: relative;
+
+  .is-active & {
+    border-bottom-color: var(--lc-color--blue-light);
+  }
+}
 .date-day-day {
     text-transform: uppercase;
     padding-bottom: .15rem;

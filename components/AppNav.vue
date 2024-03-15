@@ -52,6 +52,7 @@ const currentPageInfoOverSlug = ref('')
 
 <style lang="scss" scoped >
 .v-app-nav {
+  user-select: none;
     border-radius: var(--lc-header-radius);
     color: white;
     background: rgba(40, 40, 40, 0.9);

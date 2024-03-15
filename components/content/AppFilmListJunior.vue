@@ -2,7 +2,13 @@
     <section
         class="v-app-film-list-junior"
     >
-
+        <template
+            v-if="data"
+        >
+            <AppFilmList
+                :ticket-film-array="data.filmlist"
+            />
+        </template>
     </section>
 </template>
 
@@ -11,11 +17,14 @@
 
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import {defineProps, type Ref, type UnwrapRef} from 'vue'
+import {apiGetFilmList, type IFilmListResponse} from "~/_utils/apiTicket";
 
-const props = defineProps<{
-    message?: string
-}>()
+const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+
+onMounted(async () => {
+    data.value = await apiGetFilmList()
+})
 </script>
 
 
@@ -24,7 +33,5 @@ const props = defineProps<{
 
 <style lang="scss" scoped >
 .v-app-film-list-junior {
-    color: red;
-    border: solid white 1px;
 }
 </style>

@@ -96,7 +96,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 
 .v-app-film-vignette__subtitle,
 .v-app-film-vignette__details {
-    margin: 0;
+    margin: var(--app-flex--gap_half) 0;
     flex-basis: calc(100% / 12 * 12);
 }
 
