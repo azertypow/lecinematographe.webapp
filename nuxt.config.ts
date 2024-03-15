@@ -6,6 +6,11 @@ export default defineNuxtConfig({
         '~/assets/style/_main.scss'
     ],
 
+
+    app: {
+        baseURL: '/lecinematographe.webapp/',
+    },
+
     ssr: false,
     modules: ["@nuxt/content"]
 })
