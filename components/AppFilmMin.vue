@@ -4,7 +4,11 @@
         :style="{
             backgroundImage: ``,
         }"
+        ref="container"
     >
+        <div class="v-app-button-shine__container__shine"
+             ref="shineElement"
+        ></div>
         <div class="v-app-film-min__cover__text app-flex app-flex--column app-flex--justify_space-between app-flex--nowrap">
 
             <div class="v-app-film-min__title"
@@ -35,19 +39,37 @@
 
 
 <script setup lang="ts">
-import {defineProps} from 'vue'
+import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import type {ITicketFilm} from "~/_utils/apiTicket";
 import {average} from 'color.js'
+import {onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
 
 const props = defineProps<{
     ticketFilm: ITicketFilm
 }>()
 
+onMounted(()=> {
+    nextTick(() => {
+
+        if( ! container.value)      return
+        if( ! shineElement.value)   return
+
+        container.value.addEventListener('mousemove', (ev)=> {onMouseOver(ev, container.value!, shineElement.value! )})
+        container.value.addEventListener('mouseleave', (ev)=> {onMouseLeave(ev, container.value!, shineElement.value!)})
+    })
+})
+
+// background
 const colorBG = ref([0, 0, 0])
 
 async function setGradientColor(imageElement: HTMLImageElement) {
     colorBG.value = (await average(imageElement, {format: 'array'}) as [])
 }
+
+// shine effect
+const container: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
+const shineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
+
 </script>
 
 
@@ -107,5 +129,16 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     height: 100%;
     object-fit: cover;
     z-index: -1;
+}
+
+.v-app-button-shine__container__shine {
+    background: linear-gradient(0deg, rgba(45,45,45,0) 0%, rgba(45,45,45,0) 80%);
+    transition: all 0.2s ease-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
 }
 </style>
