@@ -11,14 +11,14 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
                 subsections: [],
             },
             {
-                title: 'Infos',
-                slug: '/infos',
-                subsections: [],
-            },
-            {
                 title: 'Jeune Public',
                 slug: '/jeune-public',
-                subsections: [],
+                subsections: [
+                    'bonjour',
+                    'hello',
+                    'hey',
+                    'guttentag',
+                ],
             },
             {
                 title: 'Location',
@@ -28,6 +28,11 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
             {
                 title: 'Médias',
                 slug: '/media',
+                subsections: [],
+            },
+            {
+                title: 'Infos',
+                slug: '/infos',
                 subsections: [],
             },
         ]

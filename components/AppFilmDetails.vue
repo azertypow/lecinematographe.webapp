@@ -24,7 +24,7 @@
 
         <div class="v-app-film-details__details"
         >
-            <div class="v-app-film-details__details__header app-flex app-flex--align_center app-flex--gap_regular app-flex--nowrap">
+            <div class="v-app-film-details__details__header app-flex app-flex--nowrap">
                 <div class="v-app-film-details__details__header__icon">
                     <img
                         alt="icon séance"
@@ -33,11 +33,11 @@
                 </div>
                 <h3 class="v-app-film-details__details__header__title">{{ticketFilm.tx_titre_lng}}</h3>
             </div>
-            <div>Un film de {{ticketFilm.tx_realisateur}}</div>
+            <div class="v-app-film-details__details__author">Un film de {{ticketFilm.tx_realisateur}}</div>
             <div class="v-app-film-details__details__info">
                 <div class="v-app-film-details__details__info__item">
-                    <div>Date (départ)</div>
-                    <div>{{ticketFilm.da_depart}}</div>
+                    <div>Date</div>
+                    <div>{{ticketFilm.tx_annee}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Pays</div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Acteur·ice·x·s</div>
-                    <div>{{ticketFilm.tx_acteur}}</div>
+                    <div>{{ticketFilm.tx_acteur.replace(/\s*Avec/, '')}}</div>
                 </div>
             </div>
         </div>
@@ -66,7 +66,8 @@
                 <div class="v-app-film-details__details__info__item"
                      v-for="nextSeance of nextSeances.seance"
                 >
-                    <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsDay) }}</div>
+                    <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
+                    <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsHourOnly) }}</div>
                 </div>
             </div>
         </div>
@@ -99,6 +100,18 @@ const dateOptionsDay: Intl.DateTimeFormatOptions = {
     weekday: 'long', // Jour de la semaine au format long (ex: "lundi")
     day: 'numeric', // Jour du mois au format numérique (ex: 13)
     month: 'long', // Mois au format long (ex: "janvier")
+    hour: 'numeric', // Heure au format numérique (ex: 20)
+    minute: 'numeric', // Minute au format numérique (ex: 30)
+    hour12: false // Format de l'heure en 24 heures (ex: 20h30)
+}
+
+const dateOptionsDayOnly: Intl.DateTimeFormatOptions = {
+    weekday: 'long', // Jour de la semaine au format long (ex: "lundi")
+    day: 'numeric', // Jour du mois au format numérique (ex: 13)
+    month: 'long', // Mois au format long (ex: "janvier")
+}
+
+const dateOptionsHourOnly: Intl.DateTimeFormatOptions = {
     hour: 'numeric', // Heure au format numérique (ex: 20)
     minute: 'numeric', // Minute au format numérique (ex: 30)
     hour12: false // Format de l'heure en 24 heures (ex: 20h30)
@@ -183,10 +196,12 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 }
 
 .v-app-film-details__details__header {
-    border-bottom: solid 1px white;
-    padding-top: 2rem;
+    border-bottom: dotted 2px white;
+    border-top: dotted 2px white;
+    margin-top: 2rem;
     box-sizing: border-box;
-    max-width: 30em;
+    padding-top: .25em;
+    padding-bottom: .25em;
 }
 
 .v-app-film-details__details__header__title {
@@ -195,16 +210,20 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     margin: 0;
 }
 
+.v-app-film-details__details__author {
+    margin-top: .65rem;
+    padding-left: 2rem;
+}
+
 .v-app-film-details__details__info {
     padding-left: 2rem;
     padding-top: .5rem;
     box-sizing: border-box;
-    max-width: 30em;
 }
 
 .v-app-film-details__details__info__item {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1.5fr 2fr);
 }
 
 .v-app-film-details__cover {
@@ -213,7 +232,12 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 }
 
 .v-app-film-details__details__header__icon {
+    padding-top: .25rem;
+    width: 2rem;
+
     img {
+        height: .75rem;
+        width: auto;
         display: block;
     }
 }

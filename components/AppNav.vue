@@ -79,13 +79,15 @@ a {
 .v-app-nav__pages-link {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 2fr;
     justify-items: start;
     align-items: start;
 }
 
 .v-app-nav__pages-link__page-title {
     //padding-bottom: 1rem;
+    text-transform: uppercase;
+    margin-top: 1rem;
 }
 
 .v-app-nav__pages-link__page-title__value {
@@ -93,6 +95,7 @@ a {
     padding: .25rem 1rem;
     border-radius: 1rem;
      font-size: .75rem;
+    border: none;
 
     &:hover {
         background: rgba(0, 0, 0, .25);
@@ -109,18 +112,6 @@ a {
 
 .v-app-nav__pages-link__page-subtitle__values {
     display: block;
-
-    &:hover {
-        &:before {
-            position: absolute;
-            content: '>';
-            transform: translateX(-100%);
-        }
-        &:after {
-            position: absolute;
-            content: '<';
-        }
-    }
 }
 
 </style>
