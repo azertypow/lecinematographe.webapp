@@ -4,10 +4,10 @@
         :style="{
             backgroundImage: ``,
         }"
-        ref="container"
+        ref="appFilmRefContainer"
     >
         <div class="v-app-button-shine__container__shine"
-             ref="shineElement"
+             ref="appFilmRefShineElement"
         ></div>
         <div class="v-app-film-min__cover__text app-flex app-flex--column app-flex--justify_space-between app-flex--nowrap">
 
@@ -42,7 +42,7 @@
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import type {ITicketFilm} from "~/_utils/apiTicket";
 import {average} from 'color.js'
-import {onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
+import {type ICardEffectOption, onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
 
 const props = defineProps<{
     ticketFilm: ITicketFilm
@@ -51,11 +51,23 @@ const props = defineProps<{
 onMounted(()=> {
     nextTick(() => {
 
-        if( ! container.value)      return
-        if( ! shineElement.value)   return
+        if( ! appFilmRefContainer.value)      return
+        if( ! appFilmRefShineElement.value)   return
 
-        container.value.addEventListener('mousemove', (ev)=> {onMouseOver(ev, container.value!, shineElement.value! )})
-        container.value.addEventListener('mouseleave', (ev)=> {onMouseLeave(ev, container.value!, shineElement.value!)})
+        const mouseOverOptions: ICardEffectOption = {
+            scale: 1.02,
+            perspectiveValue: 100,
+            perspectiveUnit: 'vh',
+            color: {
+                r: 250,
+                g: 250,
+                b: 250,
+            },
+            opacityIntensity: 0
+        }
+
+        appFilmRefContainer.value.addEventListener('mousemove', (ev)=> {onMouseOver(ev, appFilmRefContainer.value!, appFilmRefShineElement.value!   , mouseOverOptions)})
+        appFilmRefContainer.value.addEventListener('mouseleave', (ev)=> {onMouseLeave(ev, appFilmRefContainer.value!, appFilmRefShineElement.value!)})
     })
 })
 
@@ -67,8 +79,8 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 }
 
 // shine effect
-const container: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
-const shineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
+const appFilmRefContainer: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
+const appFilmRefShineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
 
 </script>
 
@@ -84,6 +96,7 @@ const shineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
     position: relative;
     border-radius: 5px;
     overflow: hidden;
+    transition: all 1s ease-out, filter 0.75s ease-out;
 }
 
 .v-app-film-min__title {

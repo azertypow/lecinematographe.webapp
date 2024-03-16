@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import {onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
+import {type ICardEffectOption, onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
 
 const props = defineProps<{
     message?: string
@@ -37,8 +37,20 @@ onMounted(()=> {
         if( ! container.value)      return
         if( ! shineElement.value)   return
 
-        container.value.addEventListener('mousemove', (ev)=> {onMouseOver(ev, container.value!, shineElement.value! )})
-        container.value.addEventListener('mouseleave', (ev)=> {onMouseLeave(ev, container.value!, shineElement.value!)})
+        const mouseOverOptions: ICardEffectOption = {
+            scale: 1.08,
+            perspectiveValue: 100,
+            perspectiveUnit: 'vh',
+            color: {
+                r: 40,
+                g: 40,
+                b: 40,
+            },
+            opacityIntensity: .5,
+        }
+
+        container.value.addEventListener('mousemove', (ev)=> {onMouseOver(ev, container.value!, shineElement.value!, mouseOverOptions)})
+        container.value.addEventListener('mouseleave', (ev)=> {onMouseLeave(ev, container.value!, shineElement.value!,  mouseOverOptions)})
     })
 })
 </script>

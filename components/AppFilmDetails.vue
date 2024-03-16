@@ -223,7 +223,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 
 .v-app-film-details__details__info__item {
     display: grid;
-    grid-template-columns: repeat(2, 1.5fr 2fr);
+    grid-template-columns: 1.5fr 2fr;
 }
 
 .v-app-film-details__cover {

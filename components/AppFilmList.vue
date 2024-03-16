@@ -58,5 +58,7 @@ const props = withDefaults(defineProps<{
 .v-app-film-list__films-container {
     width: 100%;
     overflow: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 </style>
