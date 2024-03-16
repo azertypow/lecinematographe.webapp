@@ -67,7 +67,7 @@ onMounted(()=> {
         }
 
         appFilmRefContainer.value.addEventListener('mousemove', (ev)=> {onMouseOver(ev, appFilmRefContainer.value!, appFilmRefShineElement.value!   , mouseOverOptions)})
-        appFilmRefContainer.value.addEventListener('mouseleave', (ev)=> {onMouseLeave(ev, appFilmRefContainer.value!, appFilmRefShineElement.value!)})
+        appFilmRefContainer.value.addEventListener('mouseleave', (ev)=> {onMouseLeave(ev, appFilmRefContainer.value!, appFilmRefShineElement.value!, mouseOverOptions)})
     })
 })
 
