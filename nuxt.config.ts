@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
 
     app: {
-        baseURL: '/',
+        baseURL: '/lecinematographe.webapp/',
     },
 
     ssr: false,
