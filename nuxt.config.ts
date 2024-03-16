@@ -6,9 +6,18 @@ export default defineNuxtConfig({
         '~/assets/style/_main.scss'
     ],
 
+    // nitro: {
+    //     static: true,
+    // },
+
+    content: {
+        experimental: {
+            clientDB: true,
+        },
+    },
 
     app: {
-        baseURL: '/lecinematographe.webapp/',
+        baseURL: '/',
     },
 
     ssr: false,
