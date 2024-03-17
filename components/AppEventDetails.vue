@@ -15,7 +15,7 @@
             <div>
                 <p>Au sein des vastes horizons de la cinématographie, la nuit n’est pas simplement une toile de fond, mais une protagoniste à part entière, offrant des nuances inexplorées de mystère, de mélancolie et de métamorphose. Ce cycle de cinéma, intitulé « La Nuit à l’Écran », propose une exploration riche et pluridimensionnelle des représentations nocturnes à travers l’histoire du cinéma. La nuit, avec sa capacité à brouiller les frontières entre réalité et imaginaire, offre aux cinéastes un espace unique de créativité. Elle est le reflet de nos peurs les plus profondes, de nos désirs inavoués et de ces moments d’introspection que le tumulte diurne ne permet pas. À travers une sélection rigoureuse de films, ce cycle invite les spectateurs à plonger dans des univers où la nuit révèle, cache, transforme et dévoile.</p>
             </div>
-            <button>plus d'info</button>
+            <app-button-shine>plus d'infos</app-button-shine>
         </div>
 
     </section>
@@ -52,6 +52,7 @@ img {
     background: var(--lc-color--blue-light);
     border-radius: var(--lc-radius);
     padding-top: 4em;
+    padding-bottom: 4em;
 }
 
 .v-app-event-details__date {
