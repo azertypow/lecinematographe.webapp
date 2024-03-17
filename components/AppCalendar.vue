@@ -22,7 +22,15 @@
             </div>
 
             <div
+                v-if="filmsOnSelectedDate === null"
+                class="v-app-calendar__film-list">
+                chargement…
+            </div>
+
+            <div
+                v-else
                 class="v-app-calendar__film-list"
+                v-for="film of filmsOnSelectedDate.filmlist"
             >
                 <div
                     class="v-app-calendar__film-list__title"
@@ -64,6 +72,7 @@
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
+import {apiGetListOfFilmByDate, type IFilmListResponse} from "~/_utils/apiTicket";
 
 const props = defineProps<{
 }>()
@@ -72,15 +81,19 @@ const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
 
 const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
+const filmsOnSelectedDate: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+
 onMounted(() => {
     setDateRange(new Date())
 })
 
-function setDateRange(date: Date) {
+async function setDateRange(date: Date) {
     const dateRage = getDatesRange(date, 7)
 
     dateRange.value = dateRage
     selectedDate.value = dateRage[0]
+
+    filmsOnSelectedDate.value = await apiGetListOfFilmByDate(selectedDate.value)
 }
 
 </script>
