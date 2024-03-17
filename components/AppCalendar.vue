@@ -41,8 +41,7 @@
                 class="v-app-calendar__film-list"
                 v-for="film of filmsOnSelectedDate.filmlist"
             >
-                <div
-                    class="v-app-calendar__film-list__title"
+                <div class="v-app-calendar__film-list__title"
                 >
                     {{selectedDate.toLocaleString('fr-FR', {
                         weekday: 'long',
@@ -51,7 +50,8 @@
                         year: 'numeric',
                     })}}
                 </div>
-                <div>
+                <div class="v-app-calendar__film-list__info"
+                >
                     <AppCalendarListItem
                         :title="film.tx_titre_lng"
                         :cover-url="film.ur_cover"
@@ -146,5 +146,9 @@ async function updateSelectedDate(date: Date) {
     text-align: center;
     text-transform: uppercase;
     padding-bottom: .5em;
+}
+
+.v-app-calendar__film-list__info {
+    text-transform: uppercase;
 }
 </style>

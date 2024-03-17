@@ -2,8 +2,8 @@
     <section
         class="v-app-event-details app-flex app-flex--justify_center"
     >
-        <h3 class="v-app-event-details__date">DU 4 AVRIL AU 11 AVRIL 2024</h3>
-        <h1 class="v-app-event-details__title">OUVERTURE!</h1>
+        <h3 class="v-app-event-details__date">DU 20 MARS 2024</h3>
+        <h1 class="v-app-event-details__title">OUVERTURE&nbsp;!</h1>
         <div class="v-app-event-details__cover">
             <img class="v-app-event-details__cover__img"
                  src="/image_ouverture_cinematographe.jpeg"
@@ -11,12 +11,12 @@
             />
         </div>
 
-        <div class="v-app-event-details__details">
-            <div>
-                <p>Au sein des vastes horizons de la cinématographie, la nuit n’est pas simplement une toile de fond, mais une protagoniste à part entière, offrant des nuances inexplorées de mystère, de mélancolie et de métamorphose. Ce cycle de cinéma, intitulé « La Nuit à l’Écran », propose une exploration riche et pluridimensionnelle des représentations nocturnes à travers l’histoire du cinéma. La nuit, avec sa capacité à brouiller les frontières entre réalité et imaginaire, offre aux cinéastes un espace unique de créativité. Elle est le reflet de nos peurs les plus profondes, de nos désirs inavoués et de ces moments d’introspection que le tumulte diurne ne permet pas. À travers une sélection rigoureuse de films, ce cycle invite les spectateurs à plonger dans des univers où la nuit révèle, cache, transforme et dévoile.</p>
-            </div>
-            <app-button-shine>plus d'infos</app-button-shine>
-        </div>
+<!--        <div class="v-app-event-details__details">-->
+<!--            <div>-->
+<!--                <p>Au sein des vastes horizons de la cinématographie, la nuit n’est pas simplement une toile de fond, mais une protagoniste à part entière, offrant des nuances inexplorées de mystère, de mélancolie et de métamorphose. Ce cycle de cinéma, intitulé « La Nuit à l’Écran », propose une exploration riche et pluridimensionnelle des représentations nocturnes à travers l’histoire du cinéma. La nuit, avec sa capacité à brouiller les frontières entre réalité et imaginaire, offre aux cinéastes un espace unique de créativité. Elle est le reflet de nos peurs les plus profondes, de nos désirs inavoués et de ces moments d’introspection que le tumulte diurne ne permet pas. À travers une sélection rigoureuse de films, ce cycle invite les spectateurs à plonger dans des univers où la nuit révèle, cache, transforme et dévoile.</p>-->
+<!--            </div>-->
+<!--            <app-button-shine>plus d'infos</app-button-shine>-->
+<!--        </div>-->
 
     </section>
 </template>
@@ -66,6 +66,10 @@ img {
 .v-app-event-details__details {
     margin: 0;
     flex-basis: calc(100% / 12 * 10);
+}
+
+.v-app-event-details__title {
+    margin-bottom: 1rem;
 }
 
 .v-app-event-details__cover {
