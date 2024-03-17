@@ -6,7 +6,7 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
     return {
         pages: [
             {
-                title: 'Événements',
+                title: 'Évènements',
                 slug: '/evenements',
                 subsections: [
                     "65+",

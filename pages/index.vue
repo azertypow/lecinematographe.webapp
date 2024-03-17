@@ -129,4 +129,16 @@ async function loadSpecialEventsInFilmList(): Promise<any[] | { txt: string; fil
 .v-index__section--calendar {
   grid-column: 5 / span 16;
 }
+
+.v-index__section--fil-event {
+    width: min(var(--lc-max-width--lg), 100%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.v-index__section--film-details {
+    width: min(var(--lc-max-width--lg), 100%);
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>

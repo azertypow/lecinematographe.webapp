@@ -6,7 +6,7 @@
         <h1 class="v-app-event-details__title">OUVERTURE!</h1>
         <div class="v-app-event-details__cover">
             <img class="v-app-event-details__cover__img"
-                 src="https://source.unsplash.com/random"
+                 src="/image_ouverture_cinematographe.jpeg"
                  alt="image couverture évènement"
             />
         </div>
@@ -74,7 +74,7 @@ img {
 .v-app-event-details__cover__img {
     display: block;
     width: 100%;
-    height: calc(100vh - 5rem );
+    height: auto;
     object-fit: cover;
 }
 
