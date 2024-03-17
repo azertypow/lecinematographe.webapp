@@ -26,6 +26,12 @@ onMounted(() => {
 <style lang="scss">
 .v-slug {
 
+    h1, h2, h3, h4, h5, h6 {
+        a {
+            border-bottom: none;
+        }
+    }
+
     > div {
         display: flex;
         align-items: center;
@@ -39,29 +45,6 @@ onMounted(() => {
             width: 100%;
         }
     }
-
-
-    //--slug-left-padding-coll: 6;
-    //--slug-right-padding-coll: 2;
-    //
-    //box-sizing: border-box;
-    //padding-left: calc(100% / 24 * var(--slug-left-padding-coll));
-    //padding-right: calc(100% / 24 * var(--slug-right-padding-coll));
-
-    //h2 {
-    //    position: relative;
-    //    transform: translate(-100%, 100%);
-    //    box-sizing: border-box;
-    //    padding-left: var(--app-flex--gap_half);
-    //    width: calc(100% / (24 - var(--slug-left-padding-coll) - var(--slug-right-padding-coll)) * var(--slug-left-padding-coll));
-    //    margin: 0;
-    //    font-size: .85rem;
-    //    //top: .5rem;
-    //
-    //    + p {
-    //        margin-top: 0;
-    //    }
-    //}
 
     h3 {
         text-transform: uppercase;

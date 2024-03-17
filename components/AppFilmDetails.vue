@@ -33,7 +33,7 @@
                 </div>
                 <h3 class="v-app-film-details__details__header__title">{{ticketFilm.tx_titre_lng}}</h3>
             </div>
-            <div class="v-app-film-details__details__author">Un film de {{ticketFilm.tx_realisateur}}</div>
+            <div class="v-app-film-details__details__author">Un film {{ticketFilm.tx_realisateur.replace('D', 'd')}}</div>
             <div class="v-app-film-details__details__info">
                 <div class="v-app-film-details__details__info__item">
                     <div>Date</div>
@@ -46,6 +46,26 @@
                 <div class="v-app-film-details__details__info__item">
                     <div>Acteur·ice·x·s</div>
                     <div>{{ticketFilm.tx_acteur.replace(/\s*Avec/, '')}}</div>
+                </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Titre original</div>
+                    <div>{{ticketFilm.tx_titre_ori}}</div>
+                </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Réalisateur·ice·x·s</div>
+                    <div>{{ticketFilm.tx_realisateur.replace('De', '')}}</div>
+                </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Durée</div>
+                    <div>{{ticketFilm.tx_duree}}</div>
+                </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Age</div>
+                    <div>{{ticketFilm.tx_age}}</div>
+                </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Distributeur</div>
+                    <div>{{ticketFilm.tx_distributeur}}</div>
                 </div>
             </div>
         </div>
@@ -67,7 +87,9 @@
                      v-for="nextSeance of nextSeances.seance"
                 >
                     <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
-                    <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsHourOnly) }}</div>
+                    <div>{{ formatDateFromDate( new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`) ) }}</div>
+                    <img class="v-app-film-details__details__info__item__ticket"
+                         alt="prendre un billet" src="../assets/icons/ticket.svg" />
                 </div>
             </div>
         </div>
@@ -87,6 +109,7 @@ import {
     type ITicketFilm
 } from "~/_utils/apiTicket";
 import {average} from "color.js";
+import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 
 const props = defineProps<{
     ticketFilm: ITicketFilm
@@ -111,12 +134,6 @@ const dateOptionsDayOnly: Intl.DateTimeFormatOptions = {
     month: 'long', // Mois au format long (ex: "janvier")
 }
 
-const dateOptionsHourOnly: Intl.DateTimeFormatOptions = {
-    hour: 'numeric', // Heure au format numérique (ex: 20)
-    minute: 'numeric', // Minute au format numérique (ex: 30)
-    hour12: false // Format de l'heure en 24 heures (ex: 20h30)
-}
-
 onMounted(async () => {
     nextSeances.value = await apiGetSeancesOfFilm(props.ticketFilm.id_film)
     linksOfFilm.value = await apiGetUrlOfFilm(props.ticketFilm.id_film)
@@ -139,7 +156,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     position: relative;
     background: black;
     border-radius: var(--lc-radius);
-    padding: 4em .5em .5em;
+    padding: 4em .5em 4em;
     transform: translate3d(0, 0, 0);
     overflow: hidden;
 }
@@ -239,6 +256,37 @@ async function setGradientColor(imageElement: HTMLImageElement) {
         height: .75rem;
         width: auto;
         display: block;
+    }
+}
+
+.v-app-film-details__details__info__item {
+    position: relative;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+}
+
+.v-app-film-details__details__info__item__ticket {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 1rem;
+}
+</style>
+
+<style>
+.v-app-film-details__details {
+    pre {
+        all: unset;
+        font-style: oblique;
+        padding-left: .5rem;
+        border-left: solid 1px;
+        display: block;
+
+        + p {
+            margin-top: 0;
+            font-size: .5rem;
+        }
     }
 }
 </style>

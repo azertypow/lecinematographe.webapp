@@ -8,22 +8,26 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
             {
                 title: 'Événements',
                 slug: '/evenements',
-                subsections: [],
+                subsections: [
+                    "65+",
+                    "Cycle estival",
+                    "Cours publics",
+                    "Festivals",
+                ],
             },
             {
                 title: 'Jeune Public',
                 slug: '/jeune-public',
-                subsections: [
-                    'bonjour',
-                    'hello',
-                    'hey',
-                    'guttentag',
-                ],
+                subsections: [],
             },
             {
                 title: 'Location',
                 slug: '/location',
-                subsections: [],
+                subsections: [
+                    "Salle de cinema",
+                    "Salle de montage",
+                    "Séances scolaires",
+                ],
             },
             {
                 title: 'Médias',
@@ -33,7 +37,14 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
             {
                 title: 'Infos',
                 slug: '/infos',
-                subsections: [],
+                subsections: [
+                    "Tarifs",
+                    "Accès",
+                    "Buvette",
+                    "Équipe",
+                    "Histoire",
+                    "Soutiens",
+                ],
             },
         ]
     }

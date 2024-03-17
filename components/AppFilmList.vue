@@ -43,6 +43,30 @@ const props = withDefaults(defineProps<{
     width: 100%;
     overflow: hidden;
     position: relative;
+
+    &:before {
+        z-index: 10;
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        top:0;
+        width: var(--app-gutter_regular);
+        height: 100%;
+        background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    }
+
+    &:after {
+        z-index: 10;
+        content: "";
+        display: block;
+        position: absolute;
+        right: 0;
+        top:0;
+        width: var(--app-gutter_regular);
+        height: 100%;
+        background: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    }
 }
 
 .v-app-film-list__title-container {
@@ -60,5 +84,8 @@ const props = withDefaults(defineProps<{
     overflow: auto;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    position: relative;
+    padding-left: var(--app-gutter_regular);
+    box-sizing: border-box;
 }
 </style>

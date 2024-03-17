@@ -73,10 +73,7 @@ const menuIsOpen = useMenuIsOpen()
 }
 
 .v-app-header__logo-container {
-    &:before,
-    &:after {
-        content: none;
-    }
+    border: none;
 }
 
 .v-app-header__icon {

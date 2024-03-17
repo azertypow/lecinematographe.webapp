@@ -33,14 +33,6 @@
                     <AppCalendar/>
                 </div>
 
-                <div class="v-index__section v-index__section--film-details app-flex app-flex--column app-flex app-flex--gap_regular">
-                    <div v-for="filmData of data.filmlist">
-                        <AppFilmDetails
-                            :ticket-film="filmData"
-                        />
-                    </div>
-                </div>
-
                 <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--gap_regular">
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
@@ -54,6 +46,14 @@
 
                 <div class="v-index__section v-index__section--fil-event app-flex app-grid--column-1 app-grid--gap_regular">
                     <AppEventDetails/>
+                </div>
+
+                <div class="v-index__section v-index__section--film-details app-flex app-flex--column app-flex app-flex--gap_regular">
+                    <div v-for="filmData of data.filmlist">
+                        <AppFilmDetails
+                            :ticket-film="filmData"
+                        />
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
         <div class="v-app-event-details__cover">
             <img class="v-app-event-details__cover__img"
                  src="https://source.unsplash.com/random"
-                 alt="image couverture événement"
+                 alt="image couverture évènement"
             />
         </div>
 
