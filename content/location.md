@@ -2,7 +2,7 @@
 
 ## Salle de cinema
 
-::AppMap
+:AppContentMap
 
 Location de la salle pour une projection ou un événement public qui pourrait s’intégrer à la programmation du Cinématographe : écrivez-nous à programmation@lecinematographe.ch.
 
