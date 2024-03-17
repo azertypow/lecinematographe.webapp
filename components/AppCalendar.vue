@@ -12,7 +12,7 @@
                     <button class="v-app-calendar__nav-button v-app-calendar__nav-button--left"><<</button>
                         <div v-for="date of dateRange">
                             <AppCalendarButtonDate
-                                @click="selectedDate = date"
+                                @click="updateSelectedDate(date)"
                                 :date="date"
                                 :is-active="selectedDate === date"
                             />
@@ -25,6 +25,15 @@
                 v-if="filmsOnSelectedDate === null"
                 class="v-app-calendar__film-list">
                 chargement…
+            </div>
+
+            <div class="v-app-calendar__film-list"
+                 v-else-if="filmsOnSelectedDate.filmlist?.length < 1"
+                style="display: flex; align-items: center; justify-content: center"
+            >
+                <div>
+                    Pas d'évènements pour cette date :)
+                </div>
             </div>
 
             <div
@@ -44,18 +53,8 @@
                 </div>
                 <div>
                     <AppCalendarListItem
-                        title="titre de film"
-                        en-presence-de="Nathalie Germ"
-                        cover-url="https://source.unsplash.com/random"
-                        hour="10:30"
-                    />
-                </div>
-                <div>
-                    <AppCalendarListItem
-                        title="autre film tres long pour voir comment ceci s'affiche sur la grille"
-                        en-presence-de="Marc Dujeans"
-                        cover-url="https://source.unsplash.com/random"
-                        hour="15:00"
+                        :title="film.tx_titre_lng"
+                        :cover-url="film.ur_cover"
                     />
                 </div>
             </div>
@@ -91,9 +90,13 @@ async function setDateRange(date: Date) {
     const dateRage = getDatesRange(date, 7)
 
     dateRange.value = dateRage
-    selectedDate.value = dateRage[0]
 
-    filmsOnSelectedDate.value = await apiGetListOfFilmByDate(selectedDate.value)
+    updateSelectedDate( dateRage[0] )
+}
+
+async function updateSelectedDate(date: Date) {
+    selectedDate.value = date
+    filmsOnSelectedDate.value = await apiGetListOfFilmByDate(date)
 }
 
 </script>
@@ -127,18 +130,21 @@ async function setDateRange(date: Date) {
 .v-app-calendar__film-list {
     box-sizing: border-box;
     border-radius: var(--lc-radius);
-    padding: var(--app-gutter_regular);
+    padding: .5rem var(--app-gutter_regular);
     background: var(--lc-color--blue-light);
     color: white;
     width: min(100%, 35em);
+    min-height: 6rem;
 
     > * {
-        box-shadow: 0 1px 0 0 white;
+        border-bottom: dotted 2px;
     }
 }
 
 .v-app-calendar__film-list__title {
     width: 100%;
     text-align: center;
+    text-transform: uppercase;
+    padding-bottom: .5em;
 }
 </style>

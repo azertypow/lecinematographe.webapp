@@ -45,5 +45,7 @@ const props = defineProps<{
     aspect-ratio: 2/1;
     object-fit: cover;
 }
-.v-app-calendar-list-item__title {}
+.v-app-calendar-list-item__title {
+    margin: 0;
+}
 </style>
