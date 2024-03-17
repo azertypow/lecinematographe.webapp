@@ -67,11 +67,6 @@
                         <br>All. Ernest-Ansermet 3
                         <br>1003 Lausanne
                     </p>
-                    <p>
-                        <a href="mailto:contact@lecinematographe.ch"
-                           target="_blank"
-                        >contact@lecinematographe.ch</a>
-                    </p>
 
                 </div>
             </div>
@@ -82,6 +77,11 @@
                 <p>
                     <nuxt-link href="/condition-generales">Conditions générales</nuxt-link>
                     <br><nuxt-link href="/politique-de-confidentialite" >Politique de confidentialité</nuxt-link>
+                </p>
+                <p>
+                    <a href="mailto:contact@lecinematographe.ch"
+                       target="_blank"
+                    >contact@lecinematographe.ch</a>
                 </p>
             </div>
 
