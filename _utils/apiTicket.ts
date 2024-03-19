@@ -18,7 +18,7 @@ async function fetchFromTicketAPI<T>(endPoint: string): Promise<T> {
 }
 
 export async function apiGetFilmList() {
-    return fetchFromTicketAPI<IFilmListResponse>('/ajax/WwtLstFilm.php?WwtVille=1&WwtIsSo=4&WwtTrie=4&WwtLimi=60')
+    return fetchFromTicketAPI<IFilmListResponse>('/ajax/WwtLstFilm.php?WwtIsSo=4&WwtTrie=4&WwtLimi=60')
 
 }
 
@@ -36,7 +36,7 @@ export async function apiGetSeancesOfFilm(filmID: number) {
 }
 
 export async function apiGetListOfFilmByDate(date: Date) {
-    return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtVille=1&WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
+    return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
 }
 
 export interface ISeancesOfFilm {
