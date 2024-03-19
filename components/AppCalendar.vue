@@ -159,6 +159,7 @@ async function updateSelectedDate(date: Date) {
     text-align: center;
     text-transform: uppercase;
     padding-bottom: .5em;
+    box-sizing: border-box;
 }
 
 .v-app-calendar__film-list__info {

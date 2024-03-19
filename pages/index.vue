@@ -33,7 +33,7 @@
                     <AppCalendar/>
                 </div>
 
-                <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--gap_regular">
+                <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--sm--column-1 app-grid--gap_regular">
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
                             :da_depart="filmVignette.seance.tx_date"
@@ -116,10 +116,14 @@ async function loadSpecialEventsInFilmList(): Promise<any[] | ISpecialEventsInFi
 </script>
 
 <style lang="scss" scoped >
+
+@use "@/assets/style/scss-params";
+
 .v-index__section--fil-vignette {
     padding: var(--app-gutter_regular);
     width: min(100%, var(--lc-max-width--lg));
     margin: auto;
+    box-sizing: border-box;
 }
 
 .v-index__section {
@@ -129,10 +133,18 @@ async function loadSpecialEventsInFilmList(): Promise<any[] | ISpecialEventsInFi
 .v-index__section--button-agenda {
     grid-column: 3 / span 2;
     justify-self: center;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        display: none;
+    }
 }
 
 .v-index__section--calendar {
   grid-column: 5 / span 16;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        display: none;
+    }
 }
 
 .v-index__section--fil-event {

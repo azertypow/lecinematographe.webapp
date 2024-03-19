@@ -9,7 +9,7 @@
         </div>
         <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"
         >
-            <div class="app-flex__shrink-0 app-flex__basis-1-4"
+            <div class="app-flex__shrink-0 app-flex__basis-1-4 v-app-film-list__films-container__item"
                  v-for="film of ticketFilmArray">
                 <AppFilmMin
                     :ticket-film="film"
@@ -39,6 +39,8 @@ const props = withDefaults(defineProps<{
 
 
 <style lang="scss" scoped >
+@use "@/assets/style/scss-params";
+
 .v-app-film-list {
     width: 100%;
     overflow: hidden;
@@ -87,5 +89,12 @@ const props = withDefaults(defineProps<{
     position: relative;
     padding-left: var(--app-gutter_regular);
     box-sizing: border-box;
+
+}
+
+.v-app-film-list__films-container__item {
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        flex-basis: calc( 100% / 2 );
+    }
 }
 </style>

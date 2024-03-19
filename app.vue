@@ -11,7 +11,7 @@ useRouter().beforeEach((to, from) => {
 <template>
     <div class="v-app__header-container app-flex app-flex--nowrap app-flex--justify_center"
     >
-        <div class="app-flex__basis-16-24">
+        <div class="app-flex__basis-16-24 v-app__header-container__grid">
             <AppHeader/>
         </div>
     </div>
@@ -37,13 +37,21 @@ useRouter().beforeEach((to, from) => {
         <AppFooter/>
     </div>
 </template>
-<style>
+<style lang="scss">
+@use "@/assets/style/scss-params";
+
 .v-app__header-container {
     position: fixed;
     top: .5rem;
     left: 0;
     width: 100%;
     z-index: 1000;
+}
+
+.v-app__header-container__grid {
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        flex-basis: 100% !important;
+    }
 }
 
 .v-app__nav-container {

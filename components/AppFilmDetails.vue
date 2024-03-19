@@ -154,6 +154,8 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 
 
 <style lang="scss" scoped >
+@use "@/assets/style/scss-params";
+
 .v-app-film-details {
     position: relative;
     background: black;
@@ -161,6 +163,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     padding: 4em .5em 4em;
     transform: translate3d(0, 0, 0);
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .v-app-film-details__background-img {
@@ -232,18 +235,32 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 .v-app-film-details__details__author {
     margin-top: .65rem;
     padding-left: 2rem;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        padding-left: 0;
+    }
 }
 
 .v-app-film-details__details__info {
     padding-left: 2rem;
     padding-top: .5rem;
     box-sizing: border-box;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        padding-left: 0;
+    }
 }
 
 .v-app-film-details__details__info__item {
     display: grid;
     grid-template-columns: 1.5fr 2fr;
     cursor: pointer;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        grid-template-columns: 1fr;
+        line-height: 1.15em;
+        margin-bottom: .5rem;
+    }
 }
 
 .v-app-film-details__cover {
