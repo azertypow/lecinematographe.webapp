@@ -8,9 +8,15 @@
                 :alt="`image de couverture de ${title}`"
                 :src="coverUrl"
             />
-            <h3 class="v-app-calendar-list-item__title"
-            >{{title}}</h3>
-            <p>{{hour}}</p>
+            <div class="app-flex app-flex--justify_space-between app-flex--nowrap app-flex--align_center" style="width: 100%">
+                <h3 class="v-app-calendar-list-item__title"
+                >{{title}}</h3>
+                <p>{{hour.replace(':', 'h').replace('h00', 'h')}}</p>
+            </div>
+            <img class="v-app-calendar-list-item__ticket"
+                 alt="prendre un ticket"
+                src="../assets/icons/ticket.svg"
+            />
         </div>
     </section>
 </template>
@@ -22,6 +28,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import type {ITicketFilm} from "~/_utils/apiTicket";
+import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 
 const props = defineProps<{
     title: string,
@@ -37,14 +44,28 @@ const props = defineProps<{
 
 <style lang="scss" scoped >
 .v-app-calendar-list-item {
+    padding: .25rem 5px;
+    cursor: pointer;
 }
 
 .v-app-calendar-list-item__cover {
     display: block;
-    width: 5em;
-    aspect-ratio: 2/1;
+    height: 3.5rem;
+    aspect-ratio: 3/2;
     object-fit: cover;
 }
+
+.v-app-calendar-list-item__ticket {
+    height: 1rem;
+    transition: transform cubic-bezier(.666, 0, .333, 1) 2s;
+    transform: rotate(0) scale(1);
+
+    .v-app-calendar-list-item:hover & {
+        transform: rotate3d(1, 0, 1, 360deg) scale(1.25);
+        transition: transform cubic-bezier(0, 0, .333, 1) 1s;
+    }
+}
+
 .v-app-calendar-list-item__title {
     margin: 0;
 }

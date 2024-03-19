@@ -2,7 +2,7 @@
     <section
         class="v-app-event-details app-flex app-flex--justify_center"
     >
-        <h3 class="v-app-event-details__date">DU 20 MARS 2024</h3>
+        <h3 class="v-app-event-details__date">20 MARS 2024</h3>
         <h1 class="v-app-event-details__title">OUVERTURE&nbsp;!</h1>
         <div class="v-app-event-details__cover">
             <img class="v-app-event-details__cover__img"

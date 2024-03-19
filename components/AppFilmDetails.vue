@@ -9,7 +9,7 @@
                 backgroundImage: `url(${ticketFilm.ur_cover})`,
             }"
         ></div>
-        <h3 class="v-app-film-details__date">{{ ticketFilm.da_depart }}</h3>
+        <h3 class="v-app-film-details__date">À partir du {{ new Date(ticketFilm.da_depart).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</h3>
         <h1 class="v-app-film-details__title">{{ticketFilm.tx_titre_lng}}</h1>
         <h5 class="v-app-film-details__subtitle">Un film <span class="lc-first-letter-to-lowercase">{{ticketFilm.tx_realisateur}}</span></h5>
         <div class="v-app-film-details__cover">
@@ -84,7 +84,7 @@
             <div class="v-app-film-details__details__info"
             >
                 <div class="v-app-film-details__details__info__item"
-                     v-for="nextSeance of nextSeances.seance"
+                     v-for="nextSeance of nextSeances"
                 >
                     <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
                     <div>{{ formatDateFromDate( new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`) ) }}</div>
@@ -104,7 +104,7 @@
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {
     apiGetSeancesOfFilm,
-    apiGetUrlOfFilm,
+    apiGetUrlOfFilm, type ISeance,
     type ISeancesOfFilm,
     type ITicketFilm
 } from "~/_utils/apiTicket";
@@ -115,7 +115,7 @@ const props = defineProps<{
     ticketFilm: ITicketFilm
 }>()
 
-const nextSeances: Ref<UnwrapRef<null | ISeancesOfFilm>> = ref(null)
+const nextSeances: Ref<UnwrapRef<null | ISeance[]>> = ref(null)
 
 const linksOfFilm: Ref<UnwrapRef<null | {url: {id_film: string, ty_url: string, tx_url: string, ur_url: string}[]}>> = ref(null)
 
@@ -135,7 +135,9 @@ const dateOptionsDayOnly: Intl.DateTimeFormatOptions = {
 }
 
 onMounted(async () => {
-    nextSeances.value = await apiGetSeancesOfFilm(props.ticketFilm.id_film)
+    nextSeances.value = (await apiGetSeancesOfFilm(props.ticketFilm.id_film)).seance.sort((a, b) => {
+        return (new Date(a.id_date).getTime() - new Date(b.id_date).getTime())
+    })
     linksOfFilm.value = await apiGetUrlOfFilm(props.ticketFilm.id_film)
 })
 
@@ -241,6 +243,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 .v-app-film-details__details__info__item {
     display: grid;
     grid-template-columns: 1.5fr 2fr;
+    cursor: pointer;
 }
 
 .v-app-film-details__cover {
@@ -271,6 +274,13 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     top: 0;
     right: 0;
     height: 1rem;
+    transition: transform cubic-bezier(.666, 0, .333, 1) 2s;
+    transform: rotate(0) scale(1);
+
+    .v-app-film-details__details__info__item:hover &{
+        transform: rotate3d(1, 0, 1, 45deg) scale(1.25);
+        transition: transform cubic-bezier(0, .33, 1, 1) 5s;
+    }
 }
 </style>
 

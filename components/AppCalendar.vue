@@ -22,13 +22,13 @@
             </div>
 
             <div
-                v-if="filmsOnSelectedDate === null"
+                v-if="seancesDataOnSelectedDate === null"
                 class="v-app-calendar__film-list">
                 chargement…
             </div>
 
             <div class="v-app-calendar__film-list"
-                 v-else-if="filmsOnSelectedDate.filmlist?.length < 1"
+                 v-else-if="seancesDataOnSelectedDate?.length < 1"
                 style="display: flex; align-items: center; justify-content: center"
             >
                 <div>
@@ -37,25 +37,30 @@
             </div>
 
             <div
-                v-else
-                class="v-app-calendar__film-list"
-                v-for="film of filmsOnSelectedDate.filmlist"
+                    v-else
+                    class="v-app-calendar__film-list"
             >
                 <div class="v-app-calendar__film-list__title"
                 >
-                    {{selectedDate.toLocaleString('fr-FR', {
+                    {{selectedDate?.toLocaleString('fr-FR', {
                         weekday: 'long',
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric',
                     })}}
                 </div>
-                <div class="v-app-calendar__film-list__info"
+                <div
+                    v-for="seanceData of seancesDataOnSelectedDate"
                 >
-                    <AppCalendarListItem
-                        :title="film.tx_titre_lng"
-                        :cover-url="film.ur_cover"
-                    />
+                    <div class="v-app-calendar__film-list__info"
+                         v-for="seance of seanceData.seances"
+                    >
+                        <AppCalendarListItem
+                            :title="seance.tx_titre_lng"
+                            :cover-url="seanceData.filmCover"
+                            :hour="seance.tx_heure"
+                        />
+                    </div>
                 </div>
             </div>
         </template>
@@ -71,7 +76,12 @@
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
-import {apiGetListOfFilmByDate, type IFilmListResponse} from "~/_utils/apiTicket";
+import {
+    apiGetListOfFilmByDate, apiGetListOfFilmSeanceByDate,
+    fetchFromTicketAPI,
+    type IFilmListResponse, type ISeance,
+    type ISeancesOfFilm
+} from "~/_utils/apiTicket";
 
 const props = defineProps<{
 }>()
@@ -80,7 +90,7 @@ const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
 
 const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
-const filmsOnSelectedDate: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const seancesDataOnSelectedDate: Ref<UnwrapRef<null | {seances: ISeance[], filmCover?: string}[]>> = ref(null)
 
 onMounted(() => {
     setDateRange(new Date())
@@ -96,7 +106,7 @@ async function setDateRange(date: Date) {
 
 async function updateSelectedDate(date: Date) {
     selectedDate.value = date
-    filmsOnSelectedDate.value = await apiGetListOfFilmByDate(date)
+    seancesDataOnSelectedDate.value = await apiGetListOfFilmSeanceByDate(date)
 }
 
 </script>

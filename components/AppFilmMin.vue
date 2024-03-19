@@ -6,6 +6,9 @@
         }"
         ref="appFilmRefContainer"
     >
+        <nuxt-link class="v-app-film-min__link"
+            :href="`film/${ticketFilm.id_film}`"
+        />
         <div class="v-app-button-shine__container__shine"
              ref="appFilmRefShineElement"
         ></div>
@@ -97,6 +100,15 @@ const appFilmRefShineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
     border-radius: 5px;
     overflow: hidden;
     transition: all 1s ease-out, filter 0.75s ease-out;
+}
+
+.v-app-film-min__link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
 }
 
 .v-app-film-min__title {
