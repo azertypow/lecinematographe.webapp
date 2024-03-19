@@ -36,8 +36,8 @@
                 <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--gap_regular">
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
-                            :da_depart="filmVignette.filmData.da_depart"
-                            :tx_description="filmVignette.txt"
+                            :da_depart="filmVignette.seance.tx_date"
+                            :tx_description="filmVignette.seance.tx_seance"
                             :tx_titre_lng="filmVignette.filmData.tx_titre_lng"
                             :ur_vignette="filmVignette.filmData.ur_vignette"
                         />
@@ -66,11 +66,11 @@ import {
     apiGetSeancesOfFilm,
     apiGetFilmList,
     type IFilmListResponse,
-    apiGetUrlOfFilm, type ITicketFilm
+    apiGetUrlOfFilm, type ITicketFilm, type ISeance
 } from "~/_utils/apiTicket";
 
 const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
-const specialEventsInFilmList: Ref<UnwrapRef<{ txt: string; filmData: ITicketFilm }[] | null>> = ref(null)
+const specialEventsInFilmList: Ref<UnwrapRef<ISpecialEventsInFilmList[] | null>> = ref(null)
 
 onMounted(async () => {
     data.value = await apiGetFilmList()
@@ -83,12 +83,17 @@ onMounted(async () => {
 
 })
 
-async function loadSpecialEventsInFilmList(): Promise<any[] | { txt: string; filmData: ITicketFilm }[]> {
+interface ISpecialEventsInFilmList {
+    seance: ISeance
+    filmData: ITicketFilm
+}
+
+async function loadSpecialEventsInFilmList(): Promise<any[] | ISpecialEventsInFilmList[]> {
     if(data.value === null) return []
     if(!data.value.filmlist) return []
 
     const toReturn: {
-        txt: string,
+        seance: ISeance,
         filmData: ITicketFilm,
     }[] = []
 
@@ -97,7 +102,7 @@ async function loadSpecialEventsInFilmList(): Promise<any[] | { txt: string; fil
         filmEvent.seance.forEach(seance => {
             if( seance.tx_seance.length < 1 ) return
             toReturn.push({
-                txt: seance.tx_seance,
+                seance: seance,
                 filmData: filmData,
             })
         })

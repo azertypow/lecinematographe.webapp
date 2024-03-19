@@ -23,7 +23,8 @@ export async function apiGetFilmList() {
 }
 
 export async function apiGetFilmById(filmId: number) {
-    return fetchFromTicketAPI<IFilmListResponse>(`/films/list/${filmId}`)
+    return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtFilm=${filmId}`)
+    //https://wkheops.lecinematographe.ch/wkh/ajax/WwtLstFilm.php?WwtFilm=5
     //https://wkheops.lecinematographe.ch/cgi-bin/wwtRest.fcgi?action=filmlist&idfilm=3
 }
 
@@ -36,7 +37,7 @@ export async function apiGetSeancesOfFilm(filmID: number) {
 }
 
 export async function apiGetListOfFilmByDate(date: Date) {
-    return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
+    return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtTrie=5&WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
 }
 
 export interface ISeancesOfFilm {

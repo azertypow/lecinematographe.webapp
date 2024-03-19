@@ -49,7 +49,7 @@
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Titre original</div>
-                    <div>{{ticketFilm.tx_titre_ori}}</div>
+                    <div>{{ticketFilm.tx_titre_lng}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Réalisateur·ice·x·s</div>
