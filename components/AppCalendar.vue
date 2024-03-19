@@ -9,7 +9,7 @@
             <div class="v-app-calendar__dates"
             >
                 <div class="app-flex app-flex__basis-24-24 app-flex--justify_space-between app-flex--align_flex-start app-flex--nowrap">
-                    <button class="v-app-calendar__nav-button v-app-calendar__nav-button--left"><<</button>
+<!--                    <button class="v-app-calendar__nav-button v-app-calendar__nav-button&#45;&#45;left"><<</button>-->
                         <div v-for="date of dateRange">
                             <AppCalendarButtonDate
                                 @click="updateSelectedDate(date)"
@@ -17,7 +17,7 @@
                                 :is-active="selectedDate === date"
                             />
                         </div>
-                    <button class="v-app-calendar__nav-button v-app-calendar__nav-button--right">>></button>
+<!--                    <button class="v-app-calendar__nav-button v-app-calendar__nav-button&#45;&#45;right">>></button>-->
                 </div>
             </div>
 
