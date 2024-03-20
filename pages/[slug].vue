@@ -39,10 +39,15 @@ onMounted(() => {
 
         > * {
             width: min(100%, var(--lc-max-width--reg));
+            box-sizing: border-box;
+            padding-left: var(--app-gutter_regular);
+            padding-right: var(--app-gutter_regular);
         }
 
         > section {
             width: 100%;
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 

@@ -18,7 +18,7 @@ export async function fetchFromTicketAPI<T>(endPoint: string): Promise<T> {
 }
 
 export async function apiGetFilmList() {
-    return fetchFromTicketAPI<IFilmListResponse>('/ajax/WwtLstFilm.php?WwtIsSo=4&WwtTrie=4&WwtLimi=60')
+    return fetchFromTicketAPI<IFilmListResponse>('/ajax/WwtLstFilm.php?WwtTrie=4&WwtLimi=60')
 
 }
 

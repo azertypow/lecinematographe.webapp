@@ -17,29 +17,30 @@
         </div>
         <div v-else
         >
-            <div class="app-grid--column-24">
-                <div class="v-index__section v-index__section--today">
+            <div class="app-grid--column-24 app-flex--sm app-flex--sm--column">
+                <div class="v-index__section v-index__section--today app-flex--sm__basis-1-1">
                     <AppFilmList
                         :ticket-film-array="data.filmlist"
                         :show-title="true"
                     />
                 </div>
-                <div class="v-index__section v-index__section--button-agenda">
-                    <button
-                        class="app-flex__shrink-0 lc-button--is-negative lc-button--is-rounded"
-                    ><img alt="image agenda" style="height: .75rem; width: .75rem" src="../assets/icons/material-date-range.svg"></button>
+                <div class="v-index__section v-index__section--button-agenda app-flex--sm__basis-1-1">
+<!--                    <button-->
+<!--                        class="app-flex__shrink-0 lc-button&#45;&#45;is-negative lc-button&#45;&#45;is-rounded"-->
+<!--                    ><img alt="image agenda" style="height: .75rem; width: .75rem" src="../assets/icons/material-date-range.svg"></button>-->
                 </div>
-                <div class="v-index__section v-index__section--calendar">
+                <div class="v-index__section v-index__section--calendar app-flex--sm__basis-1-1">
                     <AppCalendar/>
                 </div>
 
-                <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--sm--column-1 app-grid--gap_regular">
+                <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--sm--column-1 app-grid--gap_regular app-flex--sm__basis-1-1">
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
                             :da_depart="filmVignette.seance.tx_date"
                             :tx_description="filmVignette.seance.tx_seance"
                             :tx_titre_lng="filmVignette.filmData.tx_titre_lng"
                             :ur_vignette="filmVignette.filmData.ur_vignette"
+                            :film-id="filmVignette.filmData.id_film"
                         />
                     </div>
                 </div>

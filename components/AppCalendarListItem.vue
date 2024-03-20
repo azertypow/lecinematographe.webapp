@@ -2,7 +2,7 @@
     <section
         class="v-app-calendar-list-item"
     >
-        <div class="app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap">
+        <div class="app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap" style="position: relative;">
             <img
                 class="v-app-calendar-list-item__cover"
                 :alt="`image de couverture de ${title}`"
@@ -13,6 +13,7 @@
                 >{{title}}</h3>
                 <p>{{hour.replace(':', 'h').replace('h00', 'h')}}</p>
             </div>
+            <div style="position: absolute; top: 2.3rem; right: -.5em; font-size: .4rem; line-height: 1.25em; transform: rotate(-5deg);">bientôt!</div>
             <img class="v-app-calendar-list-item__ticket"
                  alt="prendre un ticket"
                 src="../assets/icons/ticket.svg"

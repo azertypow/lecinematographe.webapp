@@ -16,10 +16,11 @@
                  @load="(e) => setGradientColor(e.target)"
             />
         </div>
-        <div class="v-app-film-vignette__details"
+        <a class="v-app-film-vignette__details"
+           :href="`film/${filmId}`"
         >
-            <app-button-shine>plus d'infos</app-button-shine>
-        </div>
+            <app-button-shine>détails du film</app-button-shine>
+        </a>
     </section>
 </template>
 
@@ -43,6 +44,7 @@ const props = defineProps<{
     tx_titre_lng: string
     tx_description: string
     ur_vignette: string
+    filmId: string
 }>()
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
@@ -98,6 +100,8 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 .v-app-film-vignette__details {
     margin: var(--app-flex--gap_half) 0;
     flex-basis: calc(100% / 12 * 12);
+    color: inherit;
+    border: none;
 }
 
 .v-app-film-vignette__details__header {

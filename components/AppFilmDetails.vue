@@ -88,8 +88,11 @@
                 >
                     <div>{{ new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
                     <div>{{ formatDateFromDate( new Date(`${nextSeance.id_date} ${nextSeance.tx_heure}`) ) }}</div>
-                    <img class="v-app-film-details__details__info__item__ticket"
-                         alt="prendre un billet" src="../assets/icons/ticket.svg" />
+                    <div>
+                        <div style="position: absolute; top: 1rem; right: 0; font-size: .5rem; line-height: 1.25em; transform: rotate(-5deg);">bientôt!</div>
+                        <img class="v-app-film-details__details__info__item__ticket"
+                             alt="prendre un billet" src="../assets/icons/ticket.svg" />
+                    </div>
                 </div>
             </div>
         </div>

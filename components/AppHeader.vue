@@ -21,7 +21,7 @@
         <div class="app-flex">
             <button class="app-header__icon-menu app-flex app-flex--gap_large app-flex--align_center"
                 @click="menuIsOpen = !menuIsOpen"
-            >Menu
+            ><span class="app-rm--sm">Menu</span>
                 <img class="app-header__icon-menu__img"
                      v-if="menuIsOpen"
                      alt="open menu"
@@ -50,6 +50,8 @@ const menuIsOpen = useMenuIsOpen()
 
 
 <style lang="scss" scoped >
+@use "@/assets/style/scss-params";
+
 .v-app-header {
     border-radius: var(--lc-header-radius);
     height: var(--lc-header-height);
@@ -74,6 +76,8 @@ const menuIsOpen = useMenuIsOpen()
 
 .v-app-header__logo-container {
     border: none;
+    display: flex;
+    align-items: center;
 }
 
 .v-app-header__icon {
@@ -85,6 +89,10 @@ const menuIsOpen = useMenuIsOpen()
     display: block;
     height: 1rem;
     margin: 0 auto;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        height: .75rem;
+    }
 }
 
 .app-header__icon-menu {

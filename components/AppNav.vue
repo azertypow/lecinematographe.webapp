@@ -17,7 +17,7 @@
                 </nuxt-link>
             </div>
 
-            <div class="v-app-nav__pages-link__page-subtitle app-width-gutter"
+            <div class="v-app-nav__pages-link__page-subtitle app-width-gutter app-rm--sm"
                  v-if="currentPageInfoOverSlug === page.slug"
             >
                 <nuxt-link class="v-app-nav__pages-link__page-subtitle__values"
@@ -51,6 +51,8 @@ const currentPageInfoOverSlug = ref('')
 
 
 <style lang="scss" scoped >
+@use '@/assets/style/scss-params';
+
 .v-app-nav {
   user-select: none;
     border-radius: var(--lc-header-radius);
@@ -82,6 +84,10 @@ a {
     grid-template-columns: 1fr 2fr;
     justify-items: start;
     align-items: start;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+        display: flex;
+    }
 }
 
 .v-app-nav__pages-link__page-title {

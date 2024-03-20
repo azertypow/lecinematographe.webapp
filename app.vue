@@ -9,19 +9,19 @@ useRouter().beforeEach((to, from) => {
 </script>
 
 <template>
-    <div class="v-app__header-container app-flex app-flex--nowrap app-flex--justify_center"
+    <div class="v-app__header-container app-flex app-flex--nowrap app-flex--justify_center app-flex--sm"
     >
-        <div class="app-flex__basis-16-24 v-app__header-container__grid">
+        <div class="app-flex__basis-16-24 app-flex--sm__basis-1-1">
             <AppHeader/>
         </div>
     </div>
 
     <transition
     >
-        <div class="v-app__nav-container app-flex app-flex--nowrap app-flex--justify_center"
+        <div class="v-app__nav-container app-flex app-flex--nowrap app-flex--justify_center app-flex--sm"
              v-if="useMenuIsOpen().value"
         >
-            <div class="app-flex__basis-16-24 v-app__nav-container__grid">
+            <div class="app-flex__basis-16-24 app-flex--sm__basis-1-1 v-app__nav-container__grid">
                 <AppNav/>
             </div>
         </div>
@@ -46,12 +46,6 @@ useRouter().beforeEach((to, from) => {
     left: 0;
     width: 100%;
     z-index: 1000;
-}
-
-.v-app__header-container__grid {
-    @media (max-width: scss-params.$fp-breakpoint-sm) {
-        flex-basis: 100% !important;
-    }
 }
 
 .v-app__nav-container {
