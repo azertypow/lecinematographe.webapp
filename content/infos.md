@@ -6,7 +6,6 @@
 - 20.- Soutien (merci <3)
 - 12.- Réduit (AVS, AI, en formation, chômage)
 - 10.- Enfants jusqu’à 12 ans
-- 5.- Pass Culture <https://www.passculture.ch> (dès août 2024)  
 
 
 ## Accès
