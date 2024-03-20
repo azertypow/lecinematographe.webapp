@@ -77,9 +77,11 @@ const dateFilmByDate: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
 const specialEventsInFilmList: Ref<UnwrapRef<ISpecialEventsInFilmList[] | null>> = ref(null)
 
 onMounted(async () => {
-    apiGetFilmList().then(value => data.value = value)
+    apiGetFilmList().then(value => {
+        data.value = value
+        loadSpecialEventsInFilmList().then(value => specialEventsInFilmList.value = value)
+    })
     apiGetListOfFilmByDate(new Date()).then(value => dateFilmByDate.value = value)
-    loadSpecialEventsInFilmList().then(value => specialEventsInFilmList.value = value)
 
     console.log( 'data.value -> apiGetFilmList()', data.value )
     console.log('apiGetSeancesOfFilm', await apiGetSeancesOfFilm(3))
