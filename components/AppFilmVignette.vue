@@ -16,11 +16,11 @@
                  @load="(e) => setGradientColor(e.target)"
             />
         </div>
-        <a class="v-app-film-vignette__details"
+        <nuxt-link class="v-app-film-vignette__details"
            :href="`film/${filmId}`"
         >
             <app-button-shine>détails du film</app-button-shine>
-        </a>
+        </nuxt-link>
     </section>
 </template>
 
