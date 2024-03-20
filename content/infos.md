@@ -24,7 +24,7 @@ Horaires : lu-ve 17h-00h, sa-di 14h-00h
 
 Partenaires : (liste à venir)
 
-## Équipe (en kinkonsssss, de manière non hiérarchique)
+## Équipe
 
 Meli Boss (iel) – co-direction, administration
 Faye Corthésy (elle) – co-direction, médiation, programmation
