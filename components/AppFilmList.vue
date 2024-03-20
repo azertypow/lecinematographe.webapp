@@ -4,7 +4,7 @@
              v-if="showTitle"
         >
             <h3 class="lc-typo-with-dot" style="margin:0 auto">
-                À L’AFFICHE
+                À L’AFFICHE CE MOIS
             </h3>
         </div>
         <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"
