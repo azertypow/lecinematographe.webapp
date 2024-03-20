@@ -50,7 +50,9 @@
                 </div>
 
                 <div class="v-index__section v-index__section--film-details app-flex app-flex--column app-flex app-flex--gap_regular">
-                    <div v-for="filmData of data.filmlist">
+                    <div v-if="dateFilmByDate === null" >chargement…</div>
+                    <div v-else
+                        v-for="filmData of dateFilmByDate.filmlist">
                         <AppFilmDetails
                             :ticket-film="filmData"
                         />
@@ -71,11 +73,13 @@ import {
 } from "~/_utils/apiTicket";
 
 const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const dateFilmByDate: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
 const specialEventsInFilmList: Ref<UnwrapRef<ISpecialEventsInFilmList[] | null>> = ref(null)
 
 onMounted(async () => {
-    data.value = await apiGetFilmList()
-    specialEventsInFilmList.value = await loadSpecialEventsInFilmList()
+    apiGetFilmList().then(value => data.value = value)
+    apiGetListOfFilmByDate(new Date()).then(value => dateFilmByDate.value = value)
+    loadSpecialEventsInFilmList().then(value => specialEventsInFilmList.value = value)
 
     console.log( 'data.value -> apiGetFilmList()', data.value )
     console.log('apiGetSeancesOfFilm', await apiGetSeancesOfFilm(3))
