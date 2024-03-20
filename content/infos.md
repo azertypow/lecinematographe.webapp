@@ -9,7 +9,7 @@
 
 
 ## Accès
-Le Cinématographe est une salle de cinéma de 102 places, accessible sur réservation pour un fauteuil roulant <lien vers accessibilité – fauteuil roulant>.
+Le Cinématographe est une salle de cinéma de 102 places, accessible sur réservation pour un fauteuil roulant. Écrire à [billetterie@lecinematographe.ch](mailto:billetterie@lecinematographe.ch)
 
 Adresse : Casino de Montbenon, Allée Ernest-Ansermet 3, 1003 Lausanne [plan ici](https://maps.app.goo.gl/Q7zx9RSJoytFahuc6)
 
