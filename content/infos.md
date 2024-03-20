@@ -54,9 +54,9 @@ web4next — gestion informatique
 Ouvert en 1981, le Cinématographe est une salle de cinéma de 102 places située au Casino de Montbenon, au centre de Lausanne. Propriété de la Ville, l’exploitation et la programmation du Cinématographe étaient  conduites par la Cinémathèque suisse jusqu’à fin 2023. Cette salle mythique aux sièges bleus a déjà accueilli un grand nombre de films, d’invitéexs, de publics.Alors que la Cinémathèque déplace ses activités publiques au cinéma Capitole rénové dès 2024, la Ville de Lausanne lance un appel à projets en mai 2023 pour que le Cinématographe continue d’exister en tant que cinéma. Le Collectif du nouveau Cinématographe est sélectionné et assure la gestion, la programmation et l’exploitation de la salle dès mars 2024. Au centre de notre projet réside l’envie de partager avec tous les publics un cinéma de qualité en dialogue avec des enjeux de société contemporains. Nous avons envie de continuer à faire vivre cette salle historique, chère à beaucoup de Lausannoisxes, et de l’ouvrir à de nouveaux publics.
 
 ##	Soutiens
-Ville de Lausanne
-Loterie romande
-Fondation Ernst Göhner
+Ville de Lausanne  
+Loterie romande  
+Fondation Ernst Göhner  
 
 
 Un grand merci à toutes les personnes qui ont participé à notre [levée de fonds en ligne](https://wemakeit.com/projects/le-nouveau-cinematographe) :
