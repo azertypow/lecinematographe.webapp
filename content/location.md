@@ -1,6 +1,6 @@
 # Location
 
-## Salle de cinema
+## Salle de cinéma
 
 :AppContentMap
 

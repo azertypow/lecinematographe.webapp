@@ -24,7 +24,7 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
                 title: 'Location',
                 slug: '/location',
                 subsections: [
-                    "Salle de cinema",
+                    "Salle de cinéma",
                     "Salle de montage",
                     "Séances scolaires",
                 ],

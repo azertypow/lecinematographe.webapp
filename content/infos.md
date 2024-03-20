@@ -26,24 +26,23 @@ Partenaires : (liste à venir)
 
 ## Équipe
 
-Meli Boss (iel) – co-direction, administration
-Faye Corthésy (elle) – co-direction, médiation, programmation
-Gysèle Giannuzzi (iel) – co-direction, communication, programmation
-Alice Riva (elle) – co-direction, exploitation, programmation
+Meli Boss (iel) – co-direction, administration  
+Faye Corthésy (elle) – co-direction, médiation, programmation  
+Gysèle Giannuzzi (iel) – co-direction, communication, programmation  
+Alice Riva (elle) – co-direction, exploitation, programmation  
 
-Sébastien Baudet — technique
+Technique — Sébastien Baudet
 
 Caissier-ères et projectionnistes bénévoles – À venir
 
-Le comité de l’association
+Le comité de l’association  
 Mélanie Courvoisier  
 Stéphane Goël  
 Astrid Lavanderos  
 Mourad Moussa  
 Marie-Lou Pahud  
 
-Personnel de nettoyage
-Équipe WillTtec
+Personnel de nettoyage — Équipe WillTtec
 
 Clovis Duran — design graphique, web design  
 Nico Baldran — développement application  
