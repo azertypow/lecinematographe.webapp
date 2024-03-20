@@ -36,11 +36,11 @@ Sébastien Baudet — technique
 Caissier-ères et projectionnistes bénévoles – À venir
 
 Le comité de l’association
-Mélanie Courvoisier
-Stéphane Goël
-Astrid Lavanderos
-Mourad Moussa
-Marie-Lou Pahud
+Mélanie Courvoisier  
+Stéphane Goël  
+Astrid Lavanderos  
+Mourad Moussa  
+Marie-Lou Pahud  
 
 Personnel de nettoyage
 Équipe WillTtec
