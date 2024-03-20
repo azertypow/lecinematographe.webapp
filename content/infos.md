@@ -7,15 +7,18 @@
 - 12.- Réduit (AVS, AI, en formation, chômage)
 - 10.- Enfants jusqu’à 12 ans
 
+Billetterie sur place, directement à l'entrée de la salle, paiement cash/cartes/twint. Ouverture de la billetterie 30' minutes avant chaque séance.
 
 ## Accès
 Le Cinématographe est une salle de cinéma de 102 places, accessible sur réservation pour un fauteuil roulant. Écrire à [billetterie@lecinematographe.ch](mailto:billetterie@lecinematographe.ch)
 
-Adresse : Casino de Montbenon, Allée Ernest-Ansermet 3, 1003 Lausanne [plan ici](https://maps.app.goo.gl/Q7zx9RSJoytFahuc6)
+Adresse : Casino de Montbenon, Allée Ernest-Ansermet 3, 1003 Lausanne
 
 Depuis la gare de Lausanne :
 à pied en montant l’Av. Louis-Ruchonnet, puis l’Av. de Savoie
 en bus (3, 20, 21), arrêt Cécil
+
+:AppContentMap
 
 ## Buvette
 Notre buvette est située en face du Cinématographe. Nous sommes raviexs de vous y accueillir pour boire un verre, échanger sur les films, se rencontrer avant ou après chaque projection. Des livres, des magazines et des jeux sont à disposition.
