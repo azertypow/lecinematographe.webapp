@@ -9,7 +9,7 @@
                 backgroundImage: `url(${ticketFilm.ur_cover})`,
             }"
         ></div>
-        <h3 class="v-app-film-details__date">À partir du {{ new Date(ticketFilm.da_depart).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</h3>
+<!--        <h3 class="v-app-film-details__date">À partir du {{ new Date(ticketFilm.da_depart).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</h3>-->
         <h1 class="v-app-film-details__title">{{ticketFilm.tx_titre_lng}}</h1>
         <h5 class="v-app-film-details__subtitle">Un film <span class="lc-first-letter-to-lowercase">{{ticketFilm.tx_realisateur}}</span></h5>
         <div class="v-app-film-details__cover">
