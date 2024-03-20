@@ -14,13 +14,23 @@
             <h1>{{ data.error }}</h1>
         </div>
 
+
         <div class="v-film-id__info"
              v-else
         >
-            <AppFilmDetails
+            <div
                 v-for="filmData of data.filmlist"
-                :ticket-film="filmData"
-            />
+            >
+                <div class="v-film-id__info__header-image"
+                >
+                    <AppFilmMin
+                        :ticket-film="filmData"
+                    />
+                </div>
+                <AppFilmDetails
+                    :ticket-film="filmData"
+                />
+            </div>
         </div>
 
     </section>
@@ -68,5 +78,10 @@ async function loadData() {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.v-film-id__info__header-image {
+    margin: auto;
+    width: min( 100%, 10rem );
 }
 </style>

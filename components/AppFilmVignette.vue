@@ -82,6 +82,11 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     top: var(--app-flex--gap_half);
     left: var(--app-flex--gap_half);
     margin: 0;
+
+    @container (width < 1000px) {
+        font-size: .6rem;
+        line-height: 1em;
+    }
 }
 
 .v-app-film-vignette__title {
@@ -91,7 +96,7 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     line-height: 1em;
 
     @container (width < 1000px) {
-        font-size: 1rem;
+        font-size: .7rem;
         line-height: 1em;
     }
 }
