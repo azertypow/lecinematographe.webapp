@@ -12,28 +12,8 @@
         </div>
 
         <div class="v-app-event-details__content">
-            <p>Nous inaugurons le Cinématographe ce mercredi 20 mars. On se réjouit beaucoup !Bienvenuexs à toute personne souhaitant célébrer l'ouverture du Cinématographe, au programme :</p>
-
-            <p>
-                18h
-                <br>Verrée d'inauguration au Salon Bleu du Casino de Montbenon
-            </p>
-            <p>
-                18h45 - 19h15
-                <br>Discours et partie officielle
-            </p>
-            <p>
-                19h45
-                <br>Ouverture des portes du Cinématographe pour les personnes avec un billet
-            </p>
-            <p>
-                20h00
-                <br>Projection de "Blackbird Blackbird Blackberry", en présence de Elene Naveriani (discussion après le film)
-            </p>
-
-            <p>***Petit bar tenu par La Braise et foodtruck El Gaucho (empanadas)***</p>
-
-            <p>Retrait des billets réservés pour la séance de 20h à l'entrée du Salon Bleu, de 18 à 19h45. (cash, cartes, twint)</p>
+            <p>Nous inaugurons le Cinématographe ce mercredi 20 mars. On se réjouit beaucoup ! Bienvenuexs à toute personne souhaitant célébrer l'ouverture du Cinématographe</p>
+            <p>Dès 18h, au Salon Bleu du Casino de Montbenon.</p>
         </div>
 
 <!--        <div class="v-app-event-details__details">-->
