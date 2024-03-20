@@ -12,8 +12,7 @@
         </div>
 
         <div class="v-app-event-details__content">
-            <p>Nous inaugurons le Cinématographe ce mercredi 20 mars. On se réjouit beaucoup ! Bienvenuexs à toute personne souhaitant célébrer l'ouverture du Cinématographe</p>
-            <p>Dès 18h, au Salon Bleu du Casino de Montbenon.</p>
+            <p>Nous inaugurons le Cinématographe ce mercredi 20 mars. On se réjouit beaucoup ! Bienvenuexs à toute personne souhaitant célébrer l'ouverture du Cinématographe dès 18h, au Salon Bleu du Casino de Montbenon.</p>
         </div>
 
 <!--        <div class="v-app-event-details__details">-->
