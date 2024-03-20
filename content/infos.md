@@ -33,8 +33,7 @@ Alice Riva (elle) – co-direction, exploitation, programmation
 
 Sébastien Baudet — technique
 
-Caissier-ères et projectionnistes bénévoles
-À venir
+Caissier-ères et projectionnistes bénévoles – À venir
 
 Le comité de l’association
 Mélanie Courvoisier
