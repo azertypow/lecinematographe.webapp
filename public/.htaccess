@@ -4,3 +4,12 @@ AddOutputFilterByType DEFLATE "application/atom+xml" "application/javascript" "a
 # SECTION BEGIN GIT PROTECTION
 RedirectMatch 404 /\.git
 # SECTION END GIT PROTECTION
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
