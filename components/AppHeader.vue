@@ -4,7 +4,7 @@
                 'is-open': useMenuIsOpen().value
             }"
     >
-        <nuxt-link class="v-app-header__logo-container app-flex"
+        <nuxt-link class="v-app-header__logo-container app-flex app-flex--align_center app-flex--nowrap"
                    href="/"
         >
             <img
@@ -76,8 +76,6 @@ const menuIsOpen = useMenuIsOpen()
 
 .v-app-header__logo-container {
     border: none;
-    display: flex;
-    align-items: center;
 }
 
 .v-app-header__icon {
