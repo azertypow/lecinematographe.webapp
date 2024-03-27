@@ -45,10 +45,6 @@
                     </div>
                 </div>
 
-                <div class="v-index__section v-index__section--fil-event app-flex app-grid--column-1 app-grid--gap_regular">
-                    <AppEventDetails/>
-                </div>
-
                 <div class="v-index__section v-index__section--film-details app-flex app-flex--column app-flex app-flex--gap_regular">
                     <div v-if="dateFilmByDate === null" >chargement…</div>
                     <div v-else
