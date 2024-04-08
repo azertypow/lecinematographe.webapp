@@ -2,10 +2,10 @@
 
 
 ##	Tarifs
-- 15.- Plein 
+- 15.- Plein
 - 20.- Soutien (merci <3)
-- 12.- Réduit (AVS, AI, en formation, chômage)
-- 10.- Enfants jusqu’à 12 ans
+- 12.- Réduit (AVS, AI, en formation)
+- 10.- Séances jeune public
 
 Billetterie sur place, directement à l'entrée de la salle, paiement cash/cartes/twint. Ouverture de la billetterie 30' minutes avant chaque séance.
 
