@@ -2,18 +2,20 @@
     <section
         class="v-app-calendar-list-item"
     >
-        <div class="app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap" style="position: relative;">
+        <div class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap" style="position: relative;">
             <img
                 class="v-app-calendar-list-item__cover"
                 :alt="`image de couverture de ${title}`"
                 :src="coverUrl"
             />
-            <div class="app-flex app-flex--justify_space-between app-flex--nowrap app-flex--align_center" style="width: 100%">
+            <div class="v-app-calendar-list-item__text app-flex app-flex--justify_space-between app-flex--nowrap app-flex--align_center">
                 <h3 class="v-app-calendar-list-item__title"
                 >{{title}}</h3>
-                <p>{{hour.replace(':', 'h').replace('h00', 'h')}}</p>
+                <p class="v-app-calendar-list-item__hour"
+                >{{hour.replace(':', 'h').replace('h00', 'h')}}</p>
             </div>
-            <div style="position: absolute; top: 2.3rem; right: -.5em; font-size: .4rem; line-height: 1.25em; transform: rotate(-5deg);">bientôt!</div>
+            <div class="v-app-calendar-list-item__soon"
+            >bientôt!</div>
             <img class="v-app-calendar-list-item__ticket"
                  alt="prendre un ticket"
                 src="../assets/icons/ticket.svg"
@@ -49,11 +51,34 @@ const props = defineProps<{
     cursor: pointer;
 }
 
+.v-app-calendar-list-item__container {
+    @container app-calendar (width < 700px)  {
+        //flex-direction: column;
+    }
+}
+
 .v-app-calendar-list-item__cover {
     display: block;
     height: 3.5rem;
     aspect-ratio: 3/2;
     object-fit: cover;
+
+    @container app-calendar (width < 700px)  {
+        display: none;
+    }
+}
+
+.v-app-calendar-list-item__text {
+    width: 100%;
+
+    @container app-calendar (width < 700px)  {
+        flex-direction: column;
+        align-items: flex-start;
+
+        > * {
+            margin: 0;
+        }
+    }
 }
 
 .v-app-calendar-list-item__ticket {
@@ -69,5 +94,30 @@ const props = defineProps<{
 
 .v-app-calendar-list-item__title {
     margin: 0;
+
+    @container app-calendar (width < 700px)  {
+        font-size: .65rem;
+    }
+}
+
+.v-app-calendar-list-item__hour {
+    @container app-calendar (width < 700px)  {
+        font-size: .5rem;
+        line-height: 1em;
+    }
+}
+
+.v-app-calendar-list-item__soon {
+    position: absolute;
+    top: 2.3rem;
+    right: -.5em;
+    font-size: .4rem;
+    line-height: 1.25em;
+    transform: rotate(-5deg);
+
+    @container app-calendar (width < 700px)  {
+        top: calc( 50% + .45rem );
+        font-size: .35rem;
+    }
 }
 </style>

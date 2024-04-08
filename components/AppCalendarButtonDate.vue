@@ -52,6 +52,12 @@ const props = defineProps<{
     border-radius: 100%;
     margin-bottom: var(--app-flex--gap_half);
 
+    @container app-calendar (width < 700px)  {
+        margin-bottom: .1rem;
+        width: 3em;
+        height: 3em;
+    }
+
     &:hover {
       background: var(--lc-color--orange);
     }
@@ -73,13 +79,26 @@ const props = defineProps<{
   .is-active & {
     border-bottom-color: var(--lc-color--blue-light);
   }
+
+    @container app-calendar (width < 700px)  {
+        display: none;
+    }
 }
 .date-day-day {
     text-transform: uppercase;
     padding-bottom: .15rem;
+
+    @container app-calendar (width < 700px)  {
+        font-size: .3rem;
+        line-height: 1em;
+    }
 }
 
 .date-day-number {
     font-size: .85rem;
+
+    @container app-calendar (width < 700px)  {
+        font-size: .65rem;
+    }
 }
 </style>

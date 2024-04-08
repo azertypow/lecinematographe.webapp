@@ -1,67 +1,69 @@
 <template>
     <section
-        class="v-app-calendar app-flex app-flex--column app-flex--align_center"
+        class="v-app-calendar"
     >
         <template v-if="dateRange.length < 1">
-            <div>chargement…</div>
+            <div style="display: flex; align-items: center; justify-content: center">
+                <div>chargement…</div>
+            </div>
         </template>
         <template v-else>
-            <div class="v-app-calendar__dates"
-            >
-                <div class="app-flex app-flex__basis-24-24 app-flex--justify_space-between app-flex--align_flex-start app-flex--nowrap">
-                    <div class="v-app-calendar__nav-button"></div>
-                    <!--                    <button class="v-app-calendar__nav-button v-app-calendar__nav-button&#45;&#45;left"><<</button>-->
-                    <div v-for="date of dateRange">
-                        <AppCalendarButtonDate
-                            @click="updateSelectedDate(date)"
-                            :date="date"
-                            :is-active="selectedDate === date"
-                        />
-                    </div>
-                    <div class="v-app-calendar__nav-button"></div>
-                    <!--                    <button class="v-app-calendar__nav-button v-app-calendar__nav-button&#45;&#45;right">>></button>-->
-                </div>
-            </div>
-
-            <div
-                v-if="seancesDataOnSelectedDate === null"
-                class="v-app-calendar__film-list">
-                chargement…
-            </div>
-
-            <div class="v-app-calendar__film-list"
-                 v-else-if="seancesDataOnSelectedDate?.length < 1"
-                style="display: flex; align-items: center; justify-content: center"
-            >
-                <div>
-                    Pas d'évènements pour cette date :)
-                </div>
-            </div>
-
-            <div
-                    v-else
-                    class="v-app-calendar__film-list"
-            >
-                <div class="v-app-calendar__film-list__title"
+            <div class="v-app-calendar__layout">
+                <div class="v-app-calendar__dates"
                 >
-                    {{selectedDate?.toLocaleString('fr-FR', {
-                        weekday: 'long',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                    })}}
+                    <div class="v-app-calendar__nav-button app-flex app-flex__basis-24-24 app-flex--justify_space-between app-flex--align_flex-start app-flex--nowrap">
+                        <div class="v-app-calendar__nav-button__item"></div>
+<!--                        <button class="v-app-calendar__nav-button__item v-app-calendar__nav-button__item&#45;&#45;left"><<</button>-->
+                        <div v-for="date of dateRange">
+                            <AppCalendarButtonDate
+                                @click="updateSelectedDate(date)"
+                                :date="date"
+                                :is-active="selectedDate === date"
+                            />
+                        </div>
+                        <div class="v-app-calendar__nav-button__item"></div>
+<!--                        <button class="v-app-calendar__nav-button__item v-app-calendar__nav-button__item&#45;&#45;right">>></button>-->
+                    </div>
+                </div>
+
+                <div
+                    v-if="seancesDataOnSelectedDate === null"
+                    class="v-app-calendar__film-list">
+                    chargement…
+                </div>
+                <div class="v-app-calendar__film-list"
+                     v-else-if="seancesDataOnSelectedDate?.length < 1"
+                    style="display: flex; align-items: center; justify-content: center"
+                >
+                    <div>
+                        Pas d'évènements pour cette date :)
+                    </div>
                 </div>
                 <div
-                    v-for="seanceData of seancesDataOnSelectedDate"
+                        v-else
+                        class="v-app-calendar__film-list"
                 >
-                    <div class="v-app-calendar__film-list__info"
-                         v-for="seance of seanceData.seances"
+                    <div class="v-app-calendar__film-list__title"
                     >
-                        <AppCalendarListItem
-                            :title="seance.tx_titre_lng"
-                            :cover-url="seanceData.filmCover"
-                            :hour="seance.tx_heure"
-                        />
+                        {{selectedDate?.toLocaleString('fr-FR', {
+                            weekday: 'long',
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                        })}}
+                    </div>
+                    <div
+                        v-for="seanceData of seancesDataOnSelectedDate"
+                    >
+                        <div class="v-app-calendar__film-list__info"
+                             v-for="seance of seanceData.seances"
+                        >
+                            <AppCalendarListItem
+                                :title="seance.tx_titre_lng"
+                                :cover-url="seanceData.filmCover"
+                                :hour="seance.tx_heure"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,26 +120,53 @@ async function updateSelectedDate(date: Date) {
 
 
 <style lang="scss" scoped >
+
 .v-app-calendar {
+    container: app-calendar / inline-size;
+}
+
+.v-app-calendar__layout {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    @container app-calendar (width < 700px) {
+        flex-direction: row;
+        gap: .5rem;
+        padding-left: .5rem;
+        padding-right: .5rem;
+    }
 }
 
 .v-app-calendar__nav-button {
+    @container app-calendar (width < 700px) {
+        flex-direction: column;
+    }
+}
+
+.v-app-calendar__nav-button__item {
     font-size: .85rem;
     letter-spacing: -.2em;
     height: 1rem;
     width: 1rem;
 
-    &.v-app-calendar__nav-button--left {
+    &.v-app-calendar__nav-button__item--left {
         padding-left: 0;
     }
 
-    &.v-app-calendar__nav-button--right {
+    &.v-app-calendar__nav-button__item--right {
         padding-right: 0;
     }
 }
 
 .v-app-calendar__dates {
   width: 100%;
+
+    @container app-calendar (width < 700px)  {
+        width: auto;
+    }
 }
 
 .v-app-calendar__film-list {

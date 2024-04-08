@@ -144,10 +144,6 @@ async function loadSpecialEventsInFilmList(): Promise<any[] | ISpecialEventsInFi
 
 .v-index__section--calendar {
   grid-column: 5 / span 16;
-
-    @media (max-width: 500px) {
-        display: none;
-    }
 }
 
 .v-index__section--fil-event {
