@@ -7,7 +7,7 @@
         ref="appFilmRefContainer"
     >
         <nuxt-link class="v-app-film-min__link"
-            :href="`film/${ticketFilm.id_film}`"
+            :href="`/film/${ticketFilm.id_film}`"
         />
         <div class="v-app-button-shine__container__shine"
              ref="appFilmRefShineElement"

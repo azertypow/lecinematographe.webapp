@@ -17,7 +17,7 @@
             />
         </div>
         <nuxt-link class="v-app-film-vignette__details"
-           :href="`film/${filmId}`"
+           :href="`/film/${filmId}`"
         >
             <app-button-shine>détails du film</app-button-shine>
         </nuxt-link>
