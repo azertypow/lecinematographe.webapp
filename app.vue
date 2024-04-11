@@ -54,9 +54,29 @@ onMounted(() => {
         </div>
     </main>
 </template>
+
 <style lang="scss">
 @use "@/assets/style/scss-params";
 
+
+/*
+page transition
+*/
+.page-enter-active,
+.page-leave-active {
+    transition: all 1s ease-in-out;
+}
+.page-enter-from,
+.page-leave-to {
+    filter: grayscale(1);
+    opacity: 0;
+    transform: translate3d(0, -5vh, 0);
+}
+
+
+/*
+regular styles
+*/
 .v-app__header-container {
     position: fixed;
     top: .5rem;
@@ -86,6 +106,7 @@ onMounted(() => {
     height: 100%;
     overflow: hidden;
     padding-top: calc( var(--lc-header-height) + 1rem);
+    min-height: calc(100vh + 5rem);
 }
 
 .v-app__loader-container {
