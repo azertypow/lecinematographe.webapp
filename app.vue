@@ -121,15 +121,13 @@ regular styles
 
 .app-loader-container-transition-leave-active {
     opacity: 1;
-    transform: scale(1);
     background: rgba(0, 0, 0, 1);
 }
 
 .app-loader-container-transition-leave-to {
-    opacity: 0;
-    transform: scale(.5);
+    opacity: 1;
     background: rgba(0, 0, 0, 0);
-    transition: transform 1s 1s cubic-bezier(1,-0.01,.62,.63), background .5s 1s ease-in, opacity 1s 1s cubic-bezier(1,-0.01,.62,.63);
+    transition: background .5s 1s ease-in;
 }
 
 .v-app__footer-container {
