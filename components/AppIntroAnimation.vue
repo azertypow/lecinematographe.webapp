@@ -32,8 +32,8 @@ const props = defineProps<{
 
 .v-app-intro-animation__svg {
     animation: loading-animation 10s ease-in;
-    width: 10vw;
-    height: 10vh;
+    width: 25vw;
+    height: 25vh;
     object-fit: contain;
     top: 50%;
     left: 50%;
@@ -45,7 +45,7 @@ const props = defineProps<{
 
 @keyframes loading-animation {
     0% {
-        opacity: 0;
+        opacity: 1;
     }
 
     10% {
@@ -54,11 +54,11 @@ const props = defineProps<{
     }
 
     50% {
-        transform: translate(-50%, -200%) scale(.98);
+        transform: translate(-50%, -50%) scale(.98);
     }
 
     100% {
-        transform: translate(-50%, -600%) scale(1.1);
+        transform: translate(-50%, -50%) scale(1.1);
     }
 }
 </style>
