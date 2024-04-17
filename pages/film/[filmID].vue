@@ -33,6 +33,16 @@
             </div>
         </div>
 
+        <div class="v-film-id__list-film-container"
+        >
+            <AppFilmList
+                v-if="filmList"
+                :ticket-film-array="filmList.filmlist"
+                :show-title="true"
+            />
+        </div>
+
+
     </section>
 </template>
 
@@ -42,13 +52,15 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import {apiGetFilmById, type IFilmListResponse} from "~/_utils/apiTicket";
+import {apiGetFilmById, apiGetFilmList, type IFilmListResponse} from "~/_utils/apiTicket";
 
 const props = defineProps<{
 
 }>()
 
 const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+
+const filmList: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
 
 onMounted(() => {
     loadData()
@@ -61,7 +73,9 @@ async function loadData() {
 
     data.value = await apiGetFilmById( Number.parseInt(filmID) )
 
-    console.log( data.value )
+    apiGetFilmList().then(value => {
+        filmList.value = value
+    })
 }
 
 </script>
@@ -83,5 +97,9 @@ async function loadData() {
 .v-film-id__info__header-image {
     margin: auto;
     width: min( 100%, 10rem );
+}
+
+.v-film-id__list-film-container {
+    margin-top: 2rem;
 }
 </style>
