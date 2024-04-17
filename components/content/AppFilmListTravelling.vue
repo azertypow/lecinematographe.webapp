@@ -1,6 +1,6 @@
 <template>
     <section
-        class="v-app-film-list-palestine"
+        class="v-app-film-list-travelling"
     >
         <template
             v-if="data"
@@ -32,6 +32,6 @@ onMounted(async () => {
 
 
 <style lang="scss" scoped >
-.v-app-film-list-palestine {
+.v-app-film-list-travelling {
 }
 </style>
