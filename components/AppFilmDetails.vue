@@ -13,6 +13,17 @@
         <h1 class="v-app-film-details__title">{{ticketFilm.tx_titre_lng}}</h1>
         <h5 class="v-app-film-details__subtitle">Un film <span class="lc-first-letter-to-lowercase">{{ticketFilm.tx_realisateur}}</span></h5>
         <div class="v-app-film-details__cover">
+
+            <div
+                v-if="youtubeLink"
+                @click="usePlayerLink().value = youtubeLink.ur_url"
+            >
+                <img class="v-app-film-details__cover__icon-player"
+                     alt="lancer le player pour visualiser la bande annonce du film"
+                     src="@/assets/icons/play_circle_FILL0_wght400_GRAD0_opsz24.svg"
+                />
+            </div>
+
             <img alt="image de couverture pour le film"
                  :src="ticketFilm.ur_cover"
                  @load="(e) => setGradientColor(e.target)"
@@ -113,6 +124,7 @@ import {
 } from "~/_utils/apiTicket";
 import {average} from "color.js";
 import {formatDateFromDate} from "~/_utils/dateFormatHelper";
+import {usePlayerLink} from "~/composables/states";
 
 const props = defineProps<{
     ticketFilm: ITicketFilm
@@ -136,6 +148,10 @@ const dateOptionsDayOnly: Intl.DateTimeFormatOptions = {
     day: 'numeric', // Jour du mois au format numérique (ex: 13)
     month: 'long', // Mois au format long (ex: "janvier")
 }
+
+const youtubeLink = computed(() => linksOfFilm.value?.url.find(filmUrl => {
+    return filmUrl.ur_url.match('youtube.')
+}))
 
 onMounted(async () => {
     nextSeances.value = (await apiGetSeancesOfFilm(props.ticketFilm.id_film)).seance.sort((a, b) => {
@@ -185,10 +201,26 @@ async function setGradientColor(imageElement: HTMLImageElement) {
 }
 
 .v-app-film-details__cover {
+    position: relative;
+
     img {
         display: block;
         width: 100%;
         border-radius: var(--lc-radius);
+    }
+}
+.v-app-film-details__cover__icon-player {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 25%;
+    transition: transform .5s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        transform: translate(-50%, -50%) scale(1.15);
     }
 }
 
