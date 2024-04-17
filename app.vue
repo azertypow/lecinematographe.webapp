@@ -169,6 +169,7 @@ regular styles
     display: flex;
     justify-content: center;
     align-items: center;
+    container: app__player / inline-size;
 }
 
 .v-app__player__cache {
@@ -182,7 +183,11 @@ regular styles
 
 .v-app__player__container {
     position: relative;
-    width: 50%;
+    width: 75%;
+
+    @container app__player (width < 1000px) {
+        width: calc( 100% - 1rem);
+    }
 }
 
 .v-app__youtube-player {
