@@ -1,5 +1,5 @@
 <template>
-    <header class="v-app-header app-flex app-flex--row app-flex--justify_space-between app-flex--align_center app-width-gutter"
+    <header class="v-app-header app-flex app-flex--row app-flex--justify_end app-flex--align_center app-width-gutter"
             :class="{
                 'is-open': useMenuIsOpen().value
             }"
@@ -9,15 +9,18 @@
         >
             <img
                 class="v-app-header__icon"
-                src="../assets/icons/leCinematographe-icon.svg"
+                src="../assets/logo_cinematographe_big_fond_blanc.svg"
                 alt="logo cinematographe.ch"
             />
+        </nuxt-link>
+        <transition name="logo-header">
             <img
+                v-if=" !useMenuIsExtended().value"
                 class="v-app-header__logo"
                 src="../assets/icons/leCinematographe-logo_type--white.svg"
                 alt="logo cinematographe.ch"
             />
-        </nuxt-link>
+        </transition>
         <div class="app-flex">
             <button class="app-header__icon-menu app-flex app-flex--gap_large app-flex--align_center"
                 @click="menuIsOpen = !menuIsOpen"
@@ -42,6 +45,8 @@
 
 
 <script lang="ts" setup>
+import {useMenuIsExtended} from "~/composables/states";
+
 const menuIsOpen = useMenuIsOpen()
 </script>
 
@@ -56,49 +61,45 @@ const menuIsOpen = useMenuIsOpen()
     border-radius: var(--lc-header-radius);
     height: var(--lc-header-height);
     color: white;
-    background: rgba(40, 40, 40, 0.2);
-    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(11.1px);
-    -webkit-backdrop-filter: blur(11.1px);
-    transition: all .5s ease;
     padding-left: .5rem;
     padding-right: .5rem;
-
-    &.is-open {
-        background: rgba(40, 40, 40, 0);
-        border-color: rgba(255, 255, 255, 0);
-        backdrop-filter: blur(0);
-        -webkit-backdrop-filter: blur(0);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0);
-    }
-
 }
 
 .v-app-header__logo-container {
     border: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .v-app-header__icon {
     display: block;
     height: 1rem;
+    transform: scale(3) translate(0, 50%);
 }
 
 .v-app-header__logo {
     display: block;
-    height: 1rem;
+    height: 2rem;
     margin: 0 auto;
-
-    @media (max-width: scss-params.$fp-breakpoint-sm) {
-        height: .75rem;
-    }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 3rem);
 }
 
 .app-header__icon-menu {
     border: none;
-    background: transparent;
     display: flex;
     user-select: none;
     cursor: pointer;
+    background: rgba(40, 40, 40, 0.2);
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(11.1px);
+    -webkit-backdrop-filter: blur(11.1px);
+    transition: all .5s ease;
+    border-radius: 2rem;
 }
 
 .app-header__icon-menu__img {
@@ -107,4 +108,22 @@ const menuIsOpen = useMenuIsOpen()
     width: .65rem;
     object-fit: contain;
 }
+
+
+// vue transition
+
+.logo-header-enter-active,
+.logo-header-leave-active {
+    transition: opacity .25s linear, transform .25s linear;
+}
+.logo-header-enter-from {
+    opacity: 0;
+    transform: translate(-50%, 3rem);
+}
+
+.logo-header-leave-to {
+    opacity: 0;
+    transform: translate(-50%, 0);
+}
+
 </style>

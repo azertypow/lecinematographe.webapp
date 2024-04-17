@@ -2,6 +2,8 @@ import type {IApiCmsPagesList} from "~/_utils/apiCms";
 
 export const useMenuIsOpen = () => useState<boolean>('menuIsOpen', () => false)
 
+export const useMenuIsExtended = () => useState<boolean>('menuIsExtended', () => false)
+
 export const usePlayerLink = () => useState<string | null>('playerLink', () => null)
 
 export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => {

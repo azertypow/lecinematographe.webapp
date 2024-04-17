@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import AppNav from "~/components/AppNav.vue";
 import AppIntroAnimation from "~/components/AppIntroAnimation.vue";
-import {usePlayerLink} from "~/composables/states";
+import {useMenuIsExtended, usePlayerLink} from "~/composables/states";
 
 const menuIsOpen = useMenuIsOpen()
 
@@ -13,6 +13,9 @@ const appIsLoading = ref(true)
 
 onMounted(() => {
     setTimeout( () => appIsLoading.value = false, 1_000)
+    window.addEventListener('scroll', () => {
+        useMenuIsExtended().value = window.scrollY > 10
+    })
 })
 
 const youtubeEmbedLink = computed(() => {
@@ -129,7 +132,7 @@ regular styles
     width: 100%;
     height: 100%;
     overflow: hidden;
-    padding-top: calc( var(--lc-header-height) + 1rem);
+    padding-top: calc( var(--lc-header-height) + 5rem);
     min-height: calc(100vh + 5rem);
 }
 
