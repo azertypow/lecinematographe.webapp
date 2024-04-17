@@ -95,7 +95,7 @@ async function loadData() {
 }
 
 .v-film-id__info__header-image {
-    margin: auto;
+    margin: 1rem auto;
     width: min( 100%, 10rem );
 }
 
