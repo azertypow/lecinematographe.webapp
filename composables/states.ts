@@ -8,45 +8,24 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
     return {
         pages: [
             {
-                title: 'Évènements',
-                slug: '/evenements',
-                subsections: [
-                    "65+",
-                    "Cycle estival",
-                    "Cours publics",
-                    "Festivals",
-                ],
+                title: 'Cycles',
+                slug: '/cycles',
+                subsections: [],
             },
             {
-                title: 'Jeune Public',
-                slug: '/jeune-public',
+                title: 'Évènements',
+                slug: '/evenements',
                 subsections: [],
             },
             {
                 title: 'Location',
                 slug: '/location',
-                subsections: [
-                    "Salle de cinéma",
-                    "Salle de montage",
-                    "Séances scolaires",
-                ],
-            },
-            {
-                title: 'Médias',
-                slug: '/media',
                 subsections: [],
             },
             {
                 title: 'Infos',
                 slug: '/infos',
-                subsections: [
-                    "Tarifs",
-                    "Accès",
-                    "Buvette",
-                    "Équipe",
-                    "Histoire",
-                    "Soutiens",
-                ],
+                subsections: [],
             },
         ]
     }

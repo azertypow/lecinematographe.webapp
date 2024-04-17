@@ -1,14 +1,4 @@
-# Évènements
-
-## 65+
-
-Une fois par mois, une séance programmée spécialement pour les seniors, suivie d’une collation offerte dans notre
-buvette. Bienvenue à tout le monde. 
-
-La programmation 65+ débutera à l'automne 2024. 
-
-
-:app-film-list-senior
+# Événements
 
 ## Cycle estival
 

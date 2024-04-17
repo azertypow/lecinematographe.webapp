@@ -2,23 +2,24 @@
 
 
 ##	Tarifs
-- 15.- Plein
+- 15.- Plein 
 - 20.- Soutien (merci <3)
-- 12.- Réduit (AVS, AI, en formation)
-- 10.- Séances jeune public
+- 12.- Réduit (AVS, AI, en formation, chômage)
+- 10.- Enfants jusqu’à 12 ans
+- 5.- Pass Culture [passculture.ch](https://www.passculture.ch) (dès août 2024)  
 
-Billetterie sur place, directement à l'entrée de la salle, paiement cash/cartes/twint. Ouverture de la billetterie 30' minutes avant chaque séance.
+## Media
+
+Nous contacter : [communication@lecinematographe.ch](mailto:communication@lecinematographe.ch)
 
 ## Accès
-Le Cinématographe est une salle de cinéma de 102 places, accessible sur réservation pour un fauteuil roulant. Écrire à [billetterie@lecinematographe.ch](mailto:billetterie@lecinematographe.ch)
+Le Cinématographe est une salle de cinéma de 102 places, accessible sur réservation pour un fauteuil roulant <lien vers accessibilité – fauteuil roulant>.
 
-Adresse : Casino de Montbenon, Allée Ernest-Ansermet 3, 1003 Lausanne
+Adresse : Casino de Montbenon, Allée Ernest-Ansermet 3, 1003 Lausanne [plan ici](https://maps.app.goo.gl/Q7zx9RSJoytFahuc6)
 
 Depuis la gare de Lausanne :
 à pied en montant l’Av. Louis-Ruchonnet, puis l’Av. de Savoie
 en bus (3, 20, 21), arrêt Cécil
-
-:AppContentMap
 
 ## Buvette
 Notre buvette est située en face du Cinématographe. Nous sommes raviexs de vous y accueillir pour boire un verre, échanger sur les films, se rencontrer avant ou après chaque projection. Des livres, des magazines et des jeux sont à disposition.
@@ -27,25 +28,27 @@ Horaires : lu-ve 17h-00h, sa-di 14h-00h
 
 Partenaires : (liste à venir)
 
-## Équipe
+## Équipe (en kinkonsssss, de manière non hiérarchique)
 
-Meli Boss (iel) – co-direction, administration  
-Faye Corthésy (elle) – co-direction, médiation, programmation  
-Gysèle Giannuzzi (iel) – co-direction, communication, programmation  
-Alice Riva (elle) – co-direction, exploitation, programmation  
+Meli Boss (iel) – co-direction, administration
+Faye Corthésy (elle) – co-direction, médiation, programmation
+Gysèle Giannuzzi (iel) – co-direction, communication, programmation
+Alice Riva (elle) – co-direction, exploitation, programmation
 
-Technique — Sébastien Baudet
+Sébastien Baudet — technique
 
-Caissier-ères et projectionnistes bénévoles – À venir
+Caissier-ères et projectionnistes bénévoles
+À venir
 
-Le comité de l’association  
-Mélanie Courvoisier  
-Stéphane Goël  
-Astrid Lavanderos  
-Mourad Moussa  
-Marie-Lou Pahud  
+Le comité de l’association
+Mélanie Courvoisier
+Stéphane Goël
+Astrid Lavanderos
+Mourad Moussa
+Marie-Lou Pahud
 
-Personnel de nettoyage — Équipe WillTtec
+Personnel de nettoyage
+Équipe WillTtec
 
 Clovis Duran — design graphique, web design  
 Nico Baldran — développement application  
@@ -56,9 +59,9 @@ web4next — gestion informatique
 Ouvert en 1981, le Cinématographe est une salle de cinéma de 102 places située au Casino de Montbenon, au centre de Lausanne. Propriété de la Ville, l’exploitation et la programmation du Cinématographe étaient  conduites par la Cinémathèque suisse jusqu’à fin 2023. Cette salle mythique aux sièges bleus a déjà accueilli un grand nombre de films, d’invitéexs, de publics.Alors que la Cinémathèque déplace ses activités publiques au cinéma Capitole rénové dès 2024, la Ville de Lausanne lance un appel à projets en mai 2023 pour que le Cinématographe continue d’exister en tant que cinéma. Le Collectif du nouveau Cinématographe est sélectionné et assure la gestion, la programmation et l’exploitation de la salle dès mars 2024. Au centre de notre projet réside l’envie de partager avec tous les publics un cinéma de qualité en dialogue avec des enjeux de société contemporains. Nous avons envie de continuer à faire vivre cette salle historique, chère à beaucoup de Lausannoisxes, et de l’ouvrir à de nouveaux publics.
 
 ##	Soutiens
-Ville de Lausanne  
-Loterie romande  
-Fondation Ernst Göhner  
+Ville de Lausanne
+Loterie romande
+Fondation Ernst Göhner
 
 
 Un grand merci à toutes les personnes qui ont participé à notre [levée de fonds en ligne](https://wemakeit.com/projects/le-nouveau-cinematographe) :
