@@ -78,6 +78,10 @@
                     <div>Distributeur</div>
                     <div>{{ticketFilm.tx_distributeur}}</div>
                 </div>
+                <div class="v-app-film-details__details__info__item">
+                    <div>Version·s</div>
+                    <div>{{ticketFilm.tx_vers_lng?.replace('Version ', '')}}</div>
+                </div>
             </div>
         </div>
         <div class="v-app-film-details__details"

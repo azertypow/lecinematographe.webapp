@@ -134,6 +134,9 @@ export interface ITicketFilm {
     ur_cover?: string
     ur_images?: string[]
     da_fin?: string
+    tx_vers?: string
+    tx_vers_abr?: string
+    tx_vers_lng?: string
 }
 
 export interface IFilmListResponse {
