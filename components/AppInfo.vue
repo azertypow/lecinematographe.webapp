@@ -31,6 +31,8 @@ import {useBarIsOpen} from "~/composables/states";
 .v-app-info {
     background: var(--lc-color--blue-light);
     position: relative;
+    padding-left: 1rem;
+    padding-right: 2.5rem;
 }
 
 .v-app-info__text {
