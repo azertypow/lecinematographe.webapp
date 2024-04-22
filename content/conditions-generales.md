@@ -2,7 +2,7 @@
 
 ## Conditions de vente pour les achats en ligne du Cinématographe.
 L’achat de billets de cinéma en ligne est un service qui permet d’acquérir à l’avance des
-places de cinéma pour les séances programmées dans les salles Le Cinematographe de
+places de cinéma pour les séances programmées dans les salles Le collectif du nouveau Cinématographe de
 Lausanne.
 
 ## Prix
@@ -42,7 +42,7 @@ de la séance peut donner lieu au remboursement de billets.
 
 Protection des données
 Toutes les données à caractère personnel seront considérées comme confidentielles et
-traitées conformément aux prescriptions de la LPD. Le Cinematographe prend des mesures pour
+traitées conformément aux prescriptions de la LPD. Le collectif du nouveau Cinématographe prend des mesures pour
 protéger son réseau. Une protection absolue contre les interventions et les écoutes illicites
 ne peut toutefois pas être garantie, par conséquent sa responsabilité ne saurait être
 engagée pour de telles ingérences.
