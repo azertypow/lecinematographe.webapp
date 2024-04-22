@@ -13,8 +13,8 @@ export default defineNuxtConfig({
     },
 
     app: {
-        baseURL: '/lecinematographe.webapp/',
-        // baseURL: '/',
+        // baseURL: '/lecinematographe.webapp/',
+        baseURL: '/',
         pageTransition: {
             name: 'page',
             mode: 'out-in',
