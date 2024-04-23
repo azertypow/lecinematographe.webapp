@@ -75,8 +75,8 @@
                 class="v-app-footer__content__right"
             >
                 <p>
-                    <nuxt-link href="/condition-generales">Conditions générales</nuxt-link>
-                    <br><nuxt-link href="/politique-de-confidentialite" >Politique de confidentialité</nuxt-link>
+                    <nuxt-link href="/conditions-generales">Conditions générales</nuxt-link>
+                    <br><nuxt-link href="/politiques-de-confidentialite" >Politique de confidentialité</nuxt-link>
                 </p>
                 <p>
                     <a href="mailto:contact@lecinematographe.ch"
