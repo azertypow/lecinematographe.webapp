@@ -62,7 +62,7 @@
                     class="v-app-footer__content__text"
                 >
                     <p>
-                        LE CINÉMATOGRAPHE
+                        Collectif du nouveau Cinématographe
                         <br>Casino de Montbenon
                         <br>All. Ernest-Ansermet 3
                         <br>1003 Lausanne
