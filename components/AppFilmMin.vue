@@ -127,6 +127,8 @@ const appFilmRefShineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
 
 .v-app-film-min__title__value {
     margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .v-app-film-min__description {
