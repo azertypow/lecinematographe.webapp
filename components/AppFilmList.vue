@@ -96,5 +96,9 @@ const props = withDefaults(defineProps<{
     @media (max-width: scss-params.$fp-breakpoint-sm) {
         flex-basis: calc( 100% / 2 );
     }
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+        flex-basis: calc( 100% / 5 * 4 );
+    }
 }
 </style>
