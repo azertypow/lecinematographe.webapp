@@ -241,9 +241,12 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     font-size: 1.75rem;
     line-height: 1em;
 
-    @container (width < 1000px) {
+    @media (width < 1000px) {
         font-size: 1.2rem;
-        line-height: 1em;
+    }
+
+    @media (width < 500px) {
+        font-size: .8rem;
     }
 }
 
