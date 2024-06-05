@@ -57,11 +57,6 @@ const props = defineProps<{
     color: inherit;
     border: none;
     cursor: pointer;
-
-
-    @container app-calendar (width < 700px)  {
-        //flex-direction: column;
-    }
 }
 
 .v-app-calendar-list-item__cover {
@@ -70,7 +65,7 @@ const props = defineProps<{
     aspect-ratio: 3/2;
     object-fit: cover;
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         display: none;
     }
 }
@@ -78,7 +73,7 @@ const props = defineProps<{
 .v-app-calendar-list-item__text {
     width: 100%;
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         flex-direction: column;
         align-items: flex-start;
 
@@ -102,13 +97,13 @@ const props = defineProps<{
 .v-app-calendar-list-item__title {
     margin: 0;
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         font-size: .65rem;
     }
 }
 
 .v-app-calendar-list-item__hour {
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         font-size: .5rem;
         line-height: 1em;
     }
@@ -122,7 +117,7 @@ const props = defineProps<{
     line-height: 1.25em;
     transform: rotate(-5deg);
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         top: calc( 50% + .45rem );
         font-size: .35rem;
     }

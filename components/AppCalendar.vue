@@ -133,7 +133,7 @@ async function updateSelectedDate(date: Date) {
     align-items: center;
     flex-direction: column;
 
-    @container app-calendar (width < 700px) {
+    @media (max-width: 700px) {
         flex-direction: row;
         gap: .5rem;
         padding-left: .5rem;
@@ -142,7 +142,7 @@ async function updateSelectedDate(date: Date) {
 }
 
 .v-app-calendar__nav-button {
-    @container app-calendar (width < 700px) {
+    @media (max-width: 700px) {
         flex-direction: column;
     }
 }
@@ -165,7 +165,7 @@ async function updateSelectedDate(date: Date) {
 .v-app-calendar__dates {
   width: 100%;
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         width: auto;
     }
 }

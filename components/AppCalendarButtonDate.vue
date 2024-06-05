@@ -52,7 +52,7 @@ const props = defineProps<{
     border-radius: 100%;
     margin-bottom: var(--app-flex--gap_half);
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         margin-bottom: .1rem;
         width: 3em;
         height: 3em;
@@ -80,7 +80,7 @@ const props = defineProps<{
     border-bottom-color: var(--lc-color--blue-light);
   }
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         display: none;
     }
 }
@@ -88,7 +88,7 @@ const props = defineProps<{
     text-transform: uppercase;
     padding-bottom: .15rem;
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         font-size: .3rem;
         line-height: 1em;
     }
@@ -97,7 +97,7 @@ const props = defineProps<{
 .date-day-number {
     font-size: .85rem;
 
-    @container app-calendar (width < 700px)  {
+    @media (max-width: 700px) {
         font-size: .65rem;
     }
 }
