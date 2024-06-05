@@ -98,17 +98,17 @@
             </div>
             <div class="v-app-film-details__details__info"
             >
-                <div class="v-app-film-details__details__info__item"
+                <a class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
                      v-for="nextSeance of nextSeances"
+                     :href="`https://billetterie.lecinematographe.ch/shop15/${nextSeance.id_seance}`"
                 >
                     <div>{{ new Date(`${nextSeance.id_date}T${nextSeance.tx_heure}:00`).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
                     <div>{{ formatDateFromDate( new Date(`${nextSeance.id_date}T${nextSeance.tx_heure}:00`) ) }}</div>
                     <div>
-                        <div style="position: absolute; top: 1rem; right: 0; font-size: .5rem; line-height: 1.25em; transform: rotate(-5deg);">bientôt!</div>
                         <img class="v-app-film-details__details__info__item__ticket"
                              alt="prendre un billet" src="../assets/icons/ticket.svg" />
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -297,11 +297,19 @@ async function setGradientColor(imageElement: HTMLImageElement) {
     display: grid;
     grid-template-columns: 1.5fr 2fr;
     cursor: pointer;
+    position: relative;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
 
     @media (max-width: scss-params.$fp-breakpoint-sm) {
         grid-template-columns: 1fr;
         line-height: 1.15em;
         margin-bottom: .5rem;
+    }
+
+    &.v-app-film-details__details__info__item--link {
+        color: inherit;
+        border-bottom: none;
     }
 }
 
@@ -319,12 +327,6 @@ async function setGradientColor(imageElement: HTMLImageElement) {
         width: auto;
         display: block;
     }
-}
-
-.v-app-film-details__details__info__item {
-    position: relative;
-    padding-top: .25rem;
-    padding-bottom: .25rem;
 }
 
 .v-app-film-details__details__info__item__ticket {

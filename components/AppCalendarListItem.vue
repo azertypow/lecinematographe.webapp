@@ -2,7 +2,10 @@
     <section
         class="v-app-calendar-list-item"
     >
-        <div class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap" style="position: relative;">
+        <a class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
+           style="position: relative;"
+             :href="`https://billetterie.lecinematographe.ch/shop15/${seanceId}`"
+        >
             <img
                 class="v-app-calendar-list-item__cover"
                 :alt="`image de couverture de ${title}`"
@@ -14,13 +17,11 @@
                 <p class="v-app-calendar-list-item__hour"
                 >{{hour.replace(':', 'h').replace('h00', 'h')}}</p>
             </div>
-            <div class="v-app-calendar-list-item__soon"
-            >bientôt!</div>
             <img class="v-app-calendar-list-item__ticket"
                  alt="prendre un ticket"
                 src="../assets/icons/ticket.svg"
             />
-        </div>
+        </a>
     </section>
 </template>
 
@@ -37,6 +38,7 @@ const props = defineProps<{
     title: string,
     coverUrl: string,
     hour: string,
+    seanceId: number,
     enPresenceDe?: string
 }>()
 </script>
@@ -52,6 +54,11 @@ const props = defineProps<{
 }
 
 .v-app-calendar-list-item__container {
+    color: inherit;
+    border: none;
+    cursor: pointer;
+
+
     @container app-calendar (width < 700px)  {
         //flex-direction: column;
     }
