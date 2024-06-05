@@ -100,6 +100,7 @@
             >
                 <a class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
                      v-for="nextSeance of nextSeances"
+                   target="_blank"
                      :href="`https://billetterie.lecinematographe.ch/shop15/${nextSeance.id_seance}`"
                 >
                     <div>{{ new Date(`${nextSeance.id_date}T${nextSeance.tx_heure}:00`).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>

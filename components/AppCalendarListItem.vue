@@ -4,6 +4,7 @@
     >
         <a class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
            style="position: relative;"
+           target="_blank"
              :href="`https://billetterie.lecinematographe.ch/shop15/${seanceId}`"
         >
             <img
