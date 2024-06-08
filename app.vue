@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import AppNav from "~/components/AppNav.vue";
 import AppIntroAnimation from "~/components/AppIntroAnimation.vue";
-import {useBarIsOpen, usePlayerLink} from "~/composables/states";
+import {usePlayerLink} from "~/composables/states";
 
 const menuIsOpen = useMenuIsOpen()
 
@@ -25,13 +25,6 @@ const youtubeEmbedLink = computed(() => {
 
 <template>
     <main class="v-app">
-        <transition>
-        <div class="v-app__info-container"
-             v-if="useBarIsOpen().value"
-        >
-            <app-info/>
-        </div>
-        </transition>
         <transition>
             <div class="v-app__player"
                  v-if="usePlayerLink().value">
