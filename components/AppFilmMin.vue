@@ -25,7 +25,7 @@
                 :style="`background: linear-gradient(to top, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
             >
                 <p class="v-app-film-min__description__value"
-                >un film <span class="cl-min-first-letter">{{ticketFilm.tx_realisateur}}</span></p>
+                >{{ticketFilm.tx_realisateur.replace('De', '')}}</p>
             </div>
             <img class="v-app-film-min__cover__img"
                 :alt="`image de couverture de ${ticketFilm.tx_titre_lng}`"

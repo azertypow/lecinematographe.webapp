@@ -11,7 +11,7 @@
         ></div>
 <!--        <h3 class="v-app-film-details__date">À partir du {{ new Date(ticketFilm.da_depart).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</h3>-->
         <h1 class="v-app-film-details__title">{{ticketFilm.tx_titre_lng}}</h1>
-        <h5 class="v-app-film-details__subtitle">Un film <span class="lc-first-letter-to-lowercase">{{ticketFilm.tx_realisateur}}</span></h5>
+        <h5 class="v-app-film-details__subtitle">{{ticketFilm.tx_realisateur.replace('De', '')}}</h5>
         <div class="v-app-film-details__cover">
 
             <div
@@ -44,7 +44,7 @@
                 </div>
                 <h3 class="v-app-film-details__details__header__title">{{ticketFilm.tx_titre_lng}}</h3>
             </div>
-            <div class="v-app-film-details__details__author">Un film {{ticketFilm.tx_realisateur.replace('D', 'd')}}</div>
+            <div class="v-app-film-details__details__author">{{ticketFilm.tx_realisateur.replace('De', '')}}</div>
             <div class="v-app-film-details__details__info">
                 <div class="v-app-film-details__details__info__item">
                     <div>Date</div>
