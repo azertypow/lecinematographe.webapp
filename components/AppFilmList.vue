@@ -29,7 +29,7 @@ import type {ITicketFilm} from "~/_utils/apiTicket";
 
 const props = withDefaults(defineProps<{
     ticketFilmArray: ITicketFilm[],
-    showTitle: false
+    showTitle: boolean
 }>(), {
 })
 </script>

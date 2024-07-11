@@ -18,7 +18,9 @@
         <div v-else
         >
             <div class="app-grid--column-24 app-flex--sm app-flex--sm--column">
-                <div class="v-index__section v-index__section--today app-flex--sm__basis-1-1">
+                <div class="v-index__section v-index__section--today app-flex--sm__basis-1-1"
+                     v-if="data.filmlist"
+                >
                     <AppFilmList
                         :ticket-film-array="data.filmlist"
                         :show-title="true"
