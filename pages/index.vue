@@ -80,12 +80,6 @@ onMounted(async () => {
         loadSpecialEventsInFilmList().then(value => specialEventsInFilmList.value = value)
     })
     apiGetListOfFilmByDate(new Date()).then(value => dateFilmByDate.value = value)
-
-    console.log( 'data.value -> apiGetFilmList()', data.value )
-    console.log('apiGetSeancesOfFilm', await apiGetSeancesOfFilm(3))
-    console.log('apiGetUrlOfFilm', await apiGetUrlOfFilm(1))
-    console.log('apiGetListOfFilmByDate', await apiGetListOfFilmByDate(new Date('2024-03-20')))
-
 })
 
 interface ISpecialEventsInFilmList {
