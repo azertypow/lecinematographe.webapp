@@ -2,6 +2,12 @@
     <section
         class="v-app-calendar"
     >
+      <template v-if="calendarIsDisable">
+        <div class="v-app-calendar__is-disable-msg">
+          <div>Le Cinématographe réouvre le mercredi 28 août 🙂</div>
+        </div>
+      </template>
+      <template v-else>
         <template v-if="dateRange.length < 1">
             <div style="display: flex; align-items: center; justify-content: center">
                 <div>chargement…</div>
@@ -69,7 +75,7 @@
                 </div>
             </div>
         </template>
-
+      </template>
 
     </section>
 </template>
@@ -97,7 +103,11 @@ const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
 const seancesDataOnSelectedDate: Ref<UnwrapRef<null | {seances: ISeance[], filmCover?: string}[]>> = ref(null)
 
+const calendarIsDisable = true
+
 onMounted(() => {
+    if(calendarIsDisable) return
+
     setDateRange(new Date())
 })
 
@@ -124,6 +134,20 @@ async function updateSelectedDate(date: Date) {
 
 .v-app-calendar {
     container: app-calendar / inline-size;
+}
+
+.v-app-calendar__is-disable-msg {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: var(--lc-radius);
+  padding: .5rem var(--app-gutter_regular);
+  background: var(--lc-color--blue-light);
+  color: white;
+  width: min(100%, 35em);
+  min-height: 6rem;
 }
 
 .v-app-calendar__layout {
