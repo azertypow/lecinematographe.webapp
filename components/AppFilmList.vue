@@ -11,6 +11,10 @@
         >
             <div class="app-flex__shrink-0 app-flex__basis-1-4 v-app-film-list__films-container__item"
                  v-for="film of ticketFilmArray">
+                <div    style="
+                            text-align: center;
+                            padding-bottom: .5em;
+                        ">{{film.tx_titre_lng}}</div>
                 <AppFilmMin
                     :ticket-film="film"
                 />
