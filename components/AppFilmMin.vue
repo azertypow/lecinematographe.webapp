@@ -14,13 +14,6 @@
         ></div>
         <div class="v-app-film-min__cover__text app-flex app-flex--column app-flex--justify_space-between app-flex--nowrap">
 
-            <div class="v-app-film-min__title"
-                :style="`background: linear-gradient(to bottom, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
-            >
-                <h2 class="v-app-film-min__title__value"
-                >{{ticketFilm.tx_titre_lng}}</h2>
-            </div>
-
             <div class="v-app-film-min__description"
                 :style="`background: linear-gradient(to top, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
             >
@@ -109,26 +102,6 @@ const appFilmRefShineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
     width: 100%;
     height: 100%;
     z-index: 20;
-}
-
-.v-app-film-min__title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding-top: .5rem;
-    padding-bottom: 3rem;
-    margin: 0;
-    text-transform: uppercase;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-}
-
-.v-app-film-min__title__value {
-    margin: 0;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
 .v-app-film-min__description {
