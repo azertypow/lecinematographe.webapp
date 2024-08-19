@@ -97,6 +97,11 @@ const props = withDefaults(defineProps<{
 }
 
 .v-app-film-list__films-container__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-transform: uppercase;
+
     @media (max-width: scss-params.$fp-breakpoint-sm) {
         flex-basis: calc( 100% / 2 );
     }
