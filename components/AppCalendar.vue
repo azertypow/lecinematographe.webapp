@@ -103,7 +103,7 @@ const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
 const seancesDataOnSelectedDate: Ref<UnwrapRef<null | {seances: ISeance[], filmCover?: string}[]>> = ref(null)
 
-const calendarIsDisable = true
+const calendarIsDisable = false
 
 onMounted(() => {
     if(calendarIsDisable) return
