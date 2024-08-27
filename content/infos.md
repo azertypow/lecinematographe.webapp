@@ -48,7 +48,7 @@ Marie-Lou Pahud
 Personnel de nettoyage — Équipe WillTtec
 
 Clovis Duran — design graphique, web design  
-Nico Baldran — développement application  
+Villa1203 — développement application  
 web4next — gestion informatique
 
 
