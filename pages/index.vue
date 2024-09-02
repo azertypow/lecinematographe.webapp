@@ -75,9 +75,12 @@ const dateFilmByDate: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
 const specialEventsInFilmList: Ref<UnwrapRef<ISpecialEventsInFilmList[] | null>> = ref(null)
 
 onMounted(async () => {
-    apiGetFilmList().then(value => {
+    apiGetFilmList().then(async value => {
         data.value = value
-        loadSpecialEventsInFilmList().then(value => specialEventsInFilmList.value = value)
+        specialEventsInFilmList.value = (await loadSpecialEventsInFilmList()).sort((a, b) => {
+
+            return new Date(a.seance.id_date).getTime() -  new Date(b.seance.id_date).getTime()
+        })
     })
     apiGetListOfFilmByDate(new Date()).then(value => dateFilmByDate.value = value)
 })
@@ -87,7 +90,7 @@ interface ISpecialEventsInFilmList {
     filmData: ITicketFilm
 }
 
-async function loadSpecialEventsInFilmList(): Promise<any[] | ISpecialEventsInFilmList[]> {
+async function loadSpecialEventsInFilmList(): Promise<ISpecialEventsInFilmList[]> {
     if(data.value === null) return []
     if(!data.value.filmlist) return []
 
