@@ -66,9 +66,10 @@
                         >
                             <AppCalendarListItem
                                 :title="seance.tx_titre_lng"
-                                :cover-url="seanceData.filmCover"
+                                :cover_url="seanceData.filmCover || ''"
                                 :hour="seance.tx_heure"
                                 :seance-id="seance.id_seance"
+                                :film_id="seance.id_film"
                             />
                         </div>
                     </div>

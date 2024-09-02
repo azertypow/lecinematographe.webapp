@@ -2,13 +2,14 @@
     <section
         class="v-app-calendar-list-item"
     >
-        <div class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
-           style="position: relative;"
+        <nuxt-link class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
+                   style="position: relative;"
+                   :to="`/film/${film_id}`"
         >
             <img
                 class="v-app-calendar-list-item__cover"
                 :alt="`image de couverture de ${title}`"
-                :src="coverUrl"
+                :src="cover_url"
             />
             <div class="v-app-calendar-list-item__text app-flex app-flex--justify_space-between app-flex--nowrap app-flex--align_center">
                 <h3 class="v-app-calendar-list-item__title"
@@ -24,7 +25,7 @@
                   src="../assets/icons/ticket.svg"
               />
             </a>
-        </div>
+        </nuxt-link>
     </section>
 </template>
 
@@ -39,10 +40,11 @@ import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 
 const props = defineProps<{
     title: string,
-    coverUrl: string,
+    cover_url: string,
     hour: string,
     seanceId: number,
     enPresenceDe?: string
+    film_id: number
 }>()
 </script>
 
