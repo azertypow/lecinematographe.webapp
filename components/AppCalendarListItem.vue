@@ -2,10 +2,8 @@
     <section
         class="v-app-calendar-list-item"
     >
-        <a class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
+        <div class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
            style="position: relative;"
-           target="_blank"
-             :href="`https://billetterie.lecinematographe.ch/shop15/${seanceId}`"
         >
             <img
                 class="v-app-calendar-list-item__cover"
@@ -18,11 +16,15 @@
                 <p class="v-app-calendar-list-item__hour"
                 >{{hour.replace(':', 'h').replace('h00', 'h')}}</p>
             </div>
-            <img class="v-app-calendar-list-item__ticket"
-                 alt="prendre un ticket"
-                src="../assets/icons/ticket.svg"
-            />
-        </a>
+            <a target="_blank"
+               :href="`https://billetterie.lecinematographe.ch/shop15/${seanceId}`"
+            >
+              <img class="v-app-calendar-list-item__ticket"
+                   alt="prendre un ticket"
+                  src="../assets/icons/ticket.svg"
+              />
+            </a>
+        </div>
     </section>
 </template>
 
