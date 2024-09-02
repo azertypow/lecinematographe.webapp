@@ -95,9 +95,6 @@ import {
     type ISeancesOfFilm
 } from "~/_utils/apiTicket";
 
-const props = defineProps<{
-}>()
-
 const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
 
 const dateRange: Ref<UnwrapRef<Date[]>> = ref([])

@@ -42,7 +42,7 @@
                             :tx_description="filmVignette.seance.tx_seance"
                             :tx_titre_lng="filmVignette.filmData.tx_titre_lng"
                             :ur_vignette="filmVignette.filmData.ur_vignette"
-                            :film-id="filmVignette.filmData.id_film"
+                            :film_id="filmVignette.filmData.id_film"
                         />
                     </div>
                 </div>

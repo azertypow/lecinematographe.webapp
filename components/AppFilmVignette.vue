@@ -17,7 +17,7 @@
             />
         </div>
         <nuxt-link class="v-app-film-vignette__details"
-           :href="`/film/${filmId}`"
+           :href="`/film/${film_id}`"
         >
             <app-button-shine>détails du film</app-button-shine>
         </nuxt-link>
@@ -44,7 +44,7 @@ const props = defineProps<{
     tx_titre_lng: string
     tx_description: string
     ur_vignette: string
-    filmId: string
+    film_id: number
 }>()
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
