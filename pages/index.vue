@@ -110,8 +110,6 @@ async function loadSpecialEventsInFilmList(): Promise<ISpecialEventsInFilmList[]
         })
     }
 
-    console.log('loadSpecialEventsInFilmList', toReturn)
-
     return toReturn
 }
 
