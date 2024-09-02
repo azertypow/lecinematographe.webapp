@@ -60,6 +60,7 @@ const props = defineProps<{
     color: inherit;
     border: none;
     cursor: pointer;
+  user-select: none;
 }
 
 .v-app-calendar-list-item__cover {
