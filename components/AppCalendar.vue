@@ -42,7 +42,7 @@
                     style="display: flex; align-items: center; justify-content: center"
                 >
                     <div>
-                        Pas d'évènements pour cette date :)
+                        programmation à venir :)
                     </div>
                 </div>
                 <div
