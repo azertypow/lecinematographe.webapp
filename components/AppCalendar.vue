@@ -86,7 +86,7 @@
 
 
 <script setup lang="ts">
-import {defineProps, type Ref, type UnwrapRef} from 'vue'
+import {type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
 import {apiGetListOfFilmSeanceByDate, type ISeance,} from "~/_utils/apiTicket";
 
