@@ -1,0 +1,2555 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+openapi: '3.0.0'
+
+# This is your document metadata
+info:
+  version: "1.0.0"
+  title: Ticketack
+
+  description: |
+    # HTTP REST API
+
+    ## Architecture and Naming conventions
+
+    ### Name conventions
+
+    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+    "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+    interpreted as described in [RFC 2119](https://tools.ietf.org/html/rfc2119).
+
+    Additionally:
+    * SERVER refer to the Ticketack Engine server application
+    * CLIENT refer to the HTTP client making requests to the SERVER
+
+    ### Architecture
+
+    The Ticketack Engine is the SERVER application exposing a REST-like, JSON based
+    API. The design goals of the API are, in order:
+
+    1. flexibility
+    2. consistency
+    3. performance
+
+    The CLIENT MUST be able to have full control over the HTTP requests and
+    responses. This includes :
+    * creating request using different HTTP Methods,
+    * handling different HTTP statuses code in responses,
+    * providing and parsing both non-standard HTTP Headers (like X-API-Key) and
+      standard HTTP Headers,
+    * provide JSON formatted data in HTTP body requests,
+    * parse JSON formatted data from HTTP body responses
+
+    ## Standard error responses
+
+    ### Body
+
+    The standard error response body is a JSON object. Its structure is a
+    flat map containing invalid properties and error message as values.  
+    For example, if you try to create a new user with an empty `password` property
+    sending:
+
+      ```
+      {"username": "root", "password": ""}
+      ```
+
+    a standard error response body could be like:
+
+      ```
+      {"password": "ETOOSHORT"}
+      ```
+
+    The standard error object is always flat. It uses dot notation `.` for nested
+    properties and numeric indexes for arrays. For example:
+
+      ```
+      {"root": {"sub": "is-too-short"}, "array": ["is-invalid"]}
+      ```
+
+    Would give the following error:
+
+      ```
+      {"root.sub": "ETOOSHORT", "array.0": "EINVAL"}
+      ```
+
+    ### Messages
+
+    This is an exhaustive list of error messages returned by the application.
+
+    * **EDUPLICATE**  
+      A unique constraint is not respected.
+
+    * **EEMPTY**  
+      The property's value is empty. Used with object, string and arrays.
+
+    * **EINVAL**  
+      The property's value is invalid. This error message is the default for any
+      invalid value, one should report to this documentation to infer what was
+      wrong. In the best-case scenario, the SERVER should return a more meaningful
+      error message.
+
+    * **ENOPROP**  
+      The property is required but was not provided by the CLIENT.
+
+    * **EISNOTARRAY**  
+      The property's value should be an array.
+
+    * **EISNOTNUM**  
+      The property's value should be an number.
+
+    * **EISNOTOBJ**  
+      The property's value should be an object.
+
+    * **EISNOTSTRING**  
+      The property's value should be a string.
+
+    * **EISNOTUUID**  
+      The property's value should be a valid UUIDv4.
+
+    * **ENOMATCH**  
+      A match could not be found. This error message is used for example on
+      [booking confirmation](#booking-confirmation) when no satisfying
+      [window](#windows) could be found in the requested [ticket](#tickets).
+
+    * **ENOTISO8601**  
+      Expected an ISO8601 compliant date but something else was provided.
+
+    * **ENOTSUP**  
+      The property is not supported but was provided.
+
+    * **EREADONLY**  
+      The property is read only and cannot be set by the CLIENT. For example, the
+      `_id` property is usually set by the SERVER and cannot be set by the CLIENT.
+
+    * **ETOOBIG**  
+      The property's value is too big. Usually used with numbers.
+
+    * **ETOOSHORT**  
+      The property's value is too short. Usually used with numbers.
+
+    * **ETOOLATE**  
+      The requested seat is already booked or being booked, the requested booking
+      is already confirmed.
+
+
+# 1) Define the key name and location
+components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: X-API-KEY  # name of the header, query parameter or cookie
+
+  schemas:
+    Booking:
+      type: object
+      description: "Bookings are the link between Screenings and Tickets. They are first requested and saved into the matching Screening. Once created, a booking MAY be released or confirmed to a single Ticket before expiration. Once confirmed, a booking MAY be scanned or cancelled."
+      properties:
+        _id:
+          type: string
+          format: UUID
+          description: The BOOKING _id, an UUIDv4.
+        _in:
+          type: boolean
+          readOnly: true
+          description: The booking scan status (in or out)
+        created_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The date when the booking was created.
+        expire_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The deadline after which the booking cannot be confirmed.
+        screening_id:
+          type: string
+          format: UUID
+          readOnly: true
+          description: The screening's id of this booking.
+        pledge:
+          type: object
+          description: Some pledged constraint(s) on this booking, checked on confirmation.
+        seat:
+          type: string
+          description: The seat label of this booking, must exist in the screening's map.
+        confirmed_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The date when the booking was confirmed. Only set after confirmation.
+        screening_start_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The screening's start_at time. Only set after confirmation.
+        screening_bucket:
+          type: object
+          readOnly: true
+          description: The screening's bucket matching and assignation info, set at the booking request time
+          properties:
+            matching:
+              type: string
+              description: the screening's bucket matched when this booking was requested.
+            assigned:
+              type: string
+              description: the assigned screening's bucket when this booking was requested. If the assigned bucket is equals to the matching one, this booking has made the matching bucket "steal" from the assigned bucket.
+        ticket_id:
+          type: string
+          format: UUID
+          readOnly: true
+          description: The ticket's id of this booking. Only set after confirmation.
+        scanned_at:
+          type: array
+          readOnly: true
+          items:
+            type: string
+            format: ISO8601 datetime
+          description: An array with every scanning timing (in mode).
+        unscanned_at:
+          type: array
+          readOnly: true
+          items:
+            type: string
+            format: ISO8601 datetime
+          description: An array with every scanning timing (out mode).
+        vote:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Vote'
+          description: this property exists only if a vote has been placed for this booking
+
+    Vote:
+      type: object
+      description: "Embedded in a booking, it represents a user vote for a screening."
+      properties:
+        score:
+          type: number
+          description: The vote score.
+        created_at:
+          type: string
+          format: datetime
+          description: The vote creation date.
+
+    Bucket:
+      description: |
+        Screenings buckets are an ordered list of capacity and rules.
+        Each booking can "match" a bucket when all the bucket's rules are satisfied, and can be assigned to a bucket (not necessarily the matched one).
+        Each booking "use" 1 capacity unit from its assigned bucket.
+        The SERVER has a simple bucket assignation heuristic in order to maximize the screening's availabilty:
+          - loop through each bucket in order:
+            - if the bucket doesn't match, ignore it.
+            - if the bucket match but is full, add the bucket's may_steal_from list to a may_steal_from list specific to this booking.
+            - if the bucket match and is not full, assign the booking and stop.
+          - if step 1 failed to assign the booking to a bucket, loop through each booking's may_steal_from in order:
+            - if the bucket is full, ignore it.
+            - if the bucket is not full, assign the booking and stop.
+          - the booking assignation failed.
+
+
+      type: object
+      properties:
+        _id:
+          type: string
+          format: UUID
+          readOnly: true
+          description: The bucket's _id, must be unique in respect to the bucket list. Generated by the SERVER if not provided.
+        total_capacity:
+          type: number
+          minimum: 0
+          description: the bucket total capacity.
+        may_steal_from:
+          type: array
+          items:
+            type: string
+          description: A bucket _id list from which this bucket can "steal" capacity units. The default is an empty array.
+        rules:
+          type: object
+          description: The bucket's assignation rules
+          properties:
+            not_before:
+              type: string
+              format: datetime
+              description: a date (ISO8601 format) before which the bucket can not be matched.
+            not_after:
+              type: string
+              format: datetime
+              description: a date (ISO8601 format) after which the bucket can not be matched. The default is the screening's stop_at date.
+            only_for_tickettypes:
+              type: array
+              items:
+                type: string
+              description: the booking's ticket:type:_id pledge MUST be in this array in order to match the bucket.
+            only_for_roles:
+              type: array
+              items:
+                type: string
+              description: the requesting user MUST share at least one role with this array in order to match the bucket.
+      required:
+        - total_capacity
+
+    Cashregister:
+      description: A cashregister.
+      type: object
+      properties:
+        _id:
+          type: string
+          format: UUID
+          description: The cashregister's id, as an UUIDV4
+        name:
+          type: object
+          description: The cashregister's name; an object with lang:text properties, proper for display. At least one property is required.
+        salepoint_id:
+          type: string
+          format: UUID
+          description: The cashregister's salepoint id, as an UUIDV4
+        operations:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/CashregisterOperation'
+
+    CashregisterOperation:
+      description: A cashregister operation.
+      type: object
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: number
+          format: float
+          minimum: 0
+          description: The operation amount as a non negative float.
+        currency:
+          type: string
+          description: The operation currency.
+        type:
+          type: string
+          enum: [debit, credit, error_debit, error_credit]
+          description: The operation type
+        pool:
+          type: string
+          format: UUID
+          readOnly: true
+          description: All the operation of the same closing have the same pool _id.
+        created_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The date when the operation was created.
+        created_by:
+          type: string
+          format: UUID
+          readOnly: true
+          description: The creator _id
+        balance_before:
+          type: number
+          format: float
+          description: The cashregister balance before this operation
+        balance_after:
+          type: number
+          format: float
+          description: The cashregister balance after this operation
+
+    Contact:
+      type: object
+      description: An object containing contact informations.
+      properties:
+        title:
+          type: string
+          description: The contact's title.
+        firstname:
+          type: string
+          description: The contact's firstname.
+        lastname:
+          type: string
+          description: The contact's lastname.
+        age:
+          type: string
+          description: The contact's age.
+        birthdate:
+          type: string
+          description: A string representing the contact's birthdate.
+        sex:
+          type: string
+          description: The contact's gender.
+        phone:
+          type: string
+          description: The contact's landline phone.
+        cellphone:
+          type: string
+          description: The contact's cell phone.
+        language:
+          type: string
+          description: The contact's ISO 639-1 preferred language.
+        email:
+          type: string
+          description: The contact's email.
+        disable_email_notifications:
+          type: boolean
+          description: Makes it possible to opt out of booking notifications
+        address:
+          type: object
+          description: An object containing an address
+          properties:
+            street:
+              type: string
+              description: The address street name and number.
+            city:
+              type: string
+              description: The address city.
+            zip:
+              type: string
+              description: The address zip code.
+            country:
+              type: string
+              description:  The address country.
+        rfc2397_portrait:
+          type: string
+          description: A data URL string (as described in RFC 2397) embedding an image. The mime-type must be one of image/png, image/jpeg or image/gif. The maximum binary file size accepted is 100 KiB.
+        opaque:
+          type: object
+          description: An object filled with data that are not validated. Default to an empty object.
+
+    Favorite:
+      description: A user can add screenings and articles to his favorites.
+      type: object
+      properties:
+        _id:
+          type: string
+          format: UUID
+          readOnly: true
+          description: The favorite _id. This field cannot be set on creation, and should be provided on update.
+        refs:
+          type: array
+          description: An array of objects containing an id property (may be empty).
+          items:
+            type: string
+        type:
+          type: string
+          description: The favorite type. This field must be provided on creation, and should be one of 'screening'|'article'.
+        item_id:
+          type: string
+          format: UUID
+          description: the favorite item _id. This must be the screening _id if type = 'screening' or the article _id if type='article'..
+        name:
+          type: object
+          description: The favorite's name; an object with lang:text properties, proper for display.
+        description:
+          type: object
+          description: The favorite's description; an object with lang:text properties, proper for display.
+        image:
+          type: string
+          description: The favorite's image url (generated on creation)
+        edition:
+          type: string
+          description: The favorite's edition, if any (set if the screening is scoped to an edition)
+      required:
+        - type
+        - item_id
+
+    Place:
+      type: object
+      description: A cinema hall
+      properties:
+        _id:
+          type: string
+          description: A cinema_hall ID.
+        created_at:
+          type: string
+          format: datetime
+          description: The hall's creation date (ISO8601 format).
+        updated_at:
+          type: string
+          format: datetime
+          description: The hall's last update date (ISO8601 format).
+        name:
+          type: string
+          description: The hall's name.
+        cinema:
+          type: string
+          description: The cinema's name.
+        number:
+          type: integer
+          description: The hall's number. Must be provided if using Maccsbox.
+        address:
+          type: string
+          description: The cinema's postal address.
+        zip:
+          type: string
+          description: The cinema's address ZIP code.
+        city:
+          type: string
+          description: The cinema city's name.
+        state:
+          type: string
+          description: The state where the cinema is located.
+        country:
+          type: string
+          description: The country where the cinema is located.
+        coordinates:
+          type: object
+          description: The cinema's GPS coordinates.
+          properties:
+            lat:
+              type: number
+              format: float
+            long:
+              type: number
+              format: float
+          required:
+            - lat
+            - long
+        map:
+          type: object
+          description: An object describing the cinema_hall map
+          properties:
+            dim:
+              type: object
+              description: An object describing physical properties of the cinema_hall
+              properties:
+                x:
+                  type: number
+                  minimum: 1
+                  description: The length of the cinema_hall on the abscissa axis.
+                y:
+                  type: number
+                  minimum: 1
+                  description: The length of the cinema_hall on the ordinate axis.
+                z:
+                  type: number
+                  minimum: 0
+                  description: The number of floors of the cinema_hall.
+            stage_position:
+              type: string
+              enum: [top, bottom, left, right]
+              description: The placement of the screen in the cinema hall.
+            seats:
+              type: array
+              description: An array of object representing the seats on the cinema_hall.
+              items:
+                type: object
+                properties:
+                  label:
+                    type: string
+                    description: A unique label for the seat.
+                  status:
+                    type: string
+                    enum: [free, booking, booked]
+                    readOnly: true
+                    description: A representation of the current booking status.
+                  category:
+                    type: string
+                    description: The seat's category that will be used by the booking, see Bookings Pledge conditions.
+                  position:
+                    type: object
+                    description: "An object used to describe the position of the seat in the cinema hall"
+                    properties:
+                      x:
+                        type: number
+                        minimum: 0
+                        description: "The position of the seat on the abscissa axis (no greater than dim.x)."
+                      y:
+                        type: number
+                        minimum: 0
+                        description: "The position of the seat on the ordinate axis (no greater than dim.y)."
+                      z:
+                        type: number
+                        minimum: 0
+                        description: "The floor on which the seat is located (no greater than dim.z)."
+                  placing:
+                    type: object
+                    description: "An object used to describe the placement of the seat in the cinema_hall"
+                    properties:
+                      zone:
+                        type: string
+                        description: "The zone in which the seat is located (eg: parterre, balcony, etc.)."
+                      row:
+                        type: string
+                        description: "The row in which the seat is located."
+                      seat_number:
+                        type: string
+                        description: "The seat number in the row."
+
+    Pricing:
+      description: Pricings conditions are used to describe the different payments options available. They are embedded into other models and are not used "standalone".
+      type: object
+      properties:
+        name:
+          type: object
+          description: An object with lang:text properties, proper for display.
+        description:
+          type: object
+          description: The pricing's description; an object with lang:text properties, proper for display.
+        price:
+          type: object
+          description: An object with currency:value properties, the "cash" price paid by the customer. Currencies are expressed in capital letters and values are numbers.
+        value:
+          type: object
+          description: An object with currency:value properties, the "real" product price from the seller's point of view shown in the stats. Currencies are expressed in capital letters and values are numbers.
+        VAT:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+          description: The Value Added Tax in percent.
+        sellers:
+          type: array
+          items:
+            type: string
+          description: An array of roles (strings) allowed to book an access for this screening at this pricing condition.
+        category:
+          type: string
+          description: A booking category pledge. A booking having pledged the category "C" can only be confirmed on a ticket activated with a pricing of the matching category.
+        opaque:
+          type: object
+          description: An object filled with data that are not validated. Default to an empty object.
+
+    Salepoint:
+      description: A sale point.
+      type: object
+      properties:
+        _id:
+          type: string
+          format: UUID
+          description: The salepoint's id, as an UUIDV4
+        name:
+          type: object
+          description: The salepoint's name; an object with lang:text properties, proper for display. At least one property is required.
+        pos_layout:
+          type: string
+          enum: [tickets, articles]
+          description: The POS interface to use on this salepoint.
+        delivery:
+          type: object
+          description: Devliery settings for this salepoint
+          properties:
+            types:
+              type: array
+              description: Array of delivery types ids
+              items:
+                type: string
+        settings:
+          type: object
+          description: An override of the global settings (see Setting model properties)
+
+    Screening:
+      type: object
+      description: "Screenings are the main model of the application. A screening stores a lot of static informations only used by the UI (like printing tickets), but the most important part is how it interacts with bookings: Screenings define the pricing conditions and the seats limits."
+      properties:
+        _id:
+          type: string
+          format: UUID
+          readOnly: true
+          description: The screening _id, an UUIDv4. Usually generated by the SERVER, it can be injected at creation.
+        title:
+          type: object
+          description: The screening's title; an object with lang:text properties, proper for display. the original property is required.
+        description:
+          type: object
+          description: The screenings's description; an object with lang:text properties, proper for display.
+        films:
+          description: Film data is an array of objects
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+                format: UUID
+                readOnly: true
+                description: "The movie's _id."
+              title:
+                type: object
+                description: "The film's title; an object with lang:text properties, proper for display. the original property is required."
+              sections:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Section'
+                description: An array of objects with an _id (UUID) and name (translatable object) fields set and non-empty.
+              created_at:
+                type: string
+                format: datetime
+                description: The film's creation date (ISO8601 format).
+              updated_at:
+                type: string
+                format: datetime
+                description: The film's last update date (ISO8601 format).
+              opaque:
+                type: object
+                description: An object filled with data that are not validated. Default to an empty object.
+        note:
+          type: string
+          description: A field that can be used to add a note about the screening event.
+        start_at:
+          type: string
+          format: datetime
+          description: The screening starting datetime (ISO8601 Format).
+        stop_at:
+          type: string
+          format: datetime
+          description: The screening ending datetime (ISO8601 Format). Must be after start_at.
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
+          description: |
+            An array of bucket with additional fields (not provided on creation):
+              - available (integer): number of seats left available for booking.
+              - unconfirmed (integer): number of unconfirmed bookings.
+              - confirmed (integer): number of seats booked and confirmed.
+              - scanned (integer): number of seats scanned.
+        pricings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pricing'
+          description: "An object of pricing conditions."
+        cinema_hall:
+          type: object
+          $ref: '#/components/schemas/Place'
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+        ignore_overlap_rules:
+          type: boolean
+          description: Defines if the overlap rules must be ignored for this screening. Default false.
+        edition:
+          type: string
+          description: The screening's edition, set if an edition is set in the global settings
+        opaque:
+          type: object
+          description: An object filled with data that are not validated. Default to an empty object.
+        refs:
+          type: array
+          description: An array of objects containing an id property (may be empty).
+          items:
+            type: string
+        seats:
+          type: object
+          readOnly: true
+          description: An object used to describe the current booking situation.
+          properties:
+            total:
+              type: integer
+              description: The total number of seats (constant).
+            available:
+              type: integer
+              description: Number of seats left available for booking.
+            unconfirmed:
+              type: integer
+              description: Number of unconfirmed bookings.
+            confirmed:
+              type: integer
+              description: Number of seats booked and confirmed.
+            used:
+              type: integer
+              description: Number of seats in use. This value is updated when bookings are scanned.
+
+    Section:
+      description: |
+        Sections are objects with an _id and a translatable name.
+        They are used in the Screenings and in the Films.
+
+      type: object
+      properties:
+        _id:
+          type: string
+          format: UUID
+          description: |
+              The section's _id.  
+              Generated by the SERVER as an UUID if not provided.  
+              If provided, must be a non empty string or a non negative number.
+        name:
+          type: object
+          description: the section name; an object with lang:text properties, proper for display.
+      required:
+        - _id
+        - name
+
+    Setting:
+      type: object
+      description: Global settings. A unique entry with the "**default**" _id contains all the settings of the ticketack instance.
+      properties:
+        _id:
+          type: string
+          description: The setting id.
+        created_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The date when the setting was created.
+        updated_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The date when the setting was last updated.
+        _version:
+          type: integer
+          description: A non negative integer incremented each time the setting is updated.
+        customer:
+          type: object
+          description: The global customer settings
+        delivery:
+          type: object
+          description: The global delivery settings
+        images:
+          type: object
+          description: The global images settings
+        eshop:
+          type: object
+          description: The global eshop settings
+        pos:
+          type: object
+          description: The global pos settings
+        mobile:
+          type: object
+          description: The global mobile settings
+        payment:
+          type: object
+          description: The global payment settings
+        maccsbox:
+          type: object
+          description: The global maccsbox settings
+
+    TicketType:
+      type: object
+      description: |
+        TicketTypes are the different kind of multi-pass ticket. They define restrictions on tickets like number of bookings and days of bookings (through the windows system), pricings etc.
+
+        A tickettype is not to be updated because most (or all) of its field are duplicated in its ticket. They're used as template for new multi-pass tickets.
+      properties:
+        _id:
+          type: string
+          readOnly: true
+          description: The tickettype _id.
+        name:
+          type: object
+          description: The tickettype's name; an object with lang:text properties, proper for display. At least one property is required.
+        description:
+          type: object
+          description: The tickettype's description; an object with lang:text properties, proper for display. At least one property is required.
+        windows:
+          type: array
+          description: An array of booking rules.
+          items:
+            $ref: '#/components/schemas/Window'
+        pricings:
+          type: array
+          description: An object of pricing conditions.
+          items:
+            $ref: '#/components/schemas/Pricing'
+        opaque:
+          type: object
+          description: An object filled with data that are not validated. Default to an empty object.
+        renewable:
+          type: boolean
+          description: Defines if the tickets of this type can be renewed. Default false.
+        renew_type:
+          type: string
+          description: |
+            Defines how the new validity period is computed when a ticket is renewed.
+            It accepts the 5 following values: now, exp, start-of-year, latest, soonest.
+            Default is "now".
+            Depending on when the renewal is proceeded and on the renew type value, the new subscription start date is computed as described in the following table
+            <table>
+              <tr>
+                <th>If a user renews:</th>
+                <th>now</th>
+                <th>exp</th>
+                <th>start-of-year</th>
+                <th>latest</th>
+                <th>soonest</th>
+              </tr>
+              <tr>
+                <td>Before the expiration date</td>
+                <td>now</td>
+                <td>at expiration date</td>
+                <td>start of next year</td>
+                <td>at expiration date</td>
+                <td>now</td>
+              </tr>
+              <tr>
+                <td>At the expiration date</td>
+                <td>now</td>
+                <td>at expiration date</td>
+                <td>start of next year</td>
+                <td>at expiration date</td>
+                <td>at expiration date</td>
+              </tr>
+              <tr>
+                <td>After the expiration date</td>
+                <td>now</td>
+                <td>at expiration date</td>
+                <td>start of current year</td>
+                <td>now</td>
+                <td>at expiration date</td>
+              </tr>
+            </table>
+
+    Ticket:
+      type: object
+      description: |
+        Tickets are one of the most important model of the SERVER. It is also complex because it interacts with virtually every other part; it has a tickettype, a status and many bookings.
+
+        There are two kinds of tickets: one-time-pass, multi-pass.
+
+        **one-time-pass** tickets allow access to one and only one screening. A one-time-pass ticket's type id is set to the the special value one-time-pass, and the screening's _id field is known. Note that a one-time-pass ticket may allow several bookings to the screening, to allow access to groups of people with one ticket.
+
+        **multi-pass** tickets allow access to a defined number of screening within one or more time frames. Theses restrictions are described using the **windows** system. The ticket's type id is set to its tickettype.
+      required:
+        - type
+        - contact
+      properties:
+        _id:
+          type: string
+          format: UUID
+          description: The ticket _id, an UUIDv4, usually generated by the SERVER. If provided on creation, the CLIENT MUST take greate care to generate it the most randomly possible.
+        status:
+          type: string
+          readOnly: true
+          description: The ticket status. new at creation, optionnally pending after, then activated or blocked.
+        created_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: The date when the ticket was created.
+        type:
+          type: object
+          description: The ticket's type.
+          properties:
+            _id:
+              type: string
+              description: The tickettype _id field of this Ticket or one-time-pass if this Ticket is a one-time-pass.
+            name:
+              type: string
+              readOnly: true
+              description: The tickettype name field of this Ticket, only defined if this ticket is a multi-pass.
+            screening_id:
+              type: string
+              format: UUID
+              description: The screening _id field of this Ticket, only defined if this ticket is a one-time-pass.
+            people:
+              type: integer
+              description: the number of people (bookings) that can be confirmed on this Ticket, only defined if this ticket is a one-time-pass. The default is 1.
+            renewable:
+              type: boolean
+              description: See tickettype.renewable.
+            renew_type:
+              type: string
+              description: See tickettype.renew_type.
+        windows:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Window'
+          description: An array of booking rules for this ticket. If this Ticket is a one-time-pass windows allowing one booking for the given screening are generated. If it is a multi-pass, windows is copied from this Ticket's tickettype.
+        pricings:
+          type: array
+          readOnly: true
+          description: An object of pricing conditions. If this Ticket is a one-time-pass, then it based on its screening pricings. If this Ticket is a multi-pass, then it has been copied from its tickettype.
+          items:
+            $ref: '#/components/schemas/Pricing'
+        contact:
+          $ref: '#/components/schemas/Contact'
+        edition:
+          type: string
+          description: The ticket's edition, set if an edition is set in the global settings
+        opaque:
+          type: object
+          description: An object filled with data that are not validated. Default to an empty object.
+        activated_at:
+          type: string
+          format: datetime
+          readOnly: true
+          description: Only set once activated. the date when the ticket was activated.
+        activated_pricing:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/Pricing'
+        bookings:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Booking'
+          description: Only set once activated. The ticket's bookings.
+        vdr_auth_serial:
+          type: string
+          description: Only for multi-pass tickets. If not provided a random serial is generated.
+        vdr_auth_key:
+          type: string
+          description: Only for multi-pass tickets. If not provided a random key is generated.
+        expiration_date:
+          type: string
+          format: datetime
+          readOnly: true
+          description: Only set if the ticket is renewable and it has at least one window.
+        renewals:
+          type: array
+          readOnly: true
+          description: Only set if the ticket has been renewed at least once.
+          items:
+            type: object
+            properties:
+              activated_at:
+                type: string
+                format: datetime
+                readOnly: true
+                description: The date when the ticket was renewed.
+              activated_pricing:
+                $ref: '#/components/schemas/Pricing'
+
+    User:
+      description: Users of the SERVER can authenticate via the authentication system and make request through CLIENT application(s).
+      type: object
+      properties:
+        _id:
+          type: string
+          format: UUID
+          readOnly: true
+          description: The user _id. This field cannot be set on creation, and should be provided on update.
+        name:
+          type: string
+          description: The username.
+        roles:
+          type: array
+          items:
+            type: string
+          description: An array of user roles.
+        salepoints:
+          type: array
+          description: An array of salepoints _ids
+          items:
+            type: string
+            format: UUID
+        password:
+          type: string
+          writeOnly: true
+          description: The cleartext password. must be non-empty and its length must be 6 or more. It is required for creation and optional on update. The CLIENT is responsible for any input sanity check (like handling password confirmation).
+        verified:
+          type: boolean
+          readOnly: true
+          description: If false (by default), the user has to go through the email verification process (provided by the eshop) or be manually verified by an admin. While it's false, the user can not retrieve his tickets through the API.
+        contact:
+          type: object
+          description: An object containing optional contact information about the user. This property is not required and can be an empty object.
+          $ref: '#/components/schemas/Contact'
+        comment:
+          type: string
+          description: Comments about the contact.
+        opaque:
+          type: object
+          description: An object filled with data that are not validated. Default to an empty object.
+      required:
+        - name
+        - roles
+
+    Window:
+      type: object
+      description: |
+        Windows are an ordered list of rules defining restrictions on bookings that can be confirmed on tickets. They are embedded into other models and not used "standalone".
+
+        In a ticket, every confirmed booking has to be assigned to a window, and each window have a limit to the number of booking it can hold (see nbookings). When the SERVER try to confirm a booking to a ticket, it will try to assign it to the first matching, non-full window (thus the window order is important).
+
+        A window restricts a given number of bookings (**nbookings**) in a limited time frame (limited by **start_at** and **stop_at**).
+
+        Alternatively, several windows can have a **same_day** field. In this case, the screening linked to each booking in these windows must be on the same day than the screening linked to the first booking.
+
+        Alternatively, the time frame can be represent a **duration**. This type of windows only exist in a Tickettype. When it is copied in a Ticket, it is converted into the previous windows format using the current time as **start_at** and the current time plus the given duration as **stop_at**.
+
+        Alternatively, a window restricts a given number of bookings (**nbookings**) which can overlap according to a given duration (**overlap**) in a limited time frame (limited by **start_at** and **stop_at**).
+
+        In all cases, **booking's screening_id in the scope of a window must be distinct**. This is because the two first forms are primarily used to implement personal tickets (and thus don't allow to book the same screening twice). When a ticket should allow to book many time the same screening, windows are usually duplicated.
+
+      properties:
+        nbookings:
+          type: integer
+          description: The number of bookings allowed in this window. -1 means no limits.
+        start_at:
+          type: string
+          format: datetime
+          description: The windows start time (inclusive).
+        stop_at:
+          type: string
+          format: datetime
+          description: The windows end time (exclusive).
+        duration:
+          type: string
+          format: ISO8601 duration
+          description: The windows duration.
+        nsame_screening:
+          type: integer
+          description: The number of bookings for the same screening in this window.
+        same_day:
+          type: boolean
+          description: If true force all booking to be the same day (false by default)
+        overlap:
+          type: string
+          format: ISO8601 duration
+          description: |
+            Allowed overlap duration (inclusive). Ex:
+              - overlap = '+PT5M'
+                - screening_stop_at - 5 minutes of each booking must be <= screening_start_at of next booking
+              - overlap = '-PT5M'
+                - screening_stop_at + 5 minutes of each booking must be <= screening_start_at of next booking
+              - overlap = '+PT0M'
+                - screening_stop_at of each booking must be <= screening_start_at of next booking
+
+    # 2) Apply the API key globally to all operations
+security:
+  - ApiKeyAuth: []
+
+servers:
+  - url: https://{engineUri}/api
+    variables:
+      engineUri:
+        default: demo-engine.ticketack.com
+        description: Enter your Ticketack engine URI
+    description: Engine API server
+
+
+
+# Describe your paths here
+paths:
+
+  /authentication:
+    post:
+      security: []
+      tags: [ Authentication ]
+      summary: Request a new API Key
+      description: <i>Implemented and tested</i><br/><br/><b>This call is slow by design and you should expect a minimum 500ms loading time</b><br/>This method provide a way to authenticate with username/password credentials.</b><br/>On success, the SERVER return a new API Key that can be used by the CLIENT to make further requests until the API Key's expiration.</b><br/><br/>
+        <b>Access:</b> public
+      operationId: 'NewApiKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  description: "The username to use"
+                  type: "string"
+                  example: 'root'
+                password:
+                  description: "The username to use"
+                  type: "string"
+                  example: 'secret'
+
+      responses:
+        401:
+          description:  The user could not be successfully identified.
+        409:
+          description: The user has been successfully identified but the SERVER was not able to generate a new API Key because it was modified between authentication and the key generation.<br><b>The CLIENT MAY try again</b>.
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  X-API-Key:
+                    type: string
+                    example: 'b1af51ec-8b87-4796-9e32-298651d4abc4'
+                  created_at:
+                    type: string
+                    example: '2014-04-14T09:18:34.192Z'
+                  expire_at:
+                    type: string
+                    example: '2014-04-14T21:59:59.999Z'
+
+  /authentication/{key}:
+    get:
+      tags: [ Authentication ]
+      summary: Read a user by its API Key
+      description: <i>Implemented and tested</i><br/><br/><b>This method can be used to get the user info providing its API Key.</b><br/><br/>
+        <b>Access:</b> public
+      operationId: 'ReadApiKey'
+      parameters:
+        -
+          name: key
+          in: path
+          description: The user API key
+          required: true
+          schema:
+            type: string
+      responses:
+        404:
+          description:  <b>Not Found</b> The :key parameter is invalid.
+
+        200:
+          description: <b>OK</b> Response body is a user model.
+    delete:
+      tags: [ Authentication ]
+      summary: Revoke an API Key
+      description: <i>Implemented and tested</i><br/><br/><b>This method provide a way to revoke an API Key. After a successfull call the API Key can no longer be used.</b><br/><br/>
+        <b>Access:</b> public
+      operationId: 'DeleteApiKey'
+      parameters:
+        -
+          name: key
+          in: path
+          description: The user API key
+          required: true
+          schema:
+            type: string
+      responses:
+        404:
+          description:  <b>Not Found</b> The :key parameter is invalid.
+
+        204:
+          description: <b>No Content</b>
+
+  /register:
+    post:
+      security: []
+      tags: [ User ]
+      summary: Register as a customer
+      description: <i>Implemented and tested</i><br/><br/><b>Users created by this call only have the "customer" role and are not verified. </b><br/><br/>
+        <b>Access:</b> public
+      operationId: 'Register'
+      requestBody:
+        description: User data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        400:
+          description:  <b>Bad Request</b> Response body is a standard error.
+
+        200:
+          description: <b>Created</b> Response body is a user model with the **_id** field set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{user_id}/verify:
+    post:
+      tags: [ User ]
+      summary: Verify a customer account
+      description: <i>Implemented and tested</i><br/><br/><b>Tell the engine that we can trust this customer. </b><br/><br/>
+        <b>Access:</b> admin, eshop, integrator
+      operationId: 'Verify'
+      parameters:
+        -
+          name: user_id
+          in: path
+          description: The user _id
+          required: true
+          schema:
+            type: string
+      responses:
+        400:
+          description:  <b>Bad Request</b> Response body is a standard error.
+        404:
+          description:  <b>Not Found</b> The SERVER could not find a user matching the given **user_id** parameter.
+
+        200:
+          description: <b>OK</b> Response body is a user model with the **_id** field set and the verified property set to true.
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+
+  /users:
+    post:
+      tags: [ User ]
+      summary: Create a new user
+      description: <i>Implemented and tested</i><br/><br/><b>This call is slow by design and you should expect a minimum 500ms loading time on success.  </b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'CreateUser'
+      requestBody:
+        description: User data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        400:
+          description:  <b>Bad Request</b> Response body is a standard error.
+        201:
+          description: <b>Created</b> Response body is a user model with the **_id** field set.
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+    get:
+      tags: [ User ]
+      summary: Read all users
+      description: <i>Implemented and tested</i><br/><br/><b>N/D   </b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'ReadAll'
+      responses:
+        200:
+          description: <b>OK</b> Response body is an array of user model.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{user_id}:
+    parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+    get:
+      tags: [ User ]
+      summary: Read one user
+      description: <i>Implemented and tested</i><br/><br/><b>N/D   </b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'ReadOne'
+      responses:
+        200:
+          description: <b>OK</b> Response body is a user model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: <b>Not Found</b> The SERVER could not find a user matching the given :user_id parameter.
+    put:
+      tags: [ User ]
+      summary: Update a user
+      description: <i>Implemented and tested</i><br/><br/><b>This call is slow by design and you should expect a minimum 500ms loading time on success if the password is updated.   </b><br/>The **_id** property should be set and match the :user_id parameter.<br/><br/>
+        <b>Access:</b> admin
+      operationId: 'UserUpdate'
+      responses:
+        200:
+          description: <b>OK</b> Response body is a user model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: <b>Not Found</b> The SERVER could not find a user matching the given :user_id parameter.
+        400:
+          description: <b>Bad Request</b> Response body is a standard error.
+    delete:
+      tags: [ User ]
+      summary: Destroy a user
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'DeleteUser'
+      responses:
+        204:
+          description: <b>No Content</b>
+        404:
+          description: <b>Not Found</b> The SERVER could not find a user matching the given :user_id parameter.
+
+  /users/{user_id}/profile:
+    get:
+      tags: [ User ]
+      summary: Get a user's profile by his _id
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'GetUserProfileById'
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        404:
+          description:  <b>Not Found</b> The SERVER could not find a user matching the given :user_id parameter.
+
+        200:
+          description: <b>OK</b> Response body is a user model with an additional property tickets which contains the tickets owned by the user. <br><b>Note</b> if the user has not verified his email address (verified property is false), the tickets are not returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/name/{name}/profile:
+    get:
+      tags: [ User ]
+      summary: Get a user's profile by his name (can be an email)
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, integrator
+      operationId: 'GetUserProfileByEmail'
+      parameters:
+        -
+          name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        404:
+          description:  <b>Not Found</b> The SERVER could not find a user matching the given :user_id parameter.
+
+        200:
+          description: <b>OK</b> Response body is a user model with an additional property tickets which contains the tickets owned by the user. <br><b>Note</b> if the user has not verified his email address (verified property is false), the tickets are not returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/profile:
+    get:
+      tags: [ User ]
+      summary: Get current user's profile
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, integrator, customer
+      operationId: 'GetCurrentUser'
+      responses:
+        404:
+          description:  <b>Not Found</b> The SERVER could not find a user matching the given :user_id parameter.
+
+        200:
+          description: <b>OK</b> Response body is a user model with an additional property tickets which contains the tickets owned by the user. <br><b>Note</b> if the user has not verified his email address (verified property is false), the tickets are not returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/favorites/screening/{screening_id}:
+    post:
+      tags: [ User Favorites ]
+      summary: Add a screening to the current user favorites
+      description: <i>Implemented and tested</i><br/><br/><b>This call should be used with the user API key.  </b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, integrator, customer
+      operationId: 'AddFav'
+      parameters:
+        -
+          name: screening_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        400:
+          description:  <b>Bad Request</b> Response body is a standard error.
+        404:
+          description:  <b>Not Found</b> Response body is empty.
+
+        200:
+          description: <b>OK</b> Response body is a user favorite model with all fields set.
+
+  /users/favorites/{favorite_id}:
+    delete:
+      tags: [ User Favorites ]
+      summary: Remove a favorite from the current user favorites
+      description: <i>Implemented and tested</i><br/><br/><b>This call should be used with the user API key. </b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, integrator, customer
+      operationId: 'RemoveFav'
+      parameters:
+        -
+          name: favorite_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Response body is empty.
+        404:
+          description: <b>Not Found</b> Response body is empty.
+
+  /screenings:
+    post:
+      tags: [ Screenings]
+      summary: Create many new screenings
+      description: <i>Implemented and tested</i><br/><br/><b>The CLIENT MAY set the _id property on creation. At the time, no check are yet performed on this property for simplicity and performance reasons. As a result, a duplicate id will be noticed by a non-friendly error 500 without explanation.  </b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'NewScreenings'
+      responses:
+        400:
+          description:  <b>Bad Request</b> Response body is an array of standard error.
+        201:
+          description: <b>Created</b> Response body is an array screening model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Screening'
+    get:
+      tags: [ Screenings ]
+      summary: Read all screenings
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, accred, eshop, integrator, entry_check, mobile, customer
+      operationId: 'ReadAllScreenings'
+      parameters:
+        -
+          name: fields
+          in: query
+          required: false
+          description: "Comma separated list of screenings fields to retrieve (eg.: _id,start_at)"
+          schema:
+            type: string
+        -
+          name: sections_ids
+          in: query
+          required: false
+          description: "Comma separated list of sections ids to filter on"
+          schema:
+            type: string
+        -
+          name: start_at_lte
+          in: query
+          required: false
+          description: "Filter on screenings starting before this date (inclusive)"
+          schema:
+            type: string
+            format: datetime
+        -
+          name: start_at_gte
+          in: query
+          required: false
+          description: "Filter on screenings starting after this date (inclusive)"
+          schema:
+            type: string
+            format: datetime
+        -
+          name: stop_at_lte
+          in: query
+          required: false
+          description: "Filter on screenings finishing before this date (inclusive)"
+          schema:
+            type: string
+            format: datetime
+        -
+          name: stop_at_gte
+          in: query
+          required: false
+          description: "Filter on screenings finishing after this date (inclusive)"
+          schema:
+            type: string
+            format: datetime
+      responses:
+        200:
+          description: <b>OK</b>Response body is an array of screening model.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Screening'
+
+  /screenings/{screening_id}:
+    parameters:
+      -
+        name: screening_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: UUID
+    get:
+      tags: [ Screenings ]
+      summary: Read one screening
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, entry_check
+      operationId: 'ReadOneScreenings'
+      responses:
+        200:
+          description: <b>OK</b> Response body is a screening model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Screening'
+        404:
+          description: <b>Not Found</b> The SERVER could not find a screening matching the given :screening_id parameter.
+    delete:
+      tags: [ Screenings]
+      summary: Destroy a screening
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'RemoveScreening'
+      responses:
+        204:
+          description: <b>No Content</b>
+        404:
+          description: <b>Not Found</b> The SERVER could not find a screening matching the given :screening_id parameter.
+        400:
+          description: <b>Bad Request</b> At least one of the screening's booking is confirmed or can be confirmed.
+
+  /screenings/places:
+    get:
+      tags: [ Screenings ]
+      summary: Read the screenings distinct places
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos
+      operationId: 'ReadPlace'
+      responses:
+        200:
+          description: <b>OK</b> Response body is an array of objects that are screenings cinema halls.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+
+  /screenings/sections:
+    get:
+      tags: [ Screenings ]
+      summary: Read the screenings distinct sections
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos
+      operationId: 'ReadSections'
+      responses:
+        200:
+          description: <b>OK</b> Response body is an array of objects that are screenings films sections; objects with the id (integer) and name (string) fields set and non-empty
+
+  /tickettypes:
+    post:
+      tags: [ Tickettypes ]
+      summary: Create many new tickettypes
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'CreateTickettypes'
+      requestBody:
+        description: Array of tickets
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+      responses:
+        400:
+          description:  <b>Bad Request</b> Response body is an array of standard error.
+        201:
+          description: <b>Created</b> Response body is an array tickettype model.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TicketType'
+
+    get:
+      tags: [ Tickettypes ]
+      summary: Read all tickettypes
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, entry_check, wallet_cashier
+      operationId: 'ReadAllTickettypes'
+      responses:
+        200:
+          description: <b>OK</b>Response body is an array of tickettype model.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TicketType'
+
+  /tickettypes/{tickettype_id}:
+    get:
+      tags: [ Tickettypes ]
+      summary: Read one tickettype
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, entry_check, wallet_cashier
+      operationId: 'ReadOneTickettypes'
+      parameters:
+        -
+          name: tickettype_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b>Response body is a tickettype model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketType'
+        404:
+          description: <b>Not Found</b>The SERVER could not find a tickettype matching the given :tickettype_id parameter.
+
+  /tickets:
+    post:
+      tags: [ Ticket ]
+      summary: Create a new ticket
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred
+      operationId: 'CreateTicket'
+      requestBody:
+        description: An array of tickets
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Ticket'
+      responses:
+        400:
+          description:  <b>Bad Request</b> Response body is a standard error.
+        201:
+          description: <b>Created</b> Response body is a ticket model.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+    get:
+      tags: [ Ticket ]
+      summary: Read all tickets
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred
+      operationId: 'ReadAllTickets'
+      parameters:
+        -
+          name: fields
+          in: query
+          required: false
+          description: "Comma separated list of tickets fields to retrieve (eg.: _id,type._id)"
+          schema:
+            type: string
+      responses:
+        200:
+          description: <b>OK</b>Response body is an array of ticket model.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+
+  /tickets/{ticket_id}:
+    parameters:
+      -
+        name: ticket_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: UUID
+    get:
+      tags: [ Ticket ]
+      summary: Read One tickets
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, wallet_cashier
+      operationId: 'ReadOneTickets'
+      responses:
+        200:
+          description: <b>OK</b>Response Response body is a ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        404:
+          description: <b>Not Found</b>The SERVER could not find a ticket matching the given :ticket_id parameter.
+    delete:
+      tags: [ Ticket]
+      summary: Destroy a ticket
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, accred
+      operationId: 'DestroyTicket'
+      responses:
+        204:
+          description: <b>No Content</b>
+        404:
+          description: <b>Not Found</b> The SERVER could not find a ticket matching the given :ticket_id parameter. parameter.
+        400:
+          description: <b>Bad Request</b> At least one of the screening's booking is confirmed or can be confirmed.
+
+  /tickets/{ticket_id}/qrcode:
+    get:
+      tags: [ Ticket ]
+      summary: Read a ticket's QR Code
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, integrator, accred, customer, mobile
+      operationId: 'ReadQRTickets'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+        -
+          name: dotSize
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+      responses:
+        200:
+          description: <b>OK</b>The response body is a JSON object having a property "rfc2397data" whose value is a RFC 2397 "data" URL (image/png, base64 encoded) of the QR Code containing the requested ticket's URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rfc2397data:
+                    type: string
+        400:
+          description: <b>Bad Request</b>The requested :dotSize is invalid. Acceptable values between 1 and 50 (inclusive). The response body is a standard error. <b>or</b> The PNG generation failed. The response body is empty. #### expected result on success
+        404:
+          description: <b>Not Found</b>The SERVER could not find a ticket matching the given :ticket_id parameter.
+
+  /tickets/from_uri:
+    get:
+      tags: [ Ticket ]
+      summary: Read one ticket using its encoded URI
+      description: <i>Implemented and tested</i><br/><br/><b>Note; The ticket_uri parameter is the uri which is found in the QR code content.</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, integrator, customer, mobile
+      operationId: 'ReadOneUriTickets'
+      parameters:
+        -
+          name: uri
+          in: query
+          required: true
+          description: "Encoded uri of the ticket to retrieve (found in qr code)"
+          schema:
+            type: string
+            format: uri
+      responses:
+        200:
+          description: <b>OK</b>Response body is a ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        404:
+          description: <b>Not Found</b>The SERVER could not find a ticket matching the given :ticket_url parameter.
+
+  /tickets/{ticket_id}/set_pending:
+    put:
+      tags: [ Ticket ]
+      summary: Set a ticket as pending payment
+      description: <i>Implemented and tested</i><br/><br/><b><h2>About the activation body</h2><br>The pricing property should be valid for the requested Ticket it should be a key of the Ticket's pricings.
+        The price property should match exactly and only one currency/price in the Ticket pricing's price.
+        All other fields are optionals and will be saved into the Accounting system, so the CLIENT can provide additional data like the payment method, etc.<br/>The requesting user MUST share at least one role with the Ticket pricing's sellers property.</b><br/><br/>
+        <b>Access:</b> depends on the pricing requested.
+      operationId: 'SetPending'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pricing:
+                  description: "The pricing id to use"
+                  type: "string"
+                  example: 'adult'
+                price:
+                  description: "The price to use"
+                  type: object
+                  example: {"CHF": 15.00}
+                payment_method:
+                  description: "the payment method to use"
+                  type: "string"
+                  example: 'Bitcoin'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Response body is a pending ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> Response body is a standard error. body is empty. #### expected result on success
+        403:
+          description: <b>Forbidden</b> The user is not authorized to set as pending the ticket with this particular pricing.
+        410:
+          description: <b>Gone</b>  The ticket has already been set as pending (its status is not new).
+
+  /tickets/{ticket_id}/activate:
+    put:
+      tags: [ Ticket ]
+      summary: Activate a ticket
+      description: <i>Implemented and tested</i><br/><br/><b><h2>About the activation body</h2><br>The pricing property should be valid for the requested Ticket it should be a key of the Ticket's pricings.
+        The price property should match exactly and only one currency/price in the Ticket pricing's price.
+        All other fields are optionals and will be saved into the Accounting system, so the CLIENT can provide additional data like the payment method, etc.<br/>The requesting user MUST share at least one role with the Ticket pricing's sellers property.</b><br/><br/>
+        <b>Access:</b> depends on the pricing requested.
+      operationId: 'Activate'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pricing:
+                  description: "The pricing id to use"
+                  type: "string"
+                  example: 'adult'
+                price:
+                  description: "The price to use"
+                  type: object
+                  example: {"CHF": 15.00}
+                payment_method:
+                  description: "the payment method to use"
+                  type: "string"
+                  example: 'Bitcoin'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Response body is a pending ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> Response body is a standard error. body is empty. #### expected result on success
+        403:
+          description: <b>Forbidden</b> The user is not authorized to set as pending the ticket with this particular pricing.
+        410:
+          description: <b>Gone</b>  The ticket has already been set as pending (its status is not new).
+
+  /tickets/{ticket_id}/renew:
+    put:
+      tags: [ Ticket ]
+      summary: Renew a ticket
+      description: <i>Implemented and tested</i><br/><br/><b><h2>About the activation body</h2><br>The pricing property should be valid for the requested Ticket it should be a key of the Ticket's pricings.
+        The price property should match exactly and only one currency/price in the Ticket pricing's price.
+        All other fields are optionals and will be saved into the Accounting system, so the CLIENT can provide additional data like the payment method, etc.<br/>The requesting user MUST share at least one role with the Ticket pricing's sellers property.</b><br/><br/>
+        <b>Access:</b> depends on the pricing requested.
+      operationId: 'Renew'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pricing:
+                  description: "The pricing id to use"
+                  type: "string"
+                  example: 'adult'
+                price:
+                  description: "The price to use"
+                  type: object
+                  example: {"CHF": 15.00}
+                payment_method:
+                  description: "the payment method to use"
+                  type: "string"
+                  example: 'Bitcoin'
+      responses:
+        200:
+          description: <b>OK</b> Response body is a pending ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> Response body is a standard error. body is empty. #### expected result on success
+        403:
+          description: <b>Forbidden</b> The user is not authorized to set as pending the ticket with this particular pricing.
+        410:
+          description: <b>Gone</b>  The ticket has already been set as pending (its status is not new).
+
+  /tickets/{ticket_id}/block:
+    put:
+      tags: [ Ticket ]
+      summary: Block a ticket
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, accred
+      operationId: 'block'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Response body is a blocked ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> The requested ticket's status is not activated.
+        404:
+          description: <b>Not Found</b> The SERVER could not find a ticket matching the given :ticket_id parameter.
+
+  /tickets/{ticket_id}/unblock:
+    put:
+      tags: [ Ticket ]
+      summary: UnBlock a ticket
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, accred
+      operationId: 'UnBlock'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Response body is an activated ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> The requested ticket's status is not blocked.
+        404:
+          description: <b>Not Found</b> The SERVER could not find a ticket matching the given :ticket_id parameter.
+
+  /tickets/{ticket_id}/type:
+    put:
+      tags: [ Ticket ]
+      summary: Change a ticket's type
+      description: <i>Implemented and tested</i><br/><br/><b><h3>About the existing bookings</h3>If the ticket already has some bookings, the system will try to re-assign them to the new windows. If a booking can not be assigned to a window, the operation will be aborted.</b><h3>Restrictions</h3><b>Please note that you can not change a ticket to the ONE-TIME-PASS type and you can not change the type of a BLOCKED ticket</b><br/><br/>
+        <b>Access:</b> admin, pos, accred
+      operationId: 'ChangeType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tickettype_id:
+                  description: "The id of the new ticket type"
+                  type: "string"
+                  example: 'festival-pass'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Response body is a ticket model with the new type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> Response body is a standard error.
+        403:
+          description: <b>Forbidden</b> The user is not authorized to change the ticket's type.
+        404:
+          description: <b>Not Found</b> the ticket with the provided id can not be found.
+        410:
+          description: <b>Gone</b>  The ticket could not be updated. It may have been deleted durng the process (race condition).
+
+  /tickets/{ticket_id}/contact:
+    patch:
+      tags: [ Ticket ]
+      summary: Update a ticket's contact
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, mobile, customer
+      operationId: 'Update'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact:
+                  $ref: '#/components/schemas/Contact'
+      responses:
+        200:
+          description: <b>OK</b> Response body is the updated ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> Response body is a standard error.
+        403:
+          description: <b>Forbidden</b> The user is not authorized to update the ticket.
+        404:
+          description: <b>NotFound</b>  The SERVER could not find a ticket matching the given **ticket_id** parameter.
+
+  /tickets/{ticket_id}/windows/{window_idx}:
+    patch:
+      tags: [ Ticket ]
+      summary: Update a ticket's window
+      description: <i>Implemented and tested</i><br/><br/><b>N/D</b><br/><br/>
+        <b>Access:</b> admin
+      operationId: 'UpdateWindow'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+        -
+          name: window_idx
+          in: path
+          required: true
+          schema:
+            type: number
+            minimum: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nbookings:
+                  type: number
+                  minimum: 0
+      responses:
+        200:
+          description: <b>OK</b> Response body is the updated ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> Response body is a standard error.
+        403:
+          description: <b>Forbidden</b> The user is not authorized to update the ticket.
+        404:
+          description: <b>NotFound</b>  The SERVER could not find a ticket matching the given **ticket_id** parameter.
+        409:
+          description: b>Conflict</b>A conflict has been detected in the update process. Most likely the new nbookings is smaller than the number of existing bookings on the ticket. The CLIENT is encouraged to try again.
+
+  /third/tickets/{ticket_id}/pdf:
+    get:
+      tags: [ Ticket ]
+      summary: Get a ticket as PDF
+      description: <i>Implemented, partially tested.</i><br/><br/><b>format A4 is the only value supported, it will force<br/> the PDF to honor A4 paper size.</b><br/><br/>
+        <b>Access:</b> admin, pos, eshop, accred, integrator, customer, mobile
+      operationId: 'PDFTicket'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+        -
+          name: format
+          in: query
+          required: false
+          description: The PDF format
+          schema:
+            type: string
+            format: UUID
+            example: 'A4'
+        -
+          name: printer
+          in: query
+          required: false
+          description: A string printed on the PDF
+          schema:
+            type: string
+            format: UUID
+            example: 'john'
+      responses:
+        200:
+          description: <b>OK</b> Response body is a PDF file.
+        404:
+          description: <b>Not Found</b> The SERVER could not find a ticket matching the given :ticket_id parameter.
+        402:
+          description: <b>Payment Required</b> The ticket has not been activated.
+        400:
+          description: <b>Bad Request</b> The ticket is a one-time-pass and has not been confirmed by at least one booking or the ticket has been blocked. Returned data is a standard error.
+
+  /third/tickets/pdf:
+    get:
+      tags: [ Ticket ]
+      summary: Get many tickets as PDF
+      description: <i>Implemented, untested.</i><br/><br/><b>format; A4 is the only value supported, it                will force the PDF to honor A4 paper size.
+                    printer; A string printed on the PDF.
+                    ticket_id; must be an array, can be passed multiple times, the resulting PDF will contains all
+                    the ticket matching ticket_id in the requested order.</b><br/><br/>
+                    <b>Access:</b> admin, pos, eshop, accred<br/><br/>
+                    Theorically, there is no hard limit to the number of tickets that can be printed. In practice, the URL size is limited (LimitRequestLine with Apache for example) and has an impact on the number of **ticket_id** that can be provided.<br/>
+                    For theses reasons, requesting more than **100 tickets** at once is discouraged.
+
+
+      operationId: 'ManyPDFTicket'
+      parameters:
+        -
+          name: ticket_id
+          in: query
+          required: true
+          description: Comma separated list of tickets _ids
+          schema:
+            type: string
+            format: UUID
+        -
+          name: format
+          in: query
+          required: false
+          description: The PDF format
+          schema:
+            type: string
+            format: UUID
+            example: 'A4'
+        -
+          name: printer
+          in: query
+          required: false
+          description: A string printed on the PDF
+          schema:
+            type: string
+            format: UUID
+            example: 'john'
+      responses:
+        200:
+          description: <b>OK</b> Response body is a PDF file.
+        400:
+          description: <b>Bad Request</b> Returned data is an array of standard error.
+
+  /third/tickets/{ticket_id}/bookings/pdf:
+    get:
+      tags: [ Ticket ]
+      summary: Get a ticket bookings as PDF
+      description: <i>Implemented, untested.</i><br/><br/><b>N/D</b><br/><br/>
+                    <b>Access:</b> public
+      operationId: 'BookingPDF'
+      parameters:
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Response body is a PDF file.
+        400:
+          description: <b>Bad Request</b> The ticket has zero confirmed bookings or it has been blocked. Returned data is a standard error.
+        402:
+          description: <b>Payment Required</b> The ticket has not been activated.
+        404:
+          description: <b>NotFound</b> The SERVER could not find a ticket matching the given :ticket_id parameter.
+
+  /third/tickets/{serial}/{key}:
+    get:
+      tags: [ Ticket ]
+      summary: Read one ticket given its serial and key
+      description: <i>Implemented, untested.</i><br/><br/><b>N/D</b><br/><br/>
+                    <b>Access:</b> admin, pos, eshop, accred
+      operationId: 'SerialKey'
+      parameters:
+        -
+          name: serial
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: <b>OK</b> Response body is a ticket model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        400:
+          description: <b>Bad Request</b> The ticket has zero confirmed bookings or it has been blocked. Returned data is a standard error.
+        410:
+          description: <b>Gone</b> The ticket was found, but its status is blocked.
+        404:
+          description: <b>NotFound</b> The SERVER could not find a ticket matching the given :serial and/or :key parameters.
+
+  /screenings/{screening_id}/bookings:
+    post:
+      tags: [ Bookings ]
+      summary: Request many booking tokens for a single screening
+      description: <i>Implemented and tested.</i><br/><br/><b>N/D</b><br/><br/>
+                    <b>Access:</b> pos, eshop, customer, mobile, integrator, accred, entry_check
+      operationId: 'Bookings'
+      parameters:
+        -
+          name: screening_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  pledge:
+                    type: object
+                    properties:
+                      "ticket:type:_id":
+                        type: string
+                  seat:
+                    type: string
+            example:
+              [
+                  {},
+                  {"pledge": {"ticket:type:_id": "one-time-pass"}},
+                  {"seat": "A1"}
+              ]
+      responses:
+        201:
+          description: <b>Created</b> Returned body is an array of booking models.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
+        400:
+          description: <b>Bad Request</b> response body is a standard error.
+        404:
+          description: <b>NotFound</b> The SERVER could not find a screening matching the given :screening_id parameter.
+
+  /bookings/{booking_id}:
+    delete:
+      tags: [ Bookings ]
+      summary: Release a booking
+      description: <i>Implemented and tested.</i><br/><br/><b>On 400 "Bad Request" it is left to the CLIENT to infer from the requested screening's bucket what went wrong.</b><br/><br/>
+                    <b>Access:</b> pos, eshop, mobile, customer, integrator, accred, admin
+      operationId: 'ReleaseBookings'
+      parameters:
+        -
+          name: booking_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        204:
+          description: <b>No Content</b>
+        404:
+          description: <b>NotFound</b> The SERVER could not find a booking matching the given :booking_id parameter or the booking has expired, or the booking has already been confirmed.
+
+  /bookings/{booking_id}/confirm/{ticket_id}:
+    put:
+      tags: [ Bookings ]
+      summary: Confirm a booking
+      description: <i>Implemented and tested.</i><br/><br/><b>N/D</b><br/><br/>
+                    <b>Access:</b> pos, eshop, mobile, customer, integrator, accred, entry_check
+      operationId: 'ConfirmBookings'
+      parameters:
+        -
+          name: booking_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+        -
+          name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        200:
+          description: <b>OK</b> Returned body is a confirmed booking model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        404:
+          description: <b>NotFound</b> The SERVER could not find a ticket matching the given :ticket_id parameter. or
+              The SERVER could not find a booking matching the given :booking_id parameter or the booking has expired.
+        400:
+                description: <b>Bad Request</b> Booking confirmation failed. Response body is a       standard error. Many reasons may trigger a failure
+                    the booking has already been confirmed (see notes).
+                    the booking failed to honor some pledge constraints.
+                    the ticket failed confirmation (not activated, blocked, no matching window).
+        409:
+          description: <b>Conflict</b>A conflict has been detected in the confirm process. Most likely someone has made a booking with the same booking and/or on the same ticket at the same time. The CLIENT is encouraged to try again.
+
+  /tickets/:ticket_id/bookings/{booking_id}:
+    delete:
+      tags: [ Bookings ]
+      summary: Cancel a booking
+      description: <i>Implemented and tested.</i><br/><br/><b>N/D/b><br/><br/>
+                    <b>Access:</b> pos, eshop, mobile, customer, integrator, accred
+      operationId: 'CancelBookings'
+      parameters:
+        -
+          name: booking_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: UUID
+      responses:
+        204:
+          description: <b>No Content</b>
+        404:
+          description: <b>NotFound</b> The SERVER could not find a booking matching the given :ticket_id and :booking_id parameters.
+        400:
+          description: <b>Bad Request</b> The requested booking has already been scanned or the booking's screening has already started.
+
+  /tickets/:ticket_id/scan/{screening_id}/{mode}:
+      post:
+        tags: [ Bookings ]
+        summary: Scan booking
+        description: <i>Implemented and tested.</i><br/><br/><b>     Notes
+                The scan will be a success even if the ticket's status is blocked.
+                This call will scan all bookings that the requested ticket has for the screening matching screening_id The mode can take the following values in (default), out, out_and_release
+                Please note that if the ticket doesn't have any booking for the screening,
+                the book on check mechanism will be run to try to create, confirm and scan a
+                fresh new booking. </b><br/><br/>
+                      <b>Access:</b> pos, eshop, accred
+        operationId: 'ScanBookings'
+        parameters:
+          -
+            name: screening_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: UUID
+          -
+            name: mode
+            in: path
+            required: true
+            schema:
+              type: string
+              enum: [in, out]
+        responses:
+          200:
+            description: <b>ok</b>response body is an object with three properties
+
+                        ticket the requested ticket model
+                        bookings an array of the scanned bookings booking model
+                        screening an object with only the buckets property screening model
+          400:
+            description: <b>Bad Request</b> response body is a standard error.
+          404:
+            description: <b>NotFound</b> The SERVER could not find a screening matching the given :screening_id parameter.
+
+  /third/screenings/{screening_id}/scan:
+      post:
+        tags: [ Bookings ]
+        summary: Scan bookings (alternative call)
+        description: <i>Implemented and tested.</i><br/><br/><b>Notes
+
+                      The scan will be a success even if the ticket's status is blocked.
+                      This call will scan all bookings that the requested ticket has for the screening matching :screening_id
+
+                      Please note that if the ticket doesn't have any booking for the screening,
+                      the book on check mechanism will be run to try to create, confirm and scan a
+                      fresh new booking. </b><br/><br/>
+                      <b>Access:</b> entry_check
+        operationId: 'ScanBookingsAC'
+        parameters:
+          -
+            name: screening_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: UUID
+        responses:
+          200:
+            description: <b>ok</b>response body is an object with three properties
+                        ticket the requested ticket model
+                        bookings an array of the scanned bookings booking model
+                        screening an object with only the buckets property screening model
+          400:
+            description: <b>Bad Request</b> response body is a standard error.
+          404:
+            description: <b>NotFound</b> The SERVER could not find a screening matching the given :screening_id parameter.
+  /tickets/{ticket_id}/vote/{booking_id}/{score}:
+      post:
+        tags: [ Bookings ]
+        summary: Vote for a booking
+        description: <i>Implemented and tested.</i><br/><br/><b>Notes</b>:<br/>
+
+                      The booking must be confirmed.<br/><br/>
+                      <b>Access:</b> admin, eshop, mobile, customer
+        operationId: 'VoteBooking'
+        parameters:
+          -
+            name: ticket_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: UUID
+          -
+            name: booking_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: UUID
+          -
+            name: score
+            in: path
+            required: true
+            schema:
+              type: number
+        responses:
+          200:
+            description: |
+                        <b>ok</b><br/>response body is an object with two properties:
+                        <ul><li><b>ticket</b>: the updated ticket</li><li><b>booking</b>: the updated booking</li></ul>
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    booking:
+                      $ref: '#/components/schemas/Booking'
+                    ticket:
+                      $ref: '#/components/schemas/Ticket'
+          404:
+            description: <b>Not Found</b><br/>The SERVER could not find either the ticket or the confirmed booking. matching the given :screening_id parameter.
