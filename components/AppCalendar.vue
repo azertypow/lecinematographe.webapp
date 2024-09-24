@@ -88,12 +88,7 @@
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
-import {
-    apiGetListOfFilmByDate, apiGetListOfFilmSeanceByDate,
-    fetchFromTicketAPI,
-    type IFilmListResponse, type ISeance,
-    type ISeancesOfFilm
-} from "~/_utils/apiTicket";
+import {apiGetListOfFilmSeanceByDate, type ISeance,} from "~/_utils/apiTicket";
 
 const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
 
