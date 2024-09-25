@@ -20,7 +20,5 @@ export default defineNuxtConfig({
             mode: 'out-in',
         }
     },
-
-    ssr: false,
     modules: ["@nuxt/content"]
 })
