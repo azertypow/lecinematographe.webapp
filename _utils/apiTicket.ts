@@ -37,6 +37,11 @@ export async function apiGetSeancesOfFilm(filmID: number) {
 }
 
 export async function apiGetListOfFilmByDate(date: Date) {
+
+    const { data } = await useFetch('/api/getFilms')
+
+    console.log(data.value)
+
     return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtTrie=5&WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
 }
 
