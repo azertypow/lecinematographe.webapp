@@ -45,25 +45,6 @@ export async function apiGetListOfFilmByDate(date: Date) {
     return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtTrie=5&WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
 }
 
-export async function apiGetListOfFilmSeanceByDate(date: Date): Promise<{seances: ISeance[], filmCover?: string}[]> {
-
-    const listOfFilmByDate: ITicketFilm[] = (await apiGetListOfFilmByDate(date)).filmlist || []
-
-    return await Promise.all(
-        listOfFilmByDate.map( async value => {
-            const {seance: seancesToClean} = await (fetchFromTicketAPI<{seance: ISeance[]}>(`/ws/WwtLstSeanceAct.php?WwtFilm=${value.id_film}&WwtLimi=30}`))
-
-            return {
-                seances: seancesToClean.filter(seance => {
-                    const seanceDate = new Date(seance.id_date)
-                    return seanceDate.getDate() === date.getDate()
-                })
-                ,
-                filmCover: value.ur_cover,
-            }
-        })
-    )
-}
 
 export interface ISeancesOfFilm {
     seance: ISeance[]
