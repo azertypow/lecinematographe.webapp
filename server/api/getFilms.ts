@@ -31,6 +31,6 @@ export default defineEventHandler(async (event) => {
         return await response.json();
     } catch (error) {
         console.error(error)
-        return {'error': error}
+        return []
     }
 })

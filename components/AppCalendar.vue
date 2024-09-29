@@ -113,7 +113,7 @@ async function setDateRange(date: Date) {
 
 async function updateSelectedDate(date: Date) {
     selectedDate.value = date
-    seancesDataOnSelectedDate.value = await apiGetListOfFilmByDate(date)
+    seancesDataOnSelectedDate.value = await apiGetListOfFilmByDate(new Date('2024-10-01'))
 }
 
 </script>
