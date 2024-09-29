@@ -50,9 +50,11 @@ export async function apiGetListOfFilmByDate(date: Date): Promise<ApiTicketack_F
 
     const getFilmsResponse = await fetch(url)
 
-    console.log(url)
+    console.log(getFilmsResponse)
 
-    const filmResponseData: ApiTicketack_Film[] = await getFilmsResponse.json()
+    const filmResponseData: ApiTicketack_Film[]     = await getFilmsResponse.json()
+
+    console.log(getFilmsResponse)
 
     return filmResponseData
 }

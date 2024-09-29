@@ -30,6 +30,7 @@ export default defineEventHandler(async (event) => {
         const response = await fetch(url, options);
         return await response.json();
     } catch (error) {
-        return error
+        console.error(error)
+        return []
     }
 })
