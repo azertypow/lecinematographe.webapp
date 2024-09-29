@@ -16,8 +16,6 @@ export default defineEventHandler(async (event) => {
 
     const url = `https://lecinematographe-engine.ticketack.com/api/screenings?start_at_gte=${dateQueryStart}&stop_at_lte=${dateQueryEnd}`;
 
-    console.log(url)
-
     const options = {
         method: 'GET',
         headers: {
