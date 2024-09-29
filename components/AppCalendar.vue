@@ -61,15 +61,13 @@
                     <div
                         v-for="seanceData of seancesDataOnSelectedDate"
                     >
-                        <div class="v-app-calendar__film-list__info"
-                             v-for="seance of seanceData.seances"
-                        >
+                        <div class="v-app-calendar__film-list__info">
                             <AppCalendarListItem
-                                :title="seance.tx_titre_lng"
-                                :cover_url="seanceData.filmCover || ''"
-                                :hour="seance.tx_heure"
-                                :seance-id="seance.id_seance"
-                                :film_id="seance.id_film"
+                                :title="seanceData.title.original"
+                                :cover_url="seanceData.opaque.posters[0]?.url || ''"
+                                :hour="seanceData.start_at"
+                                :seance-id="1"
+                                :film_id="1"
                             />
                         </div>
                     </div>
@@ -88,13 +86,14 @@
 <script setup lang="ts">
 import {type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
-import {apiGetListOfFilmSeanceByDate, type ISeance,} from "~/_utils/apiTicket";
+import {apiGetListOfFilmByDate, type ISeance,} from "~/_utils/apiTicket";
+import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
 
 const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
 
 const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
-const seancesDataOnSelectedDate: Ref<UnwrapRef<null | {seances: ISeance[], filmCover?: string}[]>> = ref(null)
+const seancesDataOnSelectedDate: Ref<UnwrapRef<null | ApiTicketack_Film[]>> = ref(null)
 
 const calendarIsDisable = false
 
@@ -114,7 +113,7 @@ async function setDateRange(date: Date) {
 
 async function updateSelectedDate(date: Date) {
     selectedDate.value = date
-    seancesDataOnSelectedDate.value = await apiGetListOfFilmSeanceByDate(date)
+    seancesDataOnSelectedDate.value = await apiGetListOfFilmByDate(date)
 }
 
 </script>

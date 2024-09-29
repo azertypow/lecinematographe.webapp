@@ -1,3 +1,8 @@
+import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
+import {HttpProxy} from "vite";
+import type {_AsyncData, AsyncDataRequestStatus} from "#app/composables/asyncData";
+import {FetchError} from "ofetch";
+
 export async function fetchFromTicketAPI<T>(endPoint: string): Promise<T> {
     const myHeaders = new Headers()
     myHeaders.append("Accept", "application/json")
@@ -36,13 +41,16 @@ export async function apiGetSeancesOfFilm(filmID: number) {
     return fetchFromTicketAPI<ISeancesOfFilm>(`/ws/WwtLstSeanceAct.php?WwtFilm=${filmID}&WwtLimi=30`)
 }
 
-export async function apiGetListOfFilmByDate(date: Date) {
+export async function apiGetListOfFilmByDate(date: Date): Promise<ApiTicketack_Film[]> {
 
-    const { data } = await useFetch('/api/getFilms')
+    const dateAfter = new Date(date)
+    dateAfter.setDate(dateAfter.getDate() + 1)
 
-    console.log(data.value)
+    const getFilmsResponse = await fetch(`/api/getFilms?stop_at_gte=${date.toISOString()}&stop_at_lte=${dateAfter.toISOString()}`)
 
-    return fetchFromTicketAPI<IFilmListResponse>(`/ajax/WwtLstFilm.php?WwtTrie=5&WwtLimi=1&WwtDate=${date.toISOString().slice(0, 10)}`)
+    const filmResponseData: ApiTicketack_Film[] = await getFilmsResponse.json()
+
+    return filmResponseData
 }
 
 

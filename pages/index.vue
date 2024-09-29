@@ -50,7 +50,7 @@
                 <div class="v-index__section v-index__section--film-details app-flex app-flex--column app-flex app-flex--gap_regular">
                     <div v-if="dateFilmByDate === null" >chargement…</div>
                     <div v-else
-                        v-for="filmData of dateFilmByDate.filmlist">
+                        v-for="filmData of dateFilmByDate">
                         <AppFilmDetails
                             :ticket-film="filmData"
                         />
@@ -69,9 +69,10 @@ import {
     type IFilmListResponse,
     apiGetUrlOfFilm, type ITicketFilm, type ISeance
 } from "~/_utils/apiTicket";
+import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
 
 const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
-const dateFilmByDate: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const dateFilmByDate: Ref<UnwrapRef<null | ApiTicketack_Film[]>> = ref(null)
 const specialEventsInFilmList: Ref<UnwrapRef<ISpecialEventsInFilmList[] | null>> = ref(null)
 
 onMounted(async () => {
@@ -82,7 +83,7 @@ onMounted(async () => {
             return new Date(a.seance.id_date).getTime() -  new Date(b.seance.id_date).getTime()
         })
     })
-    apiGetListOfFilmByDate(new Date()).then(value => dateFilmByDate.value = value)
+    apiGetListOfFilmByDate(new Date('2024-10-01')).then(value => dateFilmByDate.value = value)
 })
 
 interface ISpecialEventsInFilmList {

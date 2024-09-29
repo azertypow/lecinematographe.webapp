@@ -6,12 +6,12 @@
     >
         <div class="v-app-film-details__background-img"
              :style="{
-                backgroundImage: `url(${ticketFilm.ur_cover})`,
+                backgroundImage: `url(${ticketFilm.films[0].opaque.posters[0]?.url})`,
             }"
         ></div>
 <!--        <h3 class="v-app-film-details__date">À partir du {{ new Date(ticketFilm.da_depart).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</h3>-->
-        <h1 class="v-app-film-details__title">{{ticketFilm.tx_titre_lng}}</h1>
-        <h5 class="v-app-film-details__subtitle">{{ticketFilm.tx_realisateur.replace('De', '')}}</h5>
+        <h1 class="v-app-film-details__title">{{ticketFilm.films[0].title.original}}</h1>
+        <h5 class="v-app-film-details__subtitle">{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</h5>
         <div class="v-app-film-details__cover">
 
             <div
@@ -25,12 +25,12 @@
             </div>
 
             <img alt="image de couverture pour le film"
-                 :src="ticketFilm.ur_cover"
+                 :src="ticketFilm.films[0].opaque.posters[0]?.url"
                  @load="(e) => setGradientColor(e.target)"
             />
         </div>
         <div class="v-app-film-details__details"
-             v-html="ticketFilm.tx_comment"
+             v-html="ticketFilm.films[0].opaque.description.fr"
         ></div>
 
         <div class="v-app-film-details__details"
@@ -42,45 +42,43 @@
                         src="../assets/icons/seance.svg"
                     />
                 </div>
-                <h3 class="v-app-film-details__details__header__title">{{ticketFilm.tx_titre_lng}}</h3>
+                <h3 class="v-app-film-details__details__header__title">{{ticketFilm.films[0].title.original}}</h3>
             </div>
-            <div class="v-app-film-details__details__author">{{ticketFilm.tx_realisateur.replace('De', '')}}</div>
+            <div class="v-app-film-details__details__author">{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</div>
             <div class="v-app-film-details__details__info">
                 <div class="v-app-film-details__details__info__item">
                     <div>Date</div>
-                    <div>{{ticketFilm.tx_annee}}</div>
+                    <div>{{ticketFilm.films[0].opaque.year}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Pays</div>
-                    <div>{{ticketFilm.tx_pays}}</div>
-                </div>
-                <div class="v-app-film-details__details__info__item">
-                    <div>Acteur·ice·x·s</div>
-                    <div>{{ticketFilm.tx_acteur.replace(/\s*Avec/, '')}}</div>
+                    <div>{{ticketFilm.films[0].opaque.countries[0]}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Titre original</div>
-                    <div>{{ticketFilm.tx_titre_lng}}</div>
+                    <div>{{ticketFilm.films[0].title.original}}</div>
                 </div>
-                <div class="v-app-film-details__details__info__item">
-                    <div>Réalisateur·ice·x·s</div>
-                    <div>{{ticketFilm.tx_realisateur.replace('De', '')}}</div>
-                </div>
+                <template v-for="people of ticketFilm.films[0].opaque.people">
+                    <div class="v-app-film-details__details__info__item">
+                        <div>{{people.activity}}</div>
+                        <div>{{people.firstname}} {{people.lastname}}</div>
+                    </div>
+                </template>
                 <div class="v-app-film-details__details__info__item">
                     <div>Durée</div>
-                    <div>{{ticketFilm.tx_duree}}</div>
+                    <div>{{ticketFilm.films[0].opaque.duration}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Age</div>
-                    <div>{{ticketFilm.tx_age}}</div>
+                    <div>{{ticketFilm.films[0].opaque.l_min_age}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Distributeur</div>
-                    <div>{{ticketFilm.tx_distributeur}}</div>
+                    <div>{{ticketFilm.films[0].opaque.distributor.name}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
-                    <div>Version·s</div>
-                    <div>{{ticketFilm.tx_vers_lng?.replace('Version ', '')}}</div>
+                    <div>Genre</div>
+                    <div>{{ticketFilm.films[0].opaque.genre}}</div>
                 </div>
             </div>
         </div>
@@ -121,18 +119,14 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import {
-    apiGetSeancesOfFilm,
-    apiGetUrlOfFilm, type ISeance,
-    type ISeancesOfFilm,
-    type ITicketFilm
-} from "~/_utils/apiTicket";
+import {type ISeance} from "~/_utils/apiTicket";
 import {average} from "color.js";
 import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 import {usePlayerLink} from "~/composables/states";
+import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
 
 const props = defineProps<{
-    ticketFilm: ITicketFilm
+    ticketFilm: ApiTicketack_Film
 }>()
 
 const nextSeances: Ref<UnwrapRef<null | ISeance[]>> = ref(null)
@@ -159,15 +153,17 @@ const youtubeLink = computed(() => linksOfFilm.value?.url.find(filmUrl => {
 }))
 
 onMounted(async () => {
-    nextSeances.value = (await apiGetSeancesOfFilm(props.ticketFilm.id_film)).seance.sort((a, b) => {
-        return (new Date(a.id_date).getTime() - new Date(b.id_date).getTime())
-    })
-    linksOfFilm.value = await apiGetUrlOfFilm(props.ticketFilm.id_film)
+    // nextSeances.value = (await apiGetSeancesOfFilm(props.ticketFilm.id_film)).seance.sort((a, b) => {
+    //     return (new Date(a.id_date).getTime() - new Date(b.id_date).getTime())
+    // })
+    // linksOfFilm.value = await apiGetUrlOfFilm(props.ticketFilm.id_film)
 })
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
 
-async function setGradientColor(imageElement: HTMLImageElement) {
+async function setGradientColor(imageElement: EventTarget | null) {
+    if(imageElement === null) return
+    else if (! (imageElement instanceof HTMLImageElement)) return
     colorBG.value = (await average(imageElement, {format: 'array'}) as [])
 }
 
