@@ -54,7 +54,7 @@ export async function apiGetListOfFilmByDate(date: Date): Promise<ApiTicketack_F
 
     const filmResponseData: ApiTicketack_Film[]     = await getFilmsResponse.json()
 
-    console.log(getFilmsResponse)
+    console.log(filmResponseData)
 
     return filmResponseData
 }
