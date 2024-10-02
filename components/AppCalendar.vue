@@ -65,7 +65,7 @@
                             <AppCalendarListItem
                                 :title="seanceData.title.original"
                                 :cover_url="seanceData.opaque.posters[0]?.url || ''"
-                                :hour="seanceData.start_at"
+                                :start_date="seanceData.start_at"
                                 :seance-id="1"
                                 :film_id="1"
                             />

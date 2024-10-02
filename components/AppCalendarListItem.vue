@@ -15,7 +15,13 @@
                 <h3 class="v-app-calendar-list-item__title"
                 >{{title}}</h3>
                 <p class="v-app-calendar-list-item__hour"
-                >{{hour.replace(':', 'h').replace('h00', 'h')}}</p>
+                >{{
+                    new Date(start_date).toLocaleTimeString('fr-FR', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false
+                    }).replace(':', 'h')
+                  }}</p>
             </div>
             <a target="_blank"
                :href="`https://billetterie.lecinematographe.ch/shop15/${seanceId}`"
@@ -41,7 +47,7 @@ import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 const props = defineProps<{
     title: string,
     cover_url: string,
-    hour: string,
+    start_date: string,
     seanceId: number,
     enPresenceDe?: string
     film_id: number
