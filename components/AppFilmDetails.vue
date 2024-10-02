@@ -124,6 +124,7 @@ import {average} from "color.js";
 import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 import {usePlayerLink} from "~/composables/states";
 import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
+import {proxyUrl} from "~/_utils/proxyUrl";
 
 const props = defineProps<{
     ticketFilm: ApiTicketack_Film
@@ -161,11 +162,15 @@ onMounted(async () => {
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
 
-async function setGradientColor(imageElement: EventTarget | null) {
-    if(imageElement === null) return
-    else if (! (imageElement instanceof HTMLImageElement)) return
-    colorBG.value = (await average(imageElement, {format: 'array'}) as [])
+async function setGradientColor(targetElement: EventTarget | null) {
+
+    if( !(targetElement instanceof HTMLImageElement)) return
+
+    const url = proxyUrl(targetElement.src)
+
+    colorBG.value = (await average(url, {format: 'array'}) as [])
 }
+
 
 </script>
 

@@ -39,6 +39,7 @@ import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import type {ITicketFilm} from "~/_utils/apiTicket";
 import {average} from 'color.js'
 import {type ICardEffectOption, onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
+import {proxyUrl} from "~/_utils/proxyUrl";
 
 const props = defineProps<{
     ticketFilm: ITicketFilm
@@ -70,9 +71,16 @@ onMounted(()=> {
 // background
 const colorBG = ref([0, 0, 0])
 
-async function setGradientColor(imageElement: HTMLImageElement) {
-    colorBG.value = (await average(imageElement, {format: 'array'}) as [])
+async function setGradientColor(targetElement: EventTarget | null) {
+
+    if( !(targetElement instanceof HTMLImageElement)) return
+
+    const url = proxyUrl(targetElement.src)
+
+    colorBG.value = (await average(url, {format: 'array'}) as [])
 }
+
+
 
 // shine effect
 const appFilmRefContainer: Ref<UnwrapRef<null | HTMLElement>> = ref(null)

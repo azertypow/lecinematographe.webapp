@@ -38,6 +38,7 @@ import {
     type ITicketFilm
 } from "~/_utils/apiTicket";
 import {average} from "color.js";
+import {proxyUrl} from "~/_utils/proxyUrl";
 
 const props = defineProps<{
     da_depart: string
@@ -49,8 +50,13 @@ const props = defineProps<{
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
 
-async function setGradientColor(imageElement: HTMLImageElement) {
-    colorBG.value = (await average(imageElement, {format: 'array'}) as [])
+async function setGradientColor(targetElement: EventTarget | null) {
+
+    if( !(targetElement instanceof HTMLImageElement)) return
+
+    const url = proxyUrl(targetElement.src)
+
+    colorBG.value = (await average(url, {format: 'array'}) as [])
 }
 
 </script>
