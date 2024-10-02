@@ -23,14 +23,13 @@
                     }).replace(':', 'h')
                   }}</p>
             </div>
-            <a target="_blank"
-               :href="`https://billetterie.lecinematographe.ch/shop15/${seanceId}`"
-            >
+            <div style="position: relative">
+              <div style="position: absolute; text-align: center; top: 1.15rem; left: 50%; font-size: .4rem; line-height: 1.25em; transform: rotate(-5deg) translate(-50%);">en<br>maintenance</div>
               <img class="v-app-calendar-list-item__ticket"
                    alt="prendre un ticket"
                   src="../assets/icons/ticket.svg"
               />
-            </a>
+            </div>
         </nuxt-link>
     </section>
 </template>
