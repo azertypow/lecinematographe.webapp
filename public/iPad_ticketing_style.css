@@ -1,0 +1,184 @@
+#articlesController ul > li > a {
+    padding: 20px;
+}
+
+@media (min-width: 1112px) {
+    body.pos #screenings_table_wrapper .btn {
+        height: 85px;
+        margin: 10px 9px;
+        width: calc(50% - 18px);
+        padding: 10px 0;
+    }
+
+    body.pos #screenings_table_wrapper td.bordered-top {
+        border-top-width: 10px !important;
+    }
+}
+
+.magic-search-form {
+    display: none;
+}
+
+/*Modif KGE*/
+/*Point de vente*/
+body {
+    counter-reset: place;
+}
+
+/*DÃ©sactive (n'affiche pas) les fonctionalitÃ© de split du paiement*/
+div#pos div.pos_split_payment, div#pos a#cart-items-selector-btn{
+    display: none;
+}
+
+#right_sidebar span.screening_title::before {
+    content: "âœ…";
+    font-size: 1.8rem;
+}
+
+button.btn.btn-danger.ng-scope {
+    font-size: 0.5rem;
+}
+
+#right_sidebar table.table.table-condensed.ng-scope::before {
+    content: "- " counter(place) " -";
+    background-color: lightcyan;
+    width: 100%;
+    display: table-caption;
+    font-size: 1.5rem;
+    border-top: 1px solid grey;
+    text-align: center;
+    counter-increment: place;
+    font-weight: bold;
+}
+/*RelevÃ© comptable*/
+.accounting-spacer {
+    display: none;
+}
+
+.accounting-table h1 {
+    margin-top: 5px;
+    margin-bottom: 4px;
+}
+
+.accounting-table h2 {
+    margin-top: 3px;
+    margin-bottom: 2px;
+}
+div#filters:has(button.btn[data-id="payment_method_select"][title="EspÃ¨ces"]) ~ div.tab-content div#details table.accounting-table tr:last-child td:nth-last-child(2)::after {
+    content: " (Somme versÃ©e Ã  la banque)";
+}
+
+li#menu_link_tickets{
+    display: none;
+}
+
+
+body.user_kge89 li#menu_link_tickets{
+    display: block !important;
+}
+div[ng-controller='TicketController'] a.btn.btn-success.btn-lg{
+    display: none;
+}
+
+body:not(.role_admin) ul#navbar-cashregisters  ul li:last-child{
+    display: none !important;
+}
+
+
+body.role_accounting:not(.role_admin) ul.nav li:nth-child(3) ul li:first-child{
+    display: none;
+}
+
+body.role_accounting:not(.role_admin) a.btn-info.pull-right{
+    display: none;
+}
+
+body:not(.role_admin) .btn-group :has(a[ng-click="view_ticket();"]){
+    display: none;
+}
+
+/*zone quantitÃ© haut panier*/
+div.must_show_article_quantity{
+    display: none;
+}
+
+.btn-group :has(a[ng-click="print_bookings($event);"]){
+    display: none;
+}
+
+.btn-group :has(a[ng-click="print_ticket($event);"]){
+    width: 0.25% !important;
+}
+
+/*Adapte bouton bleu*/
+div#pos .btn-primary[ng-click='book(screening._id)']{
+    margin-top:30px;
+    margin-bottom:30px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    height: auto;
+}
+
+div#pos .btn-primary[ng-click='book(screening._id)']::first-letter{
+    font-size:2rem;
+}
+
+div#pos .btn-primary[ng-click='book(screening._id)'] span.ng-binding{
+    display:none
+}
+
+div#pos .btn-primary[ng-click='book(screening._id)']::after{
+    content: "ðŸ‘‡\A PRENDRE UNE PLACE \A SUR LE TICKET SCANNÃ‰";
+    white-space: pre;
+    font-size: 1.5rem;
+}
+
+/*Adapte Alerte*/
+div#pos .panel.alert.alert-success{
+    right: 0%;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    font-size: 3rem;
+    text-align: center;
+}
+
+/*Adapte btn TPE man*/
+div[ng-show=has_error] a.payment-btn.cart_zvt_eft_btn {
+    font-size: 1.5px;
+    padding: 1px;
+    width: 15px;
+    margin-left: 20px;
+}
+
+
+body:not(.role_admin) div[ng-controller='TicketController']{
+    display: none;
+}
+
+/*mask week label*/
+body:not(.role_admin) div#pos label[ng-repeat="weekday in rest_of_week"]{
+    display: none;
+}
+body:not(.role_admin) div#pos label[btn-radio="8"]{
+    display: none;
+}
+
+
+/*ges TPE*/
+body:not(.role_admin) form[name="eft"] a[ng-click = "show_zvt_eft_confirm_modal()"]{
+    display: none;
+}
+
+/*button sur place*/
+div#pos a.cart_later_btn{
+    display: none;
+}
+
+
+@media print {
+    .nav-tabs,
+    .dt-buttons.btn-group {
+        display: none;
+    }
+}
