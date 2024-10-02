@@ -123,11 +123,11 @@ import {type ISeance} from "~/_utils/apiTicket";
 import {average} from "color.js";
 import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 import {usePlayerLink} from "~/composables/states";
-import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
+import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {proxyUrl} from "~/_utils/proxyUrl";
 
 const props = defineProps<{
-    ticketFilm: ApiTicketack_Film
+    ticketFilm: ApiTicketack_screening
 }>()
 
 const nextSeances: Ref<UnwrapRef<null | ISeance[]>> = ref(null)

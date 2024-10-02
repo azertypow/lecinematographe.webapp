@@ -69,10 +69,10 @@ import {
     type IFilmListResponse,
     apiGetUrlOfFilm, type ITicketFilm, type ISeance
 } from "~/_utils/apiTicket";
-import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
+import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
-const dateFilmByDate: Ref<UnwrapRef<null | ApiTicketack_Film[]>> = ref(null)
+const dateFilmByDate: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 const specialEventsInFilmList: Ref<UnwrapRef<ISpecialEventsInFilmList[] | null>> = ref(null)
 
 onMounted(async () => {

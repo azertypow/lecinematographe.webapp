@@ -1,4 +1,4 @@
-export type ApiTicketack_Film = {
+export type ApiTicketack_screening = {
     "_id": string,
     "title": {
         "fr": string,
@@ -11,10 +11,10 @@ export type ApiTicketack_Film = {
     "buckets":         {
         "_id": string,
         "total_capacity": number,
-        "may_steal_from": [],
+        "may_steal_from": ("default")[],
         "rules": {
             "not_after": string,
-            "only_for_roles": ("on-site"|"admin"|"eshop")[]
+            "only_for_roles"?: ("on-site"|"admin"|"eshop"|"entry_check"|"overbooker")[]
         },
         "available": number,
         "confirmed": number,
@@ -23,7 +23,7 @@ export type ApiTicketack_Film = {
         "_in": number,
     }[],
     "pricings": {
-        "fullprice": {
+        "fullprice"?: {
             "name": {
                 "fr": string
             },
@@ -46,10 +46,11 @@ export type ApiTicketack_Film = {
             "refs": [],
             "opaque": {
                 "eshop_sort_weight": number
+                "additional_class_names"?: string
             },
             "rules": {}
         },
-        "reduced": {
+        "reduced"?: {
             "name": {
                 "fr": string
             },
@@ -77,7 +78,7 @@ export type ApiTicketack_Film = {
             },
             "rules": {}
         },
-        "support": {
+        "support"?: {
             "name": {
                 "fr": string
             },
@@ -102,12 +103,13 @@ export type ApiTicketack_Film = {
             "refs": [],
             "opaque": {
                 "eshop_sort_weight": number
+                "additional_class_names"?: string
             },
             "rules": {}
         },
-        "free": {
+        "free"?: {
             "name": {
-                "fr": "Offert"
+                "fr": string //"Offert" | "Invitation"
             },
             "description": {},
             "price": {
@@ -130,112 +132,170 @@ export type ApiTicketack_Film = {
             ],
             "refs": [],
             "opaque": {
-                "eshop_sort_weight": 4
+                "eshop_sort_weight": number
+                "additional_class_names"?: string
             },
+            "rules": {}
+        },
+        "youth"?: {
+            "name": {"fr": "-12 ans"},
+            "description": {},
+            "price": {"CHF": 10},
+            "value": {"CHF": 10},
+            "wallet_amount": {"CHF": 0},
+            "value_per_screening": {"CHF": 0},
+            "VAT": 0,
+            "category": "default",
+            "sellers": ["eshop", "on-site", "admin"],
+            "refs": [],
+            "opaque": {"eshop_sort_weight": 5, "additional_class_names": "red"},
+            "rules": {}
+        },
+        "reduced_avsai"?: {
+            "name": {"fr": "Réduit AVS/AI"},
+            "description": {"fr": "<p>Au chômage ou à l'Assurance Invalidité</p>"},
+            "price": {"CHF": 12},
+            "value": {"CHF": 12},
+            "wallet_amount": {"CHF": 0},
+            "value_per_screening": {"CHF": 0},
+            "VAT": 0,
+            "category": "default",
+            "sellers": ["eshop", "on-site", "admin"],
+            "refs": [],
+            "opaque": {"eshop_sort_weight": 1, "additional_class_names": "green"},
+            "rules": {}
+        },
+        "reduced_formation"?: {
+            "name": {"fr": "Réduit En formation"},
+            "description": {"fr": "<p>En formation, étudiantexs</p>"},
+            "price": {"CHF": 12},
+            "value": {"CHF": 12},
+            "wallet_amount": {"CHF": 0},
+            "value_per_screening": {"CHF": 0},
+            "VAT": 0,
+            "category": "default",
+            "sellers": ["eshop", "on-site", "admin"],
+            "refs": [],
+            "opaque": {"eshop_sort_weight": 2, "additional_class_names": "green"},
+            "rules": {}
+        },
+        "reduced_caritas"?: {
+            "name": {"fr": "Réduit carte culture"},
+            "description": {"fr": "<p>Carte culture Caritas (Office subsides assurances maladie)</p>"},
+            "price": {"CHF": 12},
+            "value": {"CHF": 12},
+            "wallet_amount": {"CHF": 0},
+            "value_per_screening": {"CHF": 0},
+            "VAT": 0,
+            "category": "default",
+            "sellers": ["eshop", "on-site", "admin"],
+            "refs": [],
+            "opaque": {"eshop_sort_weight": 3, "additional_class_names": "green"},
             "rules": {}
         }
     },
     "cinema_hall": {
-        "_id": "f763cf40-c027-45d8-8a3e-96cd7263d2ac",
-        "created_at": "2024-08-27T14:40:26.000Z",
-        "updated_at": "2024-08-27T14:40:26.000Z",
-        "number": "1",
-        "name": "Salle",
-        "cinema": "Le Cinématographe de Lausanne",
-        "address": "Casino de Montbenon, Allée Ernest-Ansermet 3",
-        "zip": "1003",
-        "city": "Lausanne",
-        "state": "VD",
-        "country": "Suisse",
+        "_id": string,
+        "created_at": string,
+        "updated_at": string,
+        "number": string,
+        "name": string,
+        "cinema": string,
+        "address": string,
+        "zip": string,
+        "city": string,
+        "state": string,
+        "country": string,
         "refs": [],
         "opaque": {
-            "capacity": "100"
+            "capacity": string
         }
     },
     "films": [
         {
-            "_id": "dcf6c186-92d1-4f43-8210-03fed73758cf",
+            "_id": string,
             "title": {
-                "fr": "30 JOURS MAX",
-                "original": "30 JOURS MAX"
+                "fr": string,
+                "original": string
             },
             "sections": [],
             "opaque": {
-                "type": "movie",
+                "type": "movie" | "poster" | "banner",
                 "service_type": null,
                 "description": {
-                    "fr": "<p>Rayane est un jeune flic trouillard et maladroit sans cesse moqué par les autres policiers. Le jour où son médecin lui apprend à tort qu’il n’a plus que trente jours à vivre, il comprend que c’est sa dernière chance pour devenir un héros au sein de son commissariat et impressionner sa collègue Stéphanie. L’éternel craintif se transforme alors en véritable tête brûlée qui prendra tous les risques pour coincer un gros caïd de la drogue…</p>"
+                    "fr": string
                 },
-                "suisa": "1014.462",
-                "year": 2020,
+                "suisa": string,
+                "year": number,
                 "distributor": {
-                    "id": "ef56f5fb-ec7b-435b-8cf5-bead63ade74a",
-                    "created_at": "2018-09-20T18:25:54+02:00",
-                    "updated_at": "2023-02-28T09:03:07+01:00",
-                    "name": "Frenetic Films ag",
-                    "address": "Riedtlistrasse 23",
-                    "zip": "80004",
-                    "city": "Zurich",
-                    "country": "CH",
-                    "maccsbox_id": "CH1122",
+                    "id": string,
+                    "created_at": string,
+                    "updated_at": string,
+                    "created_by": null | string,
+                    "updated_by": null | string,
+                    "name": string,
+                    "address": string,
+                    "zip": string,
+                    "city": string,
+                    "country": string,
+                    "maccsbox_id": string,
                     "contact_mail": "",
                     "report_mail": ""
                 },
-                "l_min_age": "",
-                "s_min_age": "",
-                "a_min_age": "",
+                "l_min_age": string,
+                "s_min_age": string,
+                "a_min_age": string,
                 "free_text_1": {
-                    "fr": ""
+                    "fr": string
                 },
                 "free_text_2": {
-                    "fr": ""
+                    "fr": string
                 },
                 "free_text_3": {
-                    "fr": ""
+                    "fr": string
                 },
-                "posters": [
-                    {
-                        "url": "https://api-kronos.ticketack.com/posters/70e0d626-93ed-4d03-8969-58cf775f5372.jpg"
-                    },
-                    {
-                        "url": "https://api-kronos.ticketack.com/posters/1185b2c5-1286-46d8-8f55-e9705d7457b6.jpg"
-                    }
-                ],
+                "free_text_4": [],
+                "free_text_5": [],
+                "free_text_6": [],
+                "posters":                     {
+                    "url": string
+                    "type": "movie" | "poster" | "banner"
+                }[],
                 "trailers": [
                     {
-                        "url": "https://www.youtube.com/embed/R8cOK5mE5P8",
-                        "image": "https://img.youtube.com/vi/R8cOK5mE5P8/maxresdefault.jpg"
+                        "url": string,
+                        "image": string
                     }
                 ],
-                "genre": "Comédie",
+                "genre": string,
                 "sections": [],
                 "people": [
                     {
-                        "activity": "director",
-                        "firstname": "Tarek",
-                        "lastname": "Boudali"
+                        "activity": string,
+                        "firstname": string,
+                        "lastname": string
                     },
                     {
-                        "activity": "actor",
-                        "firstname": "Philippe",
-                        "lastname": "Lacheau"
+                        "activity": string,
+                        "firstname": string,
+                        "lastname": string
                     },
                     {
-                        "activity": "actor",
-                        "firstname": "José",
-                        "lastname": "Garcia"
+                        "activity": string,
+                        "firstname": string,
+                        "lastname": string
                     }
                 ],
-                "duration": 90,
+                "duration": number,
                 "countries": [
-                    "FR"
+                    string
                 ],
                 "languages": {
                     "original": [
-                        "fr"
+                        string
                     ],
                     "audio": [
-                        "fr"
+                        string
                     ],
                     "subtitles": []
                 }
@@ -245,20 +305,18 @@ export type ApiTicketack_Film = {
     "sections": [],
     "refs": [
         {
-            "id": "b442a586-81ea-48f7-a494-1d5c6206bf11"
+            "id": string
         }
     ],
     "opaque": {
-        "posters": [
-            {
-                "url": "https://api-kronos.ticketack.com/posters/70e0d626-93ed-4d03-8969-58cf775f5372.jpg"
-            }
-        ],
-        "week": 1,
-        "break": false,
-        "format": "",
-        "version": "",
-        "_3d": false,
-        "ignore_on_maccsbox": true
+        "posters": {
+                "url": string
+            }[],
+        "week": number,
+        "break": boolean,
+        "format": string,
+        "version": string,
+        "_3d": boolean,
+        "ignore_on_maccsbox": boolean
     }
 }

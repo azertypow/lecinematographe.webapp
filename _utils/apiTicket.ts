@@ -1,4 +1,4 @@
-import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
+import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {HttpProxy} from "vite";
 import type {_AsyncData, AsyncDataRequestStatus} from "#app/composables/asyncData";
 import {FetchError} from "ofetch";
@@ -41,7 +41,7 @@ export async function apiGetSeancesOfFilm(filmID: number) {
     return fetchFromTicketAPI<ISeancesOfFilm>(`/ws/WwtLstSeanceAct.php?WwtFilm=${filmID}&WwtLimi=30`)
 }
 
-export async function apiGetListOfFilmByDate(date: Date): Promise<ApiTicketack_Film[]> {
+export async function apiGetListOfFilmByDate(date: Date): Promise<ApiTicketack_screening[]> {
 
     const dateAfter = new Date(date)
     dateAfter.setDate(dateAfter.getDate() + 1)
@@ -52,7 +52,7 @@ export async function apiGetListOfFilmByDate(date: Date): Promise<ApiTicketack_F
 
     console.log(getFilmsResponse)
 
-    const filmResponseData: ApiTicketack_Film[]     = await getFilmsResponse.json()
+    const filmResponseData: ApiTicketack_screening[]     = await getFilmsResponse.json()
 
     console.log(filmResponseData)
 

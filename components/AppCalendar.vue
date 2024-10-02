@@ -87,13 +87,13 @@
 import {type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
 import {apiGetListOfFilmByDate, type ISeance,} from "~/_utils/apiTicket";
-import type {ApiTicketack_Film} from "~/_utils/apiTicketack";
+import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
 
 const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
-const seancesDataOnSelectedDate: Ref<UnwrapRef<null | ApiTicketack_Film[]>> = ref(null)
+const seancesDataOnSelectedDate: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 
 const calendarIsDisable = false
 
