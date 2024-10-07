@@ -47,7 +47,7 @@ const props = defineProps<{
     title: string,
     cover_url: string,
     start_date: string,
-    seanceId: number,
+    seanceId: string,
     enPresenceDe?: string
     film_id: number
 }>()
