@@ -33,14 +33,14 @@
             </div>
         </div>
 
-        <div class="v-film-id__list-film-container"
-        >
-            <AppFilmList
-                v-if="filmList"
-                :ticket-film-array="filmList.filmlist"
-                :show-title="true"
-            />
-        </div>
+<!--        <div class="v-film-id__list-film-container"-->
+<!--        >-->
+<!--            <AppFilmList-->
+<!--                v-if="filmList"-->
+<!--                :ticket-film-array="filmList.filmlist"-->
+<!--                :show-title="true"-->
+<!--            />-->
+<!--        </div>-->
 
 
     </section>
