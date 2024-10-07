@@ -31,7 +31,7 @@
         <nuxt-link class="v-app-film-vignette__details"
            :href="`/film/${film_id}`"
         >
-            <app-button-shine>détails du film</app-button-shine>
+            <app-button-shine>détails</app-button-shine>
         </nuxt-link>
     </section>
 </template>
@@ -42,13 +42,6 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import {
-    apiGetSeancesOfFilm,
-    apiGetUrlOfFilm,
-    type IFilmListResponse,
-    type ISeancesOfFilm,
-    type ITicketFilm
-} from "~/_utils/apiTicket";
 import {average} from "color.js";
 import {proxyUrl} from "~/_utils/proxyUrl";
 
@@ -57,7 +50,7 @@ const props = defineProps<{
     tx_titre_lng: string
     tx_description: string
     ur_vignette: string
-    film_id: number
+    film_id: string
 }>()
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)

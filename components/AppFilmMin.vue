@@ -7,7 +7,7 @@
         ref="appFilmRefContainer"
     >
         <nuxt-link class="v-app-film-min__link"
-            :href="`/film/${ticketFilm.id_film}`"
+            :href="`/film/${ticketFilm._id}`"
         />
         <div class="v-app-button-shine__container__shine"
              ref="appFilmRefShineElement"
@@ -18,11 +18,11 @@
                 :style="`background: linear-gradient(to top, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
             >
                 <p class="v-app-film-min__description__value"
-                >{{ticketFilm.tx_realisateur.replace('De', '')}}</p>
+                >{{ticketFilm.films[0].opaque.people[0].firstname}} {{ticketFilm.films[0].opaque.people[0].lastname}}</p>
             </div>
             <img class="v-app-film-min__cover__img"
-                :alt="`image de couverture de ${ticketFilm.tx_titre_lng}`"
-                :src="ticketFilm.ur_affiche"
+                :alt="`image de couverture de ${ticketFilm.films[0].title.original}`"
+                :src="ticketFilm.films[0].opaque.posters[0].url"
                 @load="(e) => setGradientColor(e.target)"
             />
 
@@ -40,9 +40,10 @@ import type {ITicketFilm} from "~/_utils/apiTicket";
 import {average} from 'color.js'
 import {type ICardEffectOption, onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
 import {proxyUrl} from "~/_utils/proxyUrl";
+import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const props = defineProps<{
-    ticketFilm: ITicketFilm
+    ticketFilm: ApiTicketack_screening
 }>()
 
 onMounted(()=> {

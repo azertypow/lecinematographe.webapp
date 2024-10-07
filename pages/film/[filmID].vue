@@ -18,17 +18,15 @@
         <div class="v-film-id__info"
              v-else
         >
-            <div
-                v-for="filmData of data.filmlist"
-            >
+            <div>
                 <div class="v-film-id__info__header-image"
                 >
                     <AppFilmMin
-                        :ticket-film="filmData"
+                        :ticket-film="data"
                     />
                 </div>
                 <AppFilmDetails
-                    :ticket-film="filmData"
+                    :ticket-film="data"
                 />
             </div>
         </div>
@@ -53,12 +51,14 @@
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {apiGetFilmById, apiGetFilmList, type IFilmListResponse} from "~/_utils/apiTicket";
+import {ticketackApi_screening_byID} from "~/_utils/ticketackFetch";
+import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const props = defineProps<{
 
 }>()
 
-const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const data: Ref<UnwrapRef<null | ApiTicketack_screening>> = ref(null)
 
 const filmList: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
 
@@ -71,7 +71,7 @@ async function loadData() {
 
     if( typeof filmID !== 'string') return
 
-    data.value = await apiGetFilmById( Number.parseInt(filmID) )
+    data.value = await ticketackApi_screening_byID( filmID )
 
     //
     // apiGetFilmList().then(value => {
@@ -86,8 +86,6 @@ async function loadData() {
 
 
 <style lang="scss" scoped >
-.v-film-id {
-}
 .v-film-id__info {
     min-height: calc(100vh - 10rem);
     display: flex;

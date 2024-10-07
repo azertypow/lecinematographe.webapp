@@ -66,8 +66,7 @@
                                 :title="seanceData.title.original"
                                 :cover_url="seanceData.films[0].opaque.posters.find(value => value.type === 'banner')?.url || seanceData.films[0].opaque.posters[0].url"
                                 :start_date="seanceData.start_at"
-                                :seance-id="1"
-                                :film_id="1"
+                                :seance-id="seanceData._id"
                             />
                         </div>
                     </div>

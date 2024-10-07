@@ -4,7 +4,7 @@
     >
         <nuxt-link class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
                    style="position: relative;"
-                   :to="`/film/${film_id}`"
+                   :to="`/film/${seanceId}`"
         >
             <img
                 class="v-app-calendar-list-item__cover"
@@ -49,7 +49,6 @@ const props = defineProps<{
     start_date: string,
     seanceId: string,
     enPresenceDe?: string
-    film_id: number
 }>()
 </script>
 
