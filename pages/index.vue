@@ -80,7 +80,11 @@ onMounted(async () => {
         data.value = value
         specialEventsInFilmList.value = await apiGetListOfScreeningByDate_filterByTag_event(new Date(), 30)
     })
-    apiGetListOfFilmByDate(new Date()).then(value => dateFilmByDate.value = value)
+
+    const currentDateFrom0Houre = new Date()
+    currentDateFrom0Houre.setHours(0)
+    currentDateFrom0Houre.setMinutes(0)
+    apiGetListOfFilmByDate( currentDateFrom0Houre ).then(value => dateFilmByDate.value = value)
 })
 
 interface ISpecialEventsInFilmList {
