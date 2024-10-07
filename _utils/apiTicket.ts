@@ -3,6 +3,7 @@ import {HttpProxy} from "vite";
 import type {_AsyncData, AsyncDataRequestStatus} from "#app/composables/asyncData";
 import {FetchError} from "ofetch";
 import {ticketackApi_screenings} from "~/_utils/ticketackFetch";
+import LECINEMATOGRAPHE_API_IDS from "~/_utils/LECINEMATOGRAPHE_API_IDS";
 
 export async function fetchFromTicketAPI<T>(endPoint: string): Promise<T> {
     const myHeaders = new Headers()
@@ -58,9 +59,7 @@ export async function apiGetListOfFilmByDate(date: Date, duration = 1): Promise<
         }
     ])
 
-    console.log( getFilmsResponse )
-
-    return getFilmsResponse
+    return (getFilmsResponse as ApiTicketack_screening[]).filter(filmByDate => !filmByDate.sections.some(section => section._id === LECINEMATOGRAPHE_API_IDS))
 }
 
 export async function apiGetListOfScreeningByDate_filterByTag_event(date: Date, duration= 1): Promise<ApiTicketack_screening[]> {
