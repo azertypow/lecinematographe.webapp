@@ -25,7 +25,7 @@
             </div>
 
             <img alt="image de couverture pour le film"
-                 :src="ticketFilm.films[0].opaque.posters[0]?.url"
+                 :src="ticketFilm.films[0].opaque.posters.find(value => value.type === 'banner')?.url || ticketFilm.films[0].opaque.posters[0].url"
                  @load="(e) => setGradientColor(e.target)"
             />
         </div>
