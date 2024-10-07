@@ -41,7 +41,7 @@
                             :da_depart="filmVignette.start_at"
                             :tx_description="filmVignette.description.fr"
                             :tx_titre_lng="filmVignette.films[0].title.original"
-                            :ur_vignette="filmVignette.films[0].opaque.posters[0].url"
+                            :ur_vignette="filmVignette.films[0].opaque.posters.find(value => value.type === 'banner')?.url || filmVignette.films[0].opaque.posters[0].url"
                             :film_id="10"
                         />
                     </div>
