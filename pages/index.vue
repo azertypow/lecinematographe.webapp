@@ -18,14 +18,14 @@
         <div v-else
         >
             <div class="app-grid--column-24 app-flex--sm app-flex--sm--column">
-                <div class="v-index__section v-index__section--today app-flex--sm__basis-1-1"
-                     v-if="data.filmlist"
-                >
-                    <AppFilmList
-                        :ticket-film-array="data.filmlist"
-                        :show-title="true"
-                    />
-                </div>
+<!--                <div class="v-index__section v-index__section&#45;&#45;today app-flex&#45;&#45;sm__basis-1-1"-->
+<!--                     v-if="data.filmlist"-->
+<!--                >-->
+<!--                    <AppFilmList-->
+<!--                        :ticket-film-array="data.filmlist"-->
+<!--                        :show-title="true"-->
+<!--                    />-->
+<!--                </div>-->
                 <div class="v-index__section v-index__section--button-agenda app-flex--sm__basis-1-1">
 <!--                    <button-->
 <!--                        class="app-flex__shrink-0 lc-button&#45;&#45;is-negative lc-button&#45;&#45;is-rounded"-->
