@@ -2,6 +2,7 @@ import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {HttpProxy} from "vite";
 import type {_AsyncData, AsyncDataRequestStatus} from "#app/composables/asyncData";
 import {FetchError} from "ofetch";
+import {ticketackApi_screenings} from "~/_utils/ticketackFetch";
 
 export async function fetchFromTicketAPI<T>(endPoint: string): Promise<T> {
     const myHeaders = new Headers()
@@ -41,18 +42,49 @@ export async function apiGetSeancesOfFilm(filmID: number) {
     return fetchFromTicketAPI<ISeancesOfFilm>(`/ws/WwtLstSeanceAct.php?WwtFilm=${filmID}&WwtLimi=30`)
 }
 
-export async function apiGetListOfFilmByDate(date: Date): Promise<ApiTicketack_screening[]> {
+export async function apiGetListOfFilmByDate(date: Date, duration = 1): Promise<ApiTicketack_screening[]> {
 
     const dateAfter = new Date(date)
-    dateAfter.setDate(dateAfter.getDate() + 1)
+    dateAfter.setDate(dateAfter.getDate() + duration)
 
-    const url = `/api/getFilms?stop_at_gte=${date.toISOString()}&stop_at_lte=${dateAfter.toISOString()}`
+    const getFilmsResponse = await ticketackApi_screenings([
+        {
+            query: 'start_at_gte',
+            value: date.toISOString()
+        },
+        {
+            query: 'stop_at_lte',
+            value: dateAfter.toISOString()
+        }
+    ])
 
-    const getFilmsResponse = await fetch(url)
+    console.log( getFilmsResponse )
 
-    const filmResponseData: ApiTicketack_screening[]     = await getFilmsResponse.json()
+    return getFilmsResponse
+}
 
-    return filmResponseData
+export async function apiGetListOfScreeningByDate_filterByTag_event(date: Date, duration= 1): Promise<ApiTicketack_screening[]> {
+
+    const dateAfter = new Date(date)
+    dateAfter.setDate(dateAfter.getDate() + duration)
+
+    const getFilmsResponse = await ticketackApi_screenings([
+        {
+            query: 'start_at_gte',
+            value: date.toISOString()
+        },
+        {
+            query: 'stop_at_lte',
+            value: dateAfter.toISOString()
+        },
+        {
+            query: 'sections_ids',
+            value: '47958d1d-272f-4106-8dd5-eff93f45d8f0'
+        }
+    ])
+
+
+    return await getFilmsResponse
 }
 
 

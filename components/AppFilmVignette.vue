@@ -5,11 +5,23 @@
     >
 <!--        {{ticketFilm}}-->
         <h3 class="v-app-film-vignette__date">
-            ÉVÈNEMENT SPÉCIAL
-            <br>{{ da_depart }}
+          ÉVÈNEMENT SPÉCIAL
+          <br>{{
+            new Date(da_depart).toLocaleDateString('fr-FR', {
+              weekday: 'long',
+              day: 'numeric',
+              month: 'long'
+            })
+                  + ', ' +
+            new Date(da_depart).toLocaleTimeString('fr-FR', {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            }).replace(':', 'h')
+          }}
         </h3>
         <h1 class="v-app-film-vignette__title">{{tx_titre_lng}}</h1>
-        <h5 class="v-app-film-vignette__subtitle">{{tx_description}}</h5>
+        <h5 class="v-app-film-vignette__subtitle" v-html="tx_description"></h5>
         <div class="v-app-film-vignette__cover">
             <img alt="image de couverture pour le film"
                  :src="ur_vignette"
@@ -113,6 +125,11 @@ async function setGradientColor(targetElement: EventTarget | null) {
     flex-basis: calc(100% / 12 * 12);
     color: inherit;
     border: none;
+
+}
+:global( .v-app-film-vignette__subtitle > * ),
+:global( .v-app-film-vignette__details > * ) {
+  margin: 0;
 }
 
 .v-app-film-vignette__details__header {

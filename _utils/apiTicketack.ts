@@ -4,7 +4,9 @@ export type ApiTicketack_screening = {
         "fr": string,
         "original": string
     },
-    "description": {},
+    "description": {
+        fr: string
+    },
     "start_at": string,             //"2024-08-28T15:20:00.000Z"
     "stop_at": string,              //"2024-08-28T16:50:00.000Z"
     "ignore_overlap_rules": false,
@@ -218,7 +220,10 @@ export type ApiTicketack_screening = {
                 "fr": string,
                 "original": string
             },
-            "sections": [],
+            "sections": {
+                name: {fr: 'événement' | string}
+                _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
+            }[],
             "opaque": {
                 "type": "movie" | "poster" | "banner",
                 "service_type": null,

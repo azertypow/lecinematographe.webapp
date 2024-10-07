@@ -38,11 +38,11 @@
                 <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--sm--column-1 app-grid--gap_regular app-flex--sm__basis-1-1">
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
-                            :da_depart="filmVignette.seance.tx_date"
-                            :tx_description="filmVignette.seance.tx_seance"
-                            :tx_titre_lng="filmVignette.filmData.tx_titre_lng"
-                            :ur_vignette="filmVignette.filmData.ur_vignette"
-                            :film_id="filmVignette.filmData.id_film"
+                            :da_depart="filmVignette.start_at"
+                            :tx_description="filmVignette.description.fr"
+                            :tx_titre_lng="filmVignette.films[0].title.original"
+                            :ur_vignette="filmVignette.films[0].opaque.posters[0].url"
+                            :film_id="10"
                         />
                     </div>
                 </div>
@@ -67,23 +67,20 @@ import {
     apiGetSeancesOfFilm,
     apiGetFilmList,
     type IFilmListResponse,
-    apiGetUrlOfFilm, type ITicketFilm, type ISeance
+    apiGetUrlOfFilm, type ITicketFilm, type ISeance, apiGetListOfScreeningByDate_filterByTag_event
 } from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
 const dateFilmByDate: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
-const specialEventsInFilmList: Ref<UnwrapRef<ISpecialEventsInFilmList[] | null>> = ref(null)
+const specialEventsInFilmList: Ref<UnwrapRef<ApiTicketack_screening[] | null>> = ref(null)
 
 onMounted(async () => {
     apiGetFilmList().then(async value => {
         data.value = value
-        specialEventsInFilmList.value = (await loadSpecialEventsInFilmList()).sort((a, b) => {
-
-            return new Date(a.seance.id_date).getTime() -  new Date(b.seance.id_date).getTime()
-        })
+        specialEventsInFilmList.value = await apiGetListOfScreeningByDate_filterByTag_event(new Date(), 30)
     })
-    apiGetListOfFilmByDate(new Date('2024-10-01')).then(value => dateFilmByDate.value = value)
+    apiGetListOfFilmByDate(new Date()).then(value => dateFilmByDate.value = value)
 })
 
 interface ISpecialEventsInFilmList {
