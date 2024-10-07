@@ -2,35 +2,42 @@
     <section
         class="v-app-calendar-list-item"
     >
-        <nuxt-link class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
-                   style="position: relative;"
-                   :to="`/film/${seanceId}`"
+        <div class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
+             style="position: relative;"
         >
-            <img
-                class="v-app-calendar-list-item__cover"
-                :alt="`image de couverture de ${title}`"
-                :src="cover_url"
-            />
-            <div class="v-app-calendar-list-item__text app-flex app-flex--justify_space-between app-flex--nowrap app-flex--align_center">
+            <nuxt-link
+                style="border: none"
+                :to="`/film/${seanceId}`"
+            >
+                <img
+                    class="v-app-calendar-list-item__cover"
+                    :alt="`image de couverture de ${title}`"
+                    :src="cover_url"
+                />
+            </nuxt-link>
+            <nuxt-link class="v-app-calendar-list-item__text app-flex app-flex--justify_space-between app-flex--nowrap app-flex--align_center"
+                       :to="`/film/${seanceId}`"
+            >
                 <h3 class="v-app-calendar-list-item__title"
-                >{{title}}</h3>
+                >{{ title }}</h3>
                 <p class="v-app-calendar-list-item__hour"
                 >{{
-                    new Date(start_date).toLocaleTimeString('fr-FR', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: false
-                    }).replace(':', 'h')
-                  }}</p>
-            </div>
-            <div style="position: relative">
-              <div style="position: absolute; text-align: center; top: 1.15rem; left: 50%; font-size: .4rem; line-height: 1.25em; transform: rotate(-5deg) translate(-50%);">en<br>maintenance</div>
-              <img class="v-app-calendar-list-item__ticket"
-                   alt="prendre un ticket"
-                  src="../assets/icons/ticket.svg"
-              />
-            </div>
-        </nuxt-link>
+                        new Date(start_date).toLocaleTimeString('fr-FR', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        }).replace(':', 'h')
+                    }}</p>
+            </nuxt-link>
+            <a target="_blank"
+               :href="`https://lecinematographe.ticketack.com/screening/buy/${seanceId}`"
+            >
+                <img class="v-app-calendar-list-item__ticket"
+                     alt="prendre un ticket"
+                     src="../assets/icons/ticket.svg"
+                />
+            </a>
+        </div>
     </section>
 </template>
 
@@ -82,6 +89,8 @@ const props = defineProps<{
 
 .v-app-calendar-list-item__text {
     width: 100%;
+    color: inherit;
+    border: none;
 
     @media (max-width: 700px) {
         flex-direction: column;
