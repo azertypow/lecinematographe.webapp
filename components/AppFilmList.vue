@@ -1,26 +1,5 @@
 <template>
-    <section class="v-app-film-list">
-        <div class="v-app-film-list__title-container"
-             v-if="showTitle"
-        >
-            <h3 class="lc-typo-with-dot" style="margin:0 auto">
-                À L’AFFICHE
-            </h3>
-        </div>
-        <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"
-        >
-            <div class="app-flex__shrink-0 app-flex__basis-1-4 v-app-film-list__films-container__item"
-                 v-for="film of ticketFilmArray">
-                <div    style="
-                            text-align: center;
-                            padding-bottom: .5em;
-                        ">{{film.tx_titre_lng}}</div>
-                <AppFilmMin
-                    :ticket-film="film"
-                />
-            </div>
-        </div>
-    </section>
+    <div></div>
 </template>
 
 
