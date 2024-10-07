@@ -73,9 +73,10 @@ async function loadData() {
 
     data.value = await apiGetFilmById( Number.parseInt(filmID) )
 
-    apiGetFilmList().then(value => {
-        filmList.value = value
-    })
+    //
+    // apiGetFilmList().then(value => {
+    //     filmList.value = value
+    // })
 }
 
 </script>
