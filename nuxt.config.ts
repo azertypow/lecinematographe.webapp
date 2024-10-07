@@ -11,9 +11,6 @@ export default defineNuxtConfig({
             clientDB: true,
         },
     },
-    runtimeConfig: {
-        lecinematographeEngineToken: '',
-    },
 
     app: {
         // baseURL: '/lecinematographe.webapp/',
@@ -23,5 +20,6 @@ export default defineNuxtConfig({
             mode: 'out-in',
         }
     },
+    ssr: false,
     modules: ["@nuxt/content"]
 })
