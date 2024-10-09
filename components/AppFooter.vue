@@ -112,6 +112,8 @@
     background: var(--lc-color--pink);
     margin-top: 4rem;
     margin-bottom: 2rem;
+    padding: .25rem;
+    border-radius: var(--lc-radius);
 }
 
 .inf-main_76f376382a50bd4859e50a81e701da10 {
