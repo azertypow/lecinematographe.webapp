@@ -114,3 +114,7 @@ pre {
   border-top: dotted 2px;
   width: min(100%, var(--lc-max-width--reg));
 }
+
+code {
+  font-family: inherit;
+}
