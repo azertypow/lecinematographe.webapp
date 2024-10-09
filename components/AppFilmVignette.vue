@@ -88,6 +88,10 @@ async function setGradientColor(targetElement: EventTarget | null) {
     container-type: inline-size;
 }
 
+:global(.v-app-film-vignette a) {
+  color: var(--lc-color--pastel--blue);
+}
+
 .v-app-film-vignette__date {
     position: absolute;
     top: var(--app-flex--gap_half);
