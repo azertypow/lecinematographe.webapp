@@ -221,7 +221,7 @@ export type ApiTicketack_screening = {
                 "original": string
             },
             "sections": {
-                name: {fr: 'événement' | string}
+                name: { fr: 'événement' | string }
                 _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
             }[],
             "opaque": {
@@ -262,7 +262,7 @@ export type ApiTicketack_screening = {
                 "free_text_4": [],
                 "free_text_5": [],
                 "free_text_6": [],
-                "posters":                     {
+                "posters": {
                     "url": string
                     "type": "movie" | "poster" | "banner"
                 }[],
@@ -274,9 +274,9 @@ export type ApiTicketack_screening = {
                 ],
                 "genre": string,
                 "sections": {
-                name: {fr: 'événement' | string}
-                _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
-            }[],
+                    name: { fr: 'événement' | string }
+                    _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
+                }[],
                 "people": [
                     {
                         "activity": string,
