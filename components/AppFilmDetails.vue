@@ -66,17 +66,21 @@
                 </template>
                 <div class="v-app-film-details__details__info__item">
                     <div>Durée</div>
-                    <div>{{ticketFilm.films[0].opaque.duration}}</div>
+                    <div>{{ticketFilm.films[0].opaque.duration}} minutes</div>
                 </div>
-                <div class="v-app-film-details__details__info__item">
-                    <div>Age</div>
-                    <div>{{ticketFilm.films[0].opaque.l_min_age}}</div>
+                <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.l_min_age">
+                    <div>age minimum légal</div>
+                    <div>{{ticketFilm.films[0].opaque.l_min_age}} ans</div>
+                </div>
+                <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.s_min_age">
+                    <div>age minimum suggéré</div>
+                    <div>{{ticketFilm.films[0].opaque.s_min_age}} ans</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>Distributeur</div>
                     <div>{{ticketFilm.films[0].opaque.distributor.name}}</div>
                 </div>
-                <div class="v-app-film-details__details__info__item">
+                <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.genre">
                     <div>Genre</div>
                     <div>{{ticketFilm.films[0].opaque.genre}}</div>
                 </div>
