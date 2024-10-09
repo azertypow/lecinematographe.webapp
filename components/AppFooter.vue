@@ -53,11 +53,6 @@
             <div
                 class="v-app-footer__content__left"
             >
-                <img
-                    class="v-app-footer__content__img"
-                    alt="photo du cinéma"
-                    src="../assets/cinematographe_web.png"  />
-
                 <div
                     class="v-app-footer__content__text"
                 >
@@ -201,22 +196,6 @@
 
     @media (max-width: 750px) {
         flex-direction: column;
-    }
-}
-
-.v-app-footer__content__img {
-    display: block;
-    width: calc(100% / 4 * 1);
-    object-fit: contain;
-    object-position: top;
-
-    @media (max-width: 1100px) {
-        width: 50%;
-    }
-
-    @media (max-width: 750px) {
-        width: 100%;
-        max-width: 10rem;
     }
 }
 
