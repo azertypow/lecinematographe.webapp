@@ -1,6 +1,6 @@
 <template>
     <section
-        class="v-app-film-vignette app-flex app-flex--justify_center"
+        class="v-app-film-vignette app-flex app-flex--justify_center app__ticket-container-for-hover-effect"
         :style="{background: colorBG ? `rgb(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]})` : 'rgb(0, 0, 0)'}"
     >
 <!--        {{ticketFilm}}-->
@@ -28,11 +28,24 @@
                  @load="(e) => setGradientColor(e.target)"
             />
         </div>
-        <nuxt-link class="v-app-film-vignette__details"
-           :href="`/film/${film_id}`"
-        >
-            <app-button-shine>détails</app-button-shine>
-        </nuxt-link>
+        <div class="v-app-film-vignette__details">
+            <nuxt-link
+               :href="`/film/${film_id}`"
+            >
+                <app-button-shine>détails</app-button-shine>
+            </nuxt-link>
+            <a target="_blank"
+               style="display: flex; align-items: center;"
+               :href="`https://lecinematographe.ticketack.com/screening/buy/${film_id}`"
+            >
+                <app-button-shine>réserver</app-button-shine>
+                <img class="app__ticket--img"
+                     style="height: .75rem"
+                     alt="prendre un ticket"
+                     src="../assets/icons/ticket.svg"
+                />
+            </a>
+        </div>
     </section>
 </template>
 
@@ -116,14 +129,26 @@ async function setGradientColor(targetElement: EventTarget | null) {
     }
 }
 
-.v-app-film-vignette__subtitle,
-.v-app-film-vignette__details {
+.v-app-film-vignette__subtitle {
     margin: var(--app-flex--gap_half) 0;
     flex-basis: calc(100% / 12 * 12);
     color: inherit;
     border: none;
 
 }
+
+.v-app-film-vignette__details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 1rem;
+
+    a {
+        border: none;
+    }
+}
+
 :global( .v-app-film-vignette__subtitle > * ),
 :global( .v-app-film-vignette__details > * ) {
   margin: 0;

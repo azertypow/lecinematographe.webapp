@@ -1,0 +1,10 @@
+.app__ticket--img {
+  height: 1rem;
+  transition: transform cubic-bezier(.666, 0, .333, 1) 2s;
+  transform: rotate(0) scale(1);
+
+  .app__ticket-container-for-hover-effect:hover & {
+    transform: rotate3d(1, 0, 1, 360deg) scale(1.25);
+    transition: transform cubic-bezier(0, 0, .333, 1) 1s;
+  }
+}

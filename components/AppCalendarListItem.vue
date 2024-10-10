@@ -1,6 +1,6 @@
 <template>
     <section
-        class="v-app-calendar-list-item"
+        class="v-app-calendar-list-item app__ticket-container-for-hover-effect"
     >
         <div class="v-app-calendar-list-item__container app-flex app-flex--align_center app-flex--gap_large app-flex--nowrap"
              style="position: relative;"
@@ -32,7 +32,7 @@
             <a target="_blank"
                :href="`https://lecinematographe.ticketack.com/screening/buy/${seanceId}`"
             >
-                <img class="v-app-calendar-list-item__ticket"
+                <img class="app__ticket--img"
                      alt="prendre un ticket"
                      src="../assets/icons/ticket.svg"
                 />
@@ -99,17 +99,6 @@ const props = defineProps<{
         > * {
             margin: 0;
         }
-    }
-}
-
-.v-app-calendar-list-item__ticket {
-    height: 1rem;
-    transition: transform cubic-bezier(.666, 0, .333, 1) 2s;
-    transform: rotate(0) scale(1);
-
-    .v-app-calendar-list-item:hover & {
-        transform: rotate3d(1, 0, 1, 360deg) scale(1.25);
-        transition: transform cubic-bezier(0, 0, .333, 1) 1s;
     }
 }
 
