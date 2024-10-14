@@ -329,5 +329,9 @@ export type ApiTicketack_screening = {
         "version": string,
         "_3d": boolean,
         "ignore_on_maccsbox": boolean
+        booking_mode: "other" | string,
+        booking_note: {
+            fr: string
+        }
     }
 }
