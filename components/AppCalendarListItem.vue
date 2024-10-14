@@ -30,6 +30,7 @@
                     }}</p>
             </nuxt-link>
             <a target="_blank"
+               v-if="booking_mode !== 'other'"
                :href="`https://lecinematographe.ticketack.com/screening/buy/${seanceId}`"
             >
                 <img class="app__ticket--img"
@@ -47,8 +48,7 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import type {ITicketFilm} from "~/_utils/apiTicket";
-import {formatDateFromDate} from "~/_utils/dateFormatHelper";
+import type {ApiTicketack_bookingMode} from "~/_utils/apiTicketack";
 
 const props = defineProps<{
     title: string,
@@ -56,6 +56,7 @@ const props = defineProps<{
     start_date: string,
     seanceId: string,
     enPresenceDe?: string
+    booking_mode?: ApiTicketack_bookingMode
 }>()
 </script>
 

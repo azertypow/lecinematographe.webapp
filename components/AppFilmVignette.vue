@@ -37,6 +37,7 @@
             <a target="_blank"
                style="display: flex; align-items: center;"
                :href="`https://lecinematographe.ticketack.com/screening/buy/${film_id}`"
+               v-if="booking_mode !== 'other'"
             >
                 <app-button-shine>réserver</app-button-shine>
                 <img class="app__ticket--img"
@@ -57,6 +58,7 @@
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {average} from "color.js";
 import {proxyUrl} from "~/_utils/proxyUrl";
+import type {ApiTicketack_bookingMode} from "~/_utils/apiTicketack";
 
 const props = defineProps<{
     da_depart: string
@@ -64,6 +66,7 @@ const props = defineProps<{
     tx_description: string
     ur_vignette: string
     film_id: string
+    booking_mode: ApiTicketack_bookingMode
 }>()
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
