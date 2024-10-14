@@ -179,6 +179,7 @@ async function updateSelectedDate(date: Date) {
 
 .v-app-calendar__dates {
   width: 100%;
+    max-width: 950px;
 
     @media (max-width: 700px) {
         width: auto;
