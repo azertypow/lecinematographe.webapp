@@ -103,7 +103,7 @@ onMounted(() => {
 })
 
 async function setDateRange(date: Date) {
-    const dateRage = getDatesRange(date, 7)
+    const dateRage = getDatesRange(date, 10)
 
     dateRange.value = dateRage
 
