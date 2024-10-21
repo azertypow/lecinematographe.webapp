@@ -18,7 +18,7 @@
                 :style="`background: linear-gradient(to top, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 1) 0%, rgba(${colorBG[0]}, ${colorBG[1]}, ${colorBG[2]}, 0) 100%)`"
             >
                 <p class="v-app-film-min__description__value"
-                >{{ticketFilm.films[0].opaque.people[0].firstname}} {{ticketFilm.films[0].opaque.people[0].lastname}}</p>
+                >{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</p>
             </div>
             <img class="v-app-film-min__cover__img"
                 :alt="`image de couverture de ${ticketFilm.films[0].title.original}`"
