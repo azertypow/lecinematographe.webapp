@@ -79,7 +79,7 @@ const specialEventsInFilmList: Ref<UnwrapRef<ApiTicketack_screening[] | null>> =
 onMounted(async () => {
     apiGetFilmList().then(async value => {
         data.value = value
-        specialEventsInFilmList.value = await apiGetListOfScreeningByDate_filterByTag_event(new Date(), 30)
+        specialEventsInFilmList.value = await apiGetListOfScreeningByDate_filterByTag_event(new Date(), 90)
     })
 
     const currentDateFrom0Houre = new Date()
