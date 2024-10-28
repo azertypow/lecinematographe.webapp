@@ -82,10 +82,10 @@ onMounted(async () => {
         specialEventsInFilmList.value = await apiGetListOfScreeningByDate_filterByTag_event(new Date(), 90)
     })
 
-    const currentDateFrom0Houre = new Date()
-    currentDateFrom0Houre.setHours(0)
-    currentDateFrom0Houre.setMinutes(0)
-    apiGetListOfFilmByDate( currentDateFrom0Houre ).then(value => dateFilmByDate.value = value)
+    const currentDateFrom0Hour = new Date()
+    currentDateFrom0Hour.setHours(0)
+    currentDateFrom0Hour.setMinutes(0)
+    apiGetListOfFilmByDate( currentDateFrom0Hour ).then(value => dateFilmByDate.value = value)
 })
 
 interface ISpecialEventsInFilmList {
