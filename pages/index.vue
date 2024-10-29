@@ -8,24 +8,23 @@
             >loading…
             </h2>
         </div>
-        <div v-else-if="data.error"
+        <div v-else-if="data.length === 0"
              class="app-flex app-flex--justify_center app-flex--align_center"
         >
             <h2
-            >error: {{data.error}}
+            >aucun films retourné
             </h2>
         </div>
         <div v-else
         >
             <div class="app-grid--column-24 app-flex--sm app-flex--sm--column">
-<!--                <div class="v-index__section v-index__section&#45;&#45;today app-flex&#45;&#45;sm__basis-1-1"-->
-<!--                     v-if="data.filmlist"-->
-<!--                >-->
-<!--                    <AppFilmList-->
-<!--                        :ticket-film-array="data.filmlist"-->
-<!--                        :show-title="true"-->
-<!--                    />-->
-<!--                </div>-->
+                <div class="v-index__section v-index__section--today app-flex--sm__basis-1-1"
+                >
+                    <AppFilmList
+                        :ticket-film-array="data"
+                        :show-title="true"
+                    />
+                </div>
                 <div class="v-index__section v-index__section--button-agenda app-flex--sm__basis-1-1">
 <!--                    <button-->
 <!--                        class="app-flex__shrink-0 lc-button&#45;&#45;is-negative lc-button&#45;&#45;is-rounded"-->
@@ -72,7 +71,7 @@ import {
 } from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
-const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const data: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 const dateFilmByDate: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 const specialEventsInFilmList: Ref<UnwrapRef<ApiTicketack_screening[] | null>> = ref(null)
 
@@ -87,34 +86,6 @@ onMounted(async () => {
     currentDateFrom0Hour.setMinutes(0)
     apiGetListOfFilmByDate( currentDateFrom0Hour ).then(value => dateFilmByDate.value = value)
 })
-
-interface ISpecialEventsInFilmList {
-    seance: ISeance
-    filmData: ITicketFilm
-}
-
-async function loadSpecialEventsInFilmList(): Promise<ISpecialEventsInFilmList[]> {
-    if(data.value === null) return []
-    if(!data.value.filmlist) return []
-
-    const toReturn: {
-        seance: ISeance,
-        filmData: ITicketFilm,
-    }[] = []
-
-    for (const filmData of data.value.filmlist) {
-        const filmEvent = await apiGetSeancesOfFilm(filmData.id_film)
-        filmEvent.seance.forEach(seance => {
-            if( seance.tx_seance.length < 1 ) return
-            toReturn.push({
-                seance: seance,
-                filmData: filmData,
-            })
-        })
-    }
-
-    return toReturn
-}
 
 </script>
 

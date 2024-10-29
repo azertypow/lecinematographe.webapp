@@ -24,9 +24,15 @@ export async function fetchFromTicketAPI<T>(endPoint: string): Promise<T> {
     }
 }
 
-export async function apiGetFilmList() {
-    return fetchFromTicketAPI<IFilmListResponse>('/ajax/WwtLstFilm.php?WwtTrie=4&WwtLimi=90')
+export async function apiGetFilmList(): Promise<ApiTicketack_screening[]> {
 
+    const currentDateFrom0Hour = new Date()
+    currentDateFrom0Hour.setHours(0)
+    currentDateFrom0Hour.setMinutes(0)
+
+    return (await apiGetListOfFilmByDate(currentDateFrom0Hour, 90)).filter((value, index, array) => {
+        return index === array.findIndex((item) => item.title.fr === value.title.fr)
+    })
 }
 
 export async function apiGetFilmById(filmId: number) {
