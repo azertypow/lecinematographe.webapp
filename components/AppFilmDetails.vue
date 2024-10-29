@@ -103,10 +103,10 @@
                 <a class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
                      v-for="nextSeance of nextSeances"
                    target="_blank"
-                     :href="`https://billetterie.lecinematographe.ch/shop15/${nextSeance.id_seance}`"
+                     :href="`https://lecinematographe.ticketack.com/screening/buy/${nextSeance._id}`"
                 >
-                    <div>{{ new Date(`${nextSeance.id_date}T${nextSeance.tx_heure}:00`).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
-                    <div>{{ formatDateFromDate( new Date(`${nextSeance.id_date}T${nextSeance.tx_heure}:00`) ) }}</div>
+                    <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
+                    <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
                     <div>
                         <img class="v-app-film-details__details__info__item__ticket"
                              alt="prendre un billet" src="../assets/icons/ticket.svg" />
@@ -123,18 +123,18 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import {type ISeance} from "~/_utils/apiTicket";
 import {average} from "color.js";
 import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 import {usePlayerLink} from "~/composables/states";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {proxyUrl} from "~/_utils/proxyUrl";
+import {apiGetSeancesOfFilm} from "~/_utils/ticketackFetch";
 
 const props = defineProps<{
     ticketFilm: ApiTicketack_screening
 }>()
 
-const nextSeances: Ref<UnwrapRef<null | ISeance[]>> = ref(null)
+const nextSeances: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 
 const linksOfFilm: Ref<UnwrapRef<null | {url: {id_film: string, ty_url: string, tx_url: string, ur_url: string}[]}>> = ref(null)
 
@@ -158,9 +158,13 @@ const youtubeLink = computed(() => linksOfFilm.value?.url.find(filmUrl => {
 }))
 
 onMounted(async () => {
-    // nextSeances.value = (await apiGetSeancesOfFilm(props.ticketFilm.id_film)).seance.sort((a, b) => {
+    nextSeances.value = (await apiGetSeancesOfFilm(props.ticketFilm.films[0]._id))
+
+    //     .seance.sort((a, b) => {
     //     return (new Date(a.id_date).getTime() - new Date(b.id_date).getTime())
     // })
+
+
     // linksOfFilm.value = await apiGetUrlOfFilm(props.ticketFilm.id_film)
 })
 

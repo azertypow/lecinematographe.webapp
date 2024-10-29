@@ -1,7 +1,4 @@
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
-import {HttpProxy} from "vite";
-import type {_AsyncData, AsyncDataRequestStatus} from "#app/composables/asyncData";
-import {FetchError} from "ofetch";
 import {ticketackApi_screenings} from "~/_utils/ticketackFetch";
 import LECINEMATOGRAPHE_API_IDS from "~/_utils/LECINEMATOGRAPHE_API_IDS";
 
@@ -42,11 +39,7 @@ export async function apiGetFilmById(filmId: number) {
 }
 
 export async function apiGetUrlOfFilm(filmId: number) {
-    return fetchFromTicketAPI<any>(`/ajax/WwtLstUrl.php?WwtFilm=${filmId}`)
-}
-
-export async function apiGetSeancesOfFilm(filmID: number) {
-    return fetchFromTicketAPI<ISeancesOfFilm>(`/ws/WwtLstSeanceAct.php?WwtFilm=${filmID}&WwtLimi=30`)
+    // return fetchFromTicketAPI<any>(`/ajax/WwtLstUrl.php?WwtFilm=${filmId}`)
 }
 
 export async function apiGetListOfFilmByDate(date: Date, duration = 1): Promise<ApiTicketack_screening[]> {

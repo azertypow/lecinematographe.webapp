@@ -61,13 +61,11 @@
     </div>
 </template>
 <script setup lang="ts">
-import type {ComputedRef, Ref, UnwrapRef} from "vue";
+import type {Ref, UnwrapRef} from "vue";
 import {
     apiGetListOfFilmByDate,
-    apiGetSeancesOfFilm,
     apiGetFilmList,
-    type IFilmListResponse,
-    apiGetUrlOfFilm, type ITicketFilm, type ISeance, apiGetListOfScreeningByDate_filterByTag_event
+    apiGetListOfScreeningByDate_filterByTag_event
 } from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 

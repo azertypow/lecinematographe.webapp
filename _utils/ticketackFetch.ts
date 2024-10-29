@@ -1,5 +1,6 @@
 import {LECINEMATOGRAPHE_ENGINE_TOKEN} from "~/_utils/LECINEMATOGRAPHE_ENGINE_TOKEN";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
+import {apiGetListOfFilmByDate} from "~/_utils/apiTicket";
 
 const ticketackApiBaseUrl = 'https://lecinematographe-engine.ticketack.com/api'
 
@@ -51,4 +52,15 @@ export async function ticketackApi_screening_byID(UUID: string) {
         console.error(error)
         return null
     }
+}
+
+
+export async function apiGetSeancesOfFilm(filmID: string): Promise<ApiTicketack_screening[]> {
+    const currentDateFrom0Hour = new Date()
+    currentDateFrom0Hour.setHours(0)
+    currentDateFrom0Hour.setMinutes(0)
+
+    return (await apiGetListOfFilmByDate(currentDateFrom0Hour, 90)).filter((value, index, array) => {
+        return value.films[0]._id === filmID
+    })
 }
