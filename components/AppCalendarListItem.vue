@@ -75,6 +75,10 @@ const props = defineProps<{
     border: none;
     cursor: pointer;
   user-select: none;
+
+  a {
+    border: none;
+  }
 }
 
 .v-app-calendar-list-item__cover {
