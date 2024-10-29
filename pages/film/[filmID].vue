@@ -35,7 +35,7 @@
         >
             <AppFilmList
                 v-if="filmList"
-                :ticket-film-array="filmList.filmlist"
+                :ticket-film-array="filmList"
                 :show-title="true"
             />
         </div>
@@ -50,7 +50,12 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import {apiGetFilmById, apiGetFilmList, type IFilmListResponse} from "~/_utils/apiTicket";
+import {
+    apiGetFilmById,
+    apiGetFilmList,
+    apiGetListOfScreeningByDate_filterByTag_event,
+    type IFilmListResponse
+} from "~/_utils/apiTicket";
 import {ticketackApi_screening_byID} from "~/_utils/ticketackFetch";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
@@ -60,7 +65,7 @@ const props = defineProps<{
 
 const data: Ref<UnwrapRef<null | ApiTicketack_screening>> = ref(null)
 
-const filmList: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const filmList: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 
 onMounted(() => {
     loadData()
