@@ -6,7 +6,8 @@
             v-if="data"
         >
             <AppFilmList
-                :ticket-film-array="data.filmlist"
+                :show-title="false"
+                :ticket-film-array="data"
             />
         </template>
     </section>
@@ -19,8 +20,9 @@
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {apiGetFilmList, type IFilmListResponse} from "~/_utils/apiTicket";
+import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
-const data: Ref<UnwrapRef<null | IFilmListResponse>> = ref(null)
+const data: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 
 onMounted(async () => {
     data.value = await apiGetFilmList()
