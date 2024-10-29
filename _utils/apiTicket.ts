@@ -89,7 +89,7 @@ export async function apiGetListOfScreeningByDate_filterByTag_event(date: Date, 
     ])
 
 
-    return await getFilmsResponse
+    return getFilmsResponse.filter(value => value.films[0]?._id !== '0671a85e-1c5a-438d-bb8f-500139b38cc6')
 }
 
 

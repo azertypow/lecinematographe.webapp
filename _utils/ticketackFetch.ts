@@ -25,7 +25,7 @@ export async function ticketackApi_screenings(queries: {
 
     try {
         const response = await fetch(url, options);
-        return await response.json();
+        return await response.json() as ApiTicketack_screening[]
     } catch (error) {
         console.error(error)
         return []
