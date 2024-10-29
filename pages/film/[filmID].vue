@@ -8,11 +8,11 @@
             <h1>Chargement…</h1>
         </div>
 
-        <div class="v-film-id__info"
-             v-else-if="data.error"
-        >
-            <h1>{{ data.error }}</h1>
-        </div>
+<!--        <div class="v-film-id__info"-->
+<!--             v-else-if="data.error"-->
+<!--        >-->
+<!--            <h1>{{ data.error }}</h1>-->
+<!--        </div>-->
 
 
         <div class="v-film-id__info"
