@@ -111,7 +111,7 @@
                   <div v-if="nextSeance.opaque.booking_mode === 'free'"
                        class="v-app-film-details__details__free-text"
                   >
-                    Il s agit d'un événement prix libre (paiement sur place).
+<!--                    Il s agit d'un événement prix libre (paiement sur place).-->
                   </div>
                     <div v-else>
                         <img class="v-app-film-details__details__info__item__ticket"
