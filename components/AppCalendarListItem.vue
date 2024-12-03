@@ -30,7 +30,7 @@
                     }}</p>
             </nuxt-link>
             <a target="_blank"
-               v-if="booking_mode !== 'other'"
+               v-if="booking_mode !== 'other' && booking_mode !== 'free'"
                :href="`https://lecinematographe.ticketack.com/screening/buy/${seanceId}`"
             >
                 <img class="app__ticket--img"
