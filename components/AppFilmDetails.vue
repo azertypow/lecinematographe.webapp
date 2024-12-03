@@ -103,21 +103,25 @@
               <template v-for="nextSeance of nextSeances"
               >
                 <a class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
+                   v-if="nextSeance.opaque.booking_mode !== 'free' && nextSeance.opaque.booking_mode !== 'other'"
                    target="_blank"
                      :href="`https://lecinematographe.ticketack.com/screening/buy/${nextSeance._id}`"
                 >
                     <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
                     <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
-                  <div v-if="nextSeance.opaque.booking_mode === 'free'"
-                       class="v-app-film-details__details__free-text"
-                  >
-<!--                    Il s agit d'un événement prix libre (paiement sur place).-->
-                  </div>
-                    <div v-else>
+                    <div>
                         <img class="v-app-film-details__details__info__item__ticket"
                              alt="prendre un billet" src="../assets/icons/ticket.svg" />
                     </div>
                 </a>
+                <div class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
+                     v-else
+                >
+                  <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
+                  <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
+                  <div>
+                  </div>
+                </div>
               </template>
             </div>
         </div>
@@ -329,6 +333,9 @@ async function setGradientColor(targetElement: EventTarget | null) {
         color: inherit;
         border-bottom: none;
     }
+}
+div.v-app-film-details__details__info__item {
+  cursor: auto;
 }
 
 .v-app-film-details__cover {
