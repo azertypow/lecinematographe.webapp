@@ -111,7 +111,7 @@
                   <div v-if="nextSeance.opaque.booking_mode === 'free'"
                        class="v-app-film-details__details__free-text"
                   >
-                    L'accès à cet événement est libre et gratuit. Il n'est pas nécessaire d'obtenir un billet ou de faire une réservation.
+                    Il s agit d'un événement prix libre (paiement sur place).
                   </div>
                     <div v-else>
                         <img class="v-app-film-details__details__info__item__ticket"
