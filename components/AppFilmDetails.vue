@@ -100,18 +100,25 @@
             </div>
             <div class="v-app-film-details__details__info"
             >
+              <template v-for="nextSeance of nextSeances"
+              >
                 <a class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
-                     v-for="nextSeance of nextSeances"
                    target="_blank"
                      :href="`https://lecinematographe.ticketack.com/screening/buy/${nextSeance._id}`"
                 >
                     <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
                     <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
-                    <div>
+                  <div v-if="nextSeance.opaque.booking_mode === 'free'"
+                       class="v-app-film-details__details__free-text"
+                  >
+                    L'accès à cet événement est libre et gratuit. Il n'est pas nécessaire d'obtenir un billet ou de faire une réservation.
+                  </div>
+                    <div v-else>
                         <img class="v-app-film-details__details__info__item__ticket"
                              alt="prendre un billet" src="../assets/icons/ticket.svg" />
                     </div>
                 </a>
+              </template>
             </div>
         </div>
     </section>
@@ -338,6 +345,20 @@ async function setGradientColor(targetElement: EventTarget | null) {
         width: auto;
         display: block;
     }
+}
+
+.v-app-film-details__details__free-text {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  width: 100%;
+  font-size: .5rem;
+  line-height: 1em;
+
+
+  @media (max-width: 960px) {
+    margin-top: .5rem;
+  }
 }
 
 .v-app-film-details__details__info__item__ticket {

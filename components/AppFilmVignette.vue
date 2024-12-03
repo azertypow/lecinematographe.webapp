@@ -37,7 +37,7 @@
             <a target="_blank"
                style="display: flex; align-items: center;"
                :href="`https://lecinematographe.ticketack.com/screening/buy/${film_id}`"
-               v-if="booking_mode !== 'other'"
+               v-if="booking_mode !== 'other' && booking_mode !== 'free'"
             >
                 <app-button-shine>réserver</app-button-shine>
                 <img class="app__ticket--img"
@@ -66,7 +66,7 @@ const props = defineProps<{
     tx_description: string
     ur_vignette: string
     film_id: string
-    booking_mode: ApiTicketack_bookingMode
+    booking_mode?: ApiTicketack_bookingMode
 }>()
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
