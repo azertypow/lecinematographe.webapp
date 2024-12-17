@@ -1,6 +1,6 @@
 <template>
     <footer class="v-app-footer" >
-        <div
+        <div id="newsletter"
             class="v-app-footer__newsletter-container"
         >
 
@@ -16,6 +16,7 @@
                     <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value="">
                     <div aria-hidden="true" style="position: absolute; left: -5000px;"><input type="text" name="b_a49aea9e2cab458eaa9738b98_7fe65e2807" tabindex="-1" value=""></div>
                     <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button"
+                           style="cursor: pointer;"
                            value="Envoyer">
                   </div>
                 </div>
