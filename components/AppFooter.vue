@@ -3,48 +3,27 @@
         <div
             class="v-app-footer__newsletter-container"
         >
-            <form
-                    method="post"
-                    action="https://newsletter.infomaniak.com/external/submit"
-                    class="v-app-footer__newsletter-container__form"
-                    target="_blank"
-            >
-                <input
-                        type="email"
-                        name="email"
-                        style="display:none"
-                />
-                <input type="hidden"
-                       name="key"
-                       value="eyJpdiI6ImxEQmYwMU52ZkM0OGl4TlBVQWs4YmJtb1wvZ2Q0MkpIcGlZY3RPblZGeUxZPSIsInZhbHVlIjoiVEpHXC93ZVwvcCtPMTFnMGNTclpuU1RRMzNLZ1pKdUV2dVF4bjVnV05HUW1JPSIsIm1hYyI6IjE4NjNiNjNhYzY2MTE4YmFlNmQ0NmQ2ZDg3MWE1ZmY0YTEyYzFhZDU4NTQzZjNiMzdjY2I5ZGUzMTVkYTk3MWMifQ=="
-                >
-                <input
-                        type="hidden"
-                        name="webform_id"
-                        value="15422"
-                >
 
-                <div class="inf-main_76f376382a50bd4859e50a81e701da10">
-                    <h4>Newsletter</h4>
-                    <div class="inf-success" style="display:none"><h4>C'est tout bon, merci !</h4>
-                        <p><a href="#" class="inf-btn">&laquo;</a></p>
-                    </div>
-                    <div class="inf-content">
-                        <input
-                            type="email"
-                            name="inf[1]"
-                            data-inf-meta="1"
-                            data-inf-error="Merci de renseigner une adresse email"
-                            required
-                            placeholder="Votre Email"
-                        >
-                        <input type="submit"
-                               name=""
-                               value="Envoyer"
-                        >
-                    </div>
+          <div id="mc_embed_shell">
+            <div id="mc_embed_signup">
+              <form action="https://lecinematographe.us22.list-manage.com/subscribe/post?u=a49aea9e2cab458eaa9738b98&amp;id=7fe65e2807&amp;f_id=002bd9e1f0"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+                    target="_self" novalidate="">
+                <div id="mc_embed_signup_scroll" class="inf-main">
+                  <h4>Newsletter</h4>
+
+                  <div class="inf-content">
+                    <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value="">
+                    <div aria-hidden="true" style="position: absolute; left: -5000px;"><input type="text" name="b_a49aea9e2cab458eaa9738b98_7fe65e2807" tabindex="-1" value=""></div>
+                    <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button"
+                           value="Envoyer">
+                  </div>
                 </div>
-            </form>
+              </form>
+            </div>
+          </div>
+
+
         </div>
 
         <div
@@ -111,7 +90,7 @@
     border-radius: var(--lc-radius);
 }
 
-.inf-main_76f376382a50bd4859e50a81e701da10 {
+.inf-main {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -138,7 +117,7 @@
         flex-direction: column;
     }
 
-    > input {
+    input {
         font-family: "DIN Dong", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
         box-sizing: border-box;
         border: none;
@@ -172,7 +151,7 @@
         }
     }
 
-    > input[type="submit"] {
+    input[type="submit"] {
         font-size: .5rem;
         margin-left: .5rem;
     }
