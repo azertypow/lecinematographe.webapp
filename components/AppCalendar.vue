@@ -42,7 +42,11 @@
                     style="display: flex; align-items: center; justify-content: center"
                 >
                     <div>
-                        programmation à venir :)
+                        {{(selectedDate && doesDateMatch(selectedDate, [
+                            "2024-12-24",
+                            "2024-12-25",
+                            "2024-12-31",
+                        ])) ? 'Cinématographe fermé ' : 'programmation à venir :)'}}
                     </div>
                 </div>
                 <div
@@ -88,6 +92,7 @@ import {type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
 import {apiGetListOfFilmByDate, type ISeance,} from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
+import {doesDateMatch} from "~/_utils/doesDateMatch";
 
 const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
 
