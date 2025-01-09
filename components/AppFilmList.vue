@@ -26,6 +26,7 @@
         <div  style="
                 text-align: center;
                 padding-bottom: .5em;
+                line-height: 1em;
               "
         >{{film.title.original}}</div>
         <AppFilmMin
