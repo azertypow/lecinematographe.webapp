@@ -34,13 +34,12 @@
                     <AppCalendar/>
                 </div>
 
-                <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--sm--column-1 app-grid--gap_regular app-flex--sm__basis-1-1">
-
-                  <div  style="
+                <div class="v-index__section app-flex--sm__basis-1-1">
+                    <div  style="
                           position: relative;
                         "
-                  >
-                    <div style="
+                    >
+                        <div style="
                           z-index: 10;
                           position: absolute;
                           left: 0;
@@ -49,14 +48,14 @@
                           width: 1rem;
                           background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%);
                         "
-                    ></div>
-                    <h3 class="lc-typo-with-dot"
-                        style="
+                        ></div>
+                        <h3 class="lc-typo-with-dot"
+                            style="
                           margin-left: auto;
                           margin-right: auto;
                         "
-                    >Séances spéciales</h3>
-                    <div style="
+                        >Séances spéciales</h3>
+                        <div style="
                           z-index: 10;
                           position: absolute;
                           right: 0;
@@ -65,8 +64,11 @@
                           width: 1rem;
                           background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%);
                         "
-                    ></div>
-                  </div>
+                        ></div>
+                    </div>
+                </div>
+
+                <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--sm--column-1 app-grid--gap_regular app-flex--sm__basis-1-1">
 
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
@@ -159,6 +161,7 @@ onMounted(async () => {
 
 .v-index__section--fil-vignette {
     padding: var(--app-gutter_regular);
+    padding-top: 0;
     width: min(100%, var(--lc-max-width--lg));
     margin: auto;
     box-sizing: border-box;
