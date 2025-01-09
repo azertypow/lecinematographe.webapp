@@ -99,7 +99,7 @@ async function setGradientColor(targetElement: EventTarget | null) {
         transform: scale(1);
 
         .v-app-film-vignette:hover & {
-            transition: transform ease-out 10s;
+            transition: transform ease-out 4s;
             transform: scale(1.1);
         }
     }
@@ -112,14 +112,6 @@ async function setGradientColor(targetElement: EventTarget | null) {
     padding: 4em .5em .5em;
     container: app-film-vignette-container;
     container-type: inline-size;
-
-    transition: box-shadow ease-out .5s;
-    box-shadow: rgba(172, 222, 237, 0) 0 0 0 0;
-
-    &:hover {
-        transition: box-shadow ease-out 1s;
-        box-shadow: rgba(172, 222, 237, .25) 0 0 15px 5px;
-    }
 }
 
 :global(.v-app-film-vignette a) {
