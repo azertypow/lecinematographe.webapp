@@ -88,10 +88,21 @@ async function setGradientColor(targetElement: EventTarget | null) {
 
 <style lang="scss" scoped >
 .v-app-film-vignette__cover {
+    display: block;
+    flex-basis: calc(100% / 12 * 12);
+    border-radius: var(--lc-radius);
+    overflow: hidden;
+
     img {
         display: block;
         width: 100%;
-        border-radius: var(--lc-radius);
+        transition: transform ease-out 1s;
+        transform: scale(1);
+
+        .v-app-film-vignette:hover & {
+            transition: transform ease-out 10s;
+            transform: scale(1.1);
+        }
     }
 }
 
@@ -102,6 +113,14 @@ async function setGradientColor(targetElement: EventTarget | null) {
     padding: 4em .5em .5em;
     container: app-film-vignette-container;
     container-type: inline-size;
+
+    transition: box-shadow ease-out .5s;
+    box-shadow: rgba(172, 222, 237, 0) 0 0 0 0;
+
+    &:hover {
+        transition: box-shadow ease-out 1s;
+        box-shadow: rgba(172, 222, 237, .25) 0 0 15px 5px;
+    }
 }
 
 :global(.v-app-film-vignette a) {
@@ -177,11 +196,6 @@ async function setGradientColor(targetElement: EventTarget | null) {
 .v-app-film-vignette__details__info__item {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-}
-
-.v-app-film-vignette__cover {
-    display: block;
-    flex-basis: calc(100% / 12 * 12);
 }
 
 .v-app-film-vignette__details__header__icon {
