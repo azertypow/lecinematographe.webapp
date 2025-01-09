@@ -8,7 +8,9 @@
       </h3>
     </div>
 
-    <div class="v-app-film-list__arrow-nav">
+    <div class="v-app-film-list__arrow-nav"
+         v-if="showArrowUI"
+    >
       <svg xmlns="http://www.w3.org/2000/svg"
            height="24px" viewBox="0 -960 960 960"
            width="24px"
@@ -17,6 +19,7 @@
       </svg>
     </div>
     <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"
+         @scroll="containerIsScroller"
     >
       <div class="app-flex__shrink-0 app-flex__basis-1-4 v-app-film-list__films-container__item"
            v-for="film of ticketFilmArray">
@@ -39,14 +42,29 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import type {ITicketFilm} from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const props = withDefaults(defineProps<{
     ticketFilmArray: ApiTicketack_screening[],
     showTitle: boolean
-}>(), {
-})
+}>(), {})
+
+const containerScrollLeftValue = ref(0)
+
+const showArrowUI: ComputedRef<boolean> = computed(() =>
+    window.innerWidth > containerScrollLeftValue.value
+)
+
+function containerIsScroller(element: Event) {
+    const scrollContainer = element.target
+
+    if( ! (scrollContainer instanceof HTMLElement) ) {
+        console.error('scrollContainer is not an HTMLElement')
+        return
+    }
+
+    containerScrollLeftValue.value = scrollContainer.scrollLeft
+}
 </script>
 
 
