@@ -7,14 +7,24 @@
         À L’AFFICHE
       </h3>
     </div>
+
+    <div class="v-app-film-list__arrow-nav">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           height="24px" viewBox="0 -960 960 960"
+           width="24px"
+      >
+        <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/>
+      </svg>
+    </div>
     <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"
     >
       <div class="app-flex__shrink-0 app-flex__basis-1-4 v-app-film-list__films-container__item"
            v-for="film of ticketFilmArray">
-        <div    style="
-                            text-align: center;
-                            padding-bottom: .5em;
-                        ">{{film.title.original}}</div>
+        <div  style="
+                text-align: center;
+                padding-bottom: .5em;
+              "
+        >{{film.title.original}}</div>
         <AppFilmMin
                 :ticket-film="film"
         />
@@ -110,5 +120,27 @@ const props = withDefaults(defineProps<{
     @media (max-width: scss-params.$fp-breakpoint-xs) {
         flex-basis: calc( 100% / 5 * 4 );
     }
+}
+
+.v-app-film-list__arrow-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: var(--app-gutter_regular);
+  top: 50%;
+  z-index: 10;
+  background: white;
+  border-radius: 1rem;
+  width:  1.5rem;
+  height: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
+
+  svg {
+    display: block;
+    width: 1rem;
+    height: auto;
+    fill: black;
+  }
 }
 </style>
