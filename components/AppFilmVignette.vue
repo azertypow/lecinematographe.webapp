@@ -5,7 +5,7 @@
     >
 <!--        {{ticketFilm}}-->
         <h3 class="v-app-film-vignette__date">
-          ÉVÈNEMENT SPÉCIAL
+          <span style="text-transform: uppercase">séance spéciale</span>
           <br>{{
             new Date(da_depart).toLocaleDateString('fr-FR', {
               weekday: 'long',
