@@ -117,6 +117,7 @@ const appFilmRefShineElement: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
     width: 100%;
     height: 100%;
     z-index: 20;
+    border: none !important;
 }
 
 .v-app-film-min__description {
