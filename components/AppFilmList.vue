@@ -27,6 +27,8 @@
                 text-align: center;
                 padding-bottom: .5em;
                 line-height: 1em;
+                overflow: hidden;
+                position: relative;
               "
         >
           <div  style="
