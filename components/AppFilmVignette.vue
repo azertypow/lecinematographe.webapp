@@ -39,9 +39,8 @@
                :href="`https://lecinematographe.ticketack.com/screening/buy/${film_id}`"
                v-if="booking_mode !== 'other' && booking_mode !== 'free'"
             >
-                <app-button-shine>réserver</app-button-shine>
                 <img class="app__ticket--img"
-                     style="height: .75rem"
+                     style="height: 1.25rem"
                      alt="prendre un ticket"
                      src="../assets/icons/ticket.svg"
                 />
