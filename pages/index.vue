@@ -51,9 +51,10 @@
                         ></div>
                         <h3 class="lc-typo-with-dot"
                             style="
-                          margin-left: auto;
-                          margin-right: auto;
-                        "
+                                margin-left: auto;
+                                margin-right: auto;
+                                text-transform: uppercase;
+                            "
                         >Séances spéciales</h3>
                         <div style="
                           z-index: 10;
