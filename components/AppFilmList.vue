@@ -172,17 +172,17 @@ function containerIsScroller(element: Event) {
   right: var(--app-gutter_regular);
   top: 50%;
   z-index: 10;
-  background: white;
+  background: black;
   border-radius: 1rem;
-  width:  1.5rem;
-  height: 1.5rem;
+  width:  1.25rem;
+  height: 1.25rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
 
   svg {
     display: block;
-    width: 1rem;
+    width: .75rem;
     height: auto;
-    fill: black;
+    fill: white;
   }
 }
 </style>
