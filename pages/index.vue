@@ -35,6 +35,39 @@
                 </div>
 
                 <div class="v-index__section v-index__section--fil-vignette app-flex app-grid--column-2 app-grid--sm--column-1 app-grid--gap_regular app-flex--sm__basis-1-1">
+
+                  <div  style="
+                          position: relative;
+                        "
+                  >
+                    <div style="
+                          z-index: 10;
+                          position: absolute;
+                          left: 0;
+                          top: 0;
+                          height: 100%;
+                          width: 1rem;
+                          background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%);
+                        "
+                    ></div>
+                    <h3 class="lc-typo-with-dot"
+                        style="
+                          margin-left: auto;
+                          margin-right: auto;
+                        "
+                    >Séances spéciales</h3>
+                    <div style="
+                          z-index: 10;
+                          position: absolute;
+                          right: 0;
+                          top: 0;
+                          height: 100%;
+                          width: 1rem;
+                          background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%);
+                        "
+                    ></div>
+                  </div>
+
                     <div v-for="filmVignette of specialEventsInFilmList">
                         <AppFilmVignette
                             :da_depart="filmVignette.start_at"
