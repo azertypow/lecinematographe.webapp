@@ -128,7 +128,7 @@ function containerIsScroller(element: Event) {
 .v-app-film-list__films-container__item {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     text-transform: uppercase;
 
     @media (max-width: scss-params.$fp-breakpoint-sm) {
