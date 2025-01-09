@@ -28,7 +28,22 @@
                 padding-bottom: .5em;
                 line-height: 1em;
               "
-        >{{film.title.original}}</div>
+        >
+          <div  style="
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: 0 .5rem;
+                ">{{film.title.original}}</div>
+          <div  style="
+                  z-index: 10;
+                  position: absolute;
+                  right: 0;
+                  top: 0;
+                  height: 100%;
+                  width: 1rem;
+                  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%);
+                "></div>
+        </div>
         <AppFilmMin
                 :ticket-film="film"
         />
