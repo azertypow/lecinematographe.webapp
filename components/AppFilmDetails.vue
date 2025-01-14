@@ -68,7 +68,7 @@
                         <div>{{people.firstname}} {{people.lastname}}</div>
                     </div>
                 </template>
-                <div class="v-app-film-details__details__info__item">
+                <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.duration">
                     <div>durée</div>
                     <div>{{ticketFilm.films[0].opaque.duration}} minutes</div>
                 </div>
@@ -80,7 +80,7 @@
                     <div>age suggéré</div>
                     <div>{{ticketFilm.films[0].opaque.s_min_age}} ans</div>
                 </div>
-                <div class="v-app-film-details__details__info__item">
+                <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.distributor.name">
                     <div>distributeur</div>
                     <div>{{ticketFilm.films[0].opaque.distributor.name}}</div>
                 </div>
