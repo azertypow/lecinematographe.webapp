@@ -46,7 +46,7 @@
         <div class="v-app-film-details__details"
         >
             <div class="v-app-film-details__details__header app-flex app-flex--nowrap">
-                <h3 class="v-app-film-details__details__header__title lc-typo-with-dot">{{ticketFilm.films[0].title.original}}</h3>
+                <h3 class="lc-typo-with-dot">{{ticketFilm.films[0].title.original}}</h3>
             </div>
             <div class="v-app-film-details__details__author">{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</div>
             <div class="v-app-film-details__details__info">
@@ -94,7 +94,7 @@
              v-if="nextSeances"
         >
             <div class="v-app-film-details__details__header app-flex app-flex--align_center app-flex--gap_regular app-flex--nowrap">
-                <h3 class="v-app-film-details__details__header__title lc-typo-with-dot">SÉANCES</h3>
+                <h3 class="lc-typo-with-dot">SÉANCES</h3>
             </div>
             <div class="v-app-film-details__details__info"
             >
@@ -279,10 +279,6 @@ async function setGradientColor(targetElement: EventTarget | null) {
 .v-app-film-details__details__header {
     margin-top: 2rem;
     text-transform: uppercase;
-}
-
-.v-app-film-details__details__header__title {
-    text-align: left;
 }
 
 .v-app-film-details__details__author {
