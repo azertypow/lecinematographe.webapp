@@ -1,7 +1,7 @@
 // Le mapping des traductions
 const translations: Record<string, string> = {
-    director: 'réalisateur.ice.xs',
-    actor: 'acteur.ice.xs',
+    director: 'cinéaste(s)',
+    actor: 'avec',
     producer: 'producteur.ice.xs'
 };
 
