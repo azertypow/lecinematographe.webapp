@@ -85,7 +85,7 @@
                     <div>{{ticketFilm.films[0].opaque.distributor.name}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.genre">
-                    <div>Genre</div>
+                    <div>genre</div>
                     <div>{{ticketFilm.films[0].opaque.genre}}</div>
                 </div>
             </div>
