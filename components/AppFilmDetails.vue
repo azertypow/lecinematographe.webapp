@@ -73,11 +73,11 @@
                     <div>{{ticketFilm.films[0].opaque.duration}} minutes</div>
                 </div>
                 <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.l_min_age">
-                    <div>age légal</div>
+                    <div>âge légal</div>
                     <div>{{ticketFilm.films[0].opaque.l_min_age}} ans</div>
                 </div>
                 <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.s_min_age">
-                    <div>age suggéré</div>
+                    <div>âge suggéré</div>
                     <div>{{ticketFilm.films[0].opaque.s_min_age}} ans</div>
                 </div>
                 <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.distributor.name">
