@@ -46,13 +46,7 @@
         <div class="v-app-film-details__details"
         >
             <div class="v-app-film-details__details__header app-flex app-flex--nowrap">
-                <div class="v-app-film-details__details__header__icon">
-                    <img
-                        alt="icon séance"
-                        src="../assets/icons/seance.svg"
-                    />
-                </div>
-                <h3 class="v-app-film-details__details__header__title">{{ticketFilm.films[0].title.original}}</h3>
+                <h3 class="v-app-film-details__details__header__title lc-typo-with-dot">{{ticketFilm.films[0].title.original}}</h3>
             </div>
             <div class="v-app-film-details__details__author">{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</div>
             <div class="v-app-film-details__details__info">
@@ -100,13 +94,7 @@
              v-if="nextSeances"
         >
             <div class="v-app-film-details__details__header app-flex app-flex--align_center app-flex--gap_regular app-flex--nowrap">
-                <div class="v-app-film-details__details__header__icon">
-                    <img
-                        alt="icon séance"
-                        src="../assets/icons/material-date-range--white.svg"
-                    />
-                </div>
-                <h3 class="v-app-film-details__details__header__title">SÉANCES</h3>
+                <h3 class="v-app-film-details__details__header__title lc-typo-with-dot">SÉANCES</h3>
             </div>
             <div class="v-app-film-details__details__info"
             >
@@ -289,18 +277,12 @@ async function setGradientColor(targetElement: EventTarget | null) {
 }
 
 .v-app-film-details__details__header {
-    border-bottom: dotted 2px white;
-    border-top: dotted 2px white;
     margin-top: 2rem;
-    box-sizing: border-box;
-    padding-top: .25em;
-    padding-bottom: .25em;
+    text-transform: uppercase;
 }
 
 .v-app-film-details__details__header__title {
-    font-size: 1rem;
-    line-height: 1.25em;
-    margin: 0;
+    text-align: left;
 }
 
 .v-app-film-details__details__author {
@@ -348,31 +330,6 @@ div.v-app-film-details__details__info__item {
 .v-app-film-details__cover {
     display: block;
     width: min(100%, var(--lc-max-width--sm));
-}
-
-.v-app-film-details__details__header__icon {
-    padding-top: .25rem;
-    width: 2rem;
-
-    img {
-        height: .75rem;
-        width: auto;
-        display: block;
-    }
-}
-
-.v-app-film-details__details__free-text {
-  position: absolute;
-  top: 1.5rem;
-  left: 0;
-  width: 100%;
-  font-size: .5rem;
-  line-height: 1em;
-
-
-  @media (max-width: 960px) {
-    margin-top: .5rem;
-  }
 }
 
 .v-app-film-details__details__info__item__ticket {

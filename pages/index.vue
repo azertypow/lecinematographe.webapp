@@ -103,6 +103,7 @@
                         style="
                           margin-left: auto;
                           margin-right: auto;
+                          text-transform: uppercase;
                         "
                     >Aujourd'hui</h3>
                     <div style="
