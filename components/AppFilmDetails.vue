@@ -62,7 +62,7 @@
                     <div>Titre original</div>
                     <div>{{ticketFilm.films[0].title.original}}</div>
                 </div>
-                <template v-for="people of ticketFilm.films[0].opaque.people">
+                <template v-for="people of translateActivities(ticketFilm.films[0].opaque.people)">
                     <div class="v-app-film-details__details__info__item">
                         <div>{{people.activity}}</div>
                         <div>{{people.firstname}} {{people.lastname}}</div>
@@ -138,6 +138,7 @@ import {usePlayerLink} from "~/composables/states";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {proxyUrl} from "~/_utils/proxyUrl";
 import {apiGetSeancesOfFilm} from "~/_utils/ticketackFetch";
+import {translateActivities} from "~/_utils/translateArray";
 
 const props = defineProps<{
     ticketFilm: ApiTicketack_screening
