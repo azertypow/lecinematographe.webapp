@@ -51,15 +51,15 @@
             <div class="v-app-film-details__details__author">{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</div>
             <div class="v-app-film-details__details__info">
                 <div class="v-app-film-details__details__info__item">
-                    <div>Date</div>
+                    <div>date</div>
                     <div>{{ticketFilm.films[0].opaque.year}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
-                    <div>Pays</div>
+                    <div>pays</div>
                     <div>{{ticketFilm.films[0].opaque.countries[0]}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
-                    <div>Titre original</div>
+                    <div>titre original</div>
                     <div>{{ticketFilm.films[0].title.original}}</div>
                 </div>
                 <template v-for="people of translateActivities(ticketFilm.films[0].opaque.people)">
@@ -69,7 +69,7 @@
                     </div>
                 </template>
                 <div class="v-app-film-details__details__info__item">
-                    <div>Durée</div>
+                    <div>durée</div>
                     <div>{{ticketFilm.films[0].opaque.duration}} minutes</div>
                 </div>
                 <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.l_min_age">
@@ -81,7 +81,7 @@
                     <div>{{ticketFilm.films[0].opaque.s_min_age}} ans</div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
-                    <div>Distributeur</div>
+                    <div>distributeur</div>
                     <div>{{ticketFilm.films[0].opaque.distributor.name}}</div>
                 </div>
                 <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.genre">
