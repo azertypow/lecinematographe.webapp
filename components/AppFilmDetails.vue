@@ -309,6 +309,10 @@ async function setGradientColor(targetElement: EventTarget | null) {
     padding-top: .25rem;
     padding-bottom: .25rem;
 
+    > *:first-child:first-letter {
+      text-transform: uppercase;
+    }
+
     @media (max-width: scss-params.$fp-breakpoint-sm) {
         grid-template-columns: 1fr;
         line-height: 1.15em;
