@@ -16,7 +16,17 @@
 
             <div
                 v-if="youtubeLink"
-                @click="usePlayerLink().value = youtubeLink.ur_url"
+                @click="usePlayerLink().value = youtubeLink.url"
+            >
+                <img class="v-app-film-details__cover__icon-player"
+                     alt="lancer le player pour visualiser la bande annonce du film"
+                     src="@/assets/icons/play_circle_FILL0_wght400_GRAD0_opsz24.svg"
+                />
+            </div>
+
+            <div
+                v-if="vimeoLink"
+                @click="usePlayerLink().value = vimeoLink.url"
             >
                 <img class="v-app-film-details__cover__icon-player"
                      alt="lancer le player pour visualiser la bande annonce du film"
@@ -147,8 +157,6 @@ const props = defineProps<{
 
 const nextSeances: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 
-const linksOfFilm: Ref<UnwrapRef<null | {url: {id_film: string, ty_url: string, tx_url: string, ur_url: string}[]}>> = ref(null)
-
 const dateOptionsDay: Intl.DateTimeFormatOptions = {
     weekday: 'long', // Jour de la semaine au format long (ex: "lundi")
     day: 'numeric', // Jour du mois au format numérique (ex: 13)
@@ -164,19 +172,16 @@ const dateOptionsDayOnly: Intl.DateTimeFormatOptions = {
     month: 'long', // Mois au format long (ex: "janvier")
 }
 
-const youtubeLink = computed(() => linksOfFilm.value?.url.find(filmUrl => {
-    return filmUrl.ur_url.match('youtube.')
+const youtubeLink = computed(() => props.ticketFilm.films[0]?.opaque.trailers.find(thrailer => {
+    return thrailer.url.match('youtube.')
+}))
+
+const vimeoLink = computed(() => props.ticketFilm.films[0]?.opaque.trailers.find(thrailer => {
+    return thrailer.url.match('vimeo.')
 }))
 
 onMounted(async () => {
     nextSeances.value = (await apiGetSeancesOfFilm(props.ticketFilm.films[0]._id))
-
-    //     .seance.sort((a, b) => {
-    //     return (new Date(a.id_date).getTime() - new Date(b.id_date).getTime())
-    // })
-
-
-    // linksOfFilm.value = await apiGetUrlOfFilm(props.ticketFilm.id_film)
 })
 
 const colorBG: Ref<UnwrapRef<number[] | null>> = ref(null)
@@ -244,6 +249,8 @@ async function setGradientColor(targetElement: EventTarget | null) {
     height: 25%;
     transition: transform .5s ease-in-out;
     cursor: pointer;
+    -webkit-user-drag: none;
+
 
     &:hover {
         transform: translate(-50%, -50%) scale(1.15);

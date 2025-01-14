@@ -15,11 +15,35 @@ onMounted(() => {
     setTimeout( () => appIsLoading.value = false, 1_000)
 })
 
-const youtubeEmbedLink = computed(() => {
-    const videoID =  'VEJuFDpf7gc'
 
-    return `https://www.youtube.com/embed/${videoID}?autoplay=1&color=white`
+const playerLink = usePlayerLink()
+
+const youtubeEmbedLink: ComputedRef<string | null> = computed(() => {
+    //format: https://www.youtube.com/watch?v=C9OtlkJk1Oo
+
+    if( playerLink.value === null ) return null
+
+    const parsedUrl = new URL(playerLink.value)
+
+    if( ! parsedUrl.hostname.includes('youtube')) return null
+
+    const videoId = parsedUrl.searchParams.get("v")
+
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&color=white`
 })
+
+const vimeoEmbedLink: ComputedRef<string | null> = computed(() => {
+    //format: https://player.vimeo.com/video/992877888
+
+    if( playerLink.value === null ) return null
+
+    const parsedUrl = new URL(playerLink.value)
+
+    if( ! parsedUrl.hostname.includes('vimeo')) return null
+
+    return playerLink.value
+})
+
 
 </script>
 
@@ -27,19 +51,31 @@ const youtubeEmbedLink = computed(() => {
     <main class="v-app">
         <transition>
             <div class="v-app__player"
-                 v-if="usePlayerLink().value">
+                 v-if="usePlayerLink().value"
+            >
                 <div class="v-app__player__cache"
                      @click="usePlayerLink().value = null"
                 ></div>
                 <div class="v-app__player__container"
                 >
-                    <iframe class="v-app__youtube-player"
-                            type="text/html"
-                            :src="youtubeEmbedLink"
-                            frameborder="0" allowfullscreen
-                    />
+                    <template v-if="vimeoEmbedLink">
+                        <div style="padding:56.25% 0 0 0;position:relative;">
+                            <iframe :src="vimeoEmbedLink"
+                                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                                    title="All We Imagine As Light"></iframe>
+                        </div>
+                    </template>
+                    <template v-else-if="youtubeEmbedLink">
+                        <iframe class="v-app__youtube-player"
+                                type="text/html"
+                                :src="youtubeEmbedLink"
+                                frameborder="0" allowfullscreen
+                        />
+                    </template>
                 </div>
             </div>
+
         </transition>
 
         <transition name="app-loader-container-transition">
@@ -168,7 +204,7 @@ regular styles
 
 .v-app__player {
     position: fixed;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.5);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -193,6 +229,8 @@ regular styles
 .v-app__player__container {
     position: relative;
     width: 75%;
+    box-sizing: border-box;
+    box-shadow: 0 100px 100px -50px rgba(0, 0, 0, 1);
 
     @container app__player (width < 1000px) {
         width: calc( 100% - 1rem);
