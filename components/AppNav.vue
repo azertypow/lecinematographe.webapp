@@ -1,5 +1,5 @@
 <template>
-    <nav class="v-app-nav"
+    <nav class="v-app-nav lc-font-inter"
     >
         <div class="v-app-nav__pages-link"
              v-for="page of pagesData.pages"

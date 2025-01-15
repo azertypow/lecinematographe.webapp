@@ -117,7 +117,8 @@ code {
 
 
 .lc-font-inter {
-  font-variation-settings: "wght" 450, "opsz" 15;
+  font-family: 'InterVariable', Arial, sans-serif;
+  font-variation-settings: "wght" 450, "opsz" 20;  //14 <-> 32
   font-feature-settings:
           "case" 0,
           "dlig" 0,

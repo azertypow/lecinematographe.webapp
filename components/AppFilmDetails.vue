@@ -39,7 +39,7 @@
                  @load="(e) => setGradientColor(e.target)"
             />
         </div>
-        <div class="v-app-film-details__details"
+        <div class="v-app-film-details__details lc-font-inter"
              v-html="ticketFilm.films[0].opaque.description.fr"
         ></div>
 
