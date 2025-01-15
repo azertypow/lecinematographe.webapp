@@ -44,6 +44,40 @@
         ></div>
 
         <div class="v-app-film-details__details"
+             v-if="nextSeances"
+        >
+          <div class="v-app-film-details__details__header app-flex app-flex--align_center app-flex--gap_regular app-flex--nowrap">
+            <h3 class="lc-typo-with-dot">SÉANCES</h3>
+          </div>
+          <div class="v-app-film-details__details__info"
+          >
+            <template v-for="nextSeance of nextSeances"
+            >
+              <a class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
+                 v-if="nextSeance.opaque.booking_mode !== 'free' && nextSeance.opaque.booking_mode !== 'other'"
+                 target="_blank"
+                 :href="`https://lecinematographe.ticketack.com/screening/buy/${nextSeance._id}`"
+              >
+                <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
+                <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
+                <div>
+                  <img class="v-app-film-details__details__info__item__ticket"
+                       alt="prendre un billet" src="../assets/icons/ticket.svg" />
+                </div>
+              </a>
+              <div class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
+                   v-else
+              >
+                <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
+                <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
+                <div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="v-app-film-details__details"
         >
             <div class="v-app-film-details__details__header app-flex app-flex--nowrap">
                 <h3 class="lc-typo-with-dot">{{ticketFilm.films[0].title.original}}</h3>
@@ -56,7 +90,10 @@
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>pays</div>
-                    <div>{{ticketFilm.films[0].opaque.countries[0]}}</div>
+                    <div>
+                      <template v-for="(country,number) of ticketFilm.films[0].opaque.countries"
+                      ><template v-if="number > 0">, </template>{{country}}</template>
+                    </div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
                     <div>titre original</div>
@@ -88,39 +125,6 @@
                     <div>genre</div>
                     <div>{{ticketFilm.films[0].opaque.genre}}</div>
                 </div>
-            </div>
-        </div>
-        <div class="v-app-film-details__details"
-             v-if="nextSeances"
-        >
-            <div class="v-app-film-details__details__header app-flex app-flex--align_center app-flex--gap_regular app-flex--nowrap">
-                <h3 class="lc-typo-with-dot">SÉANCES</h3>
-            </div>
-            <div class="v-app-film-details__details__info"
-            >
-              <template v-for="nextSeance of nextSeances"
-              >
-                <a class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
-                   v-if="nextSeance.opaque.booking_mode !== 'free' && nextSeance.opaque.booking_mode !== 'other'"
-                   target="_blank"
-                     :href="`https://lecinematographe.ticketack.com/screening/buy/${nextSeance._id}`"
-                >
-                    <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
-                    <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
-                    <div>
-                        <img class="v-app-film-details__details__info__item__ticket"
-                             alt="prendre un billet" src="../assets/icons/ticket.svg" />
-                    </div>
-                </a>
-                <div class="v-app-film-details__details__info__item v-app-film-details__details__info__item--link"
-                     v-else
-                >
-                  <div>{{ new Date(nextSeance.start_at).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</div>
-                  <div>{{ formatDateFromDate( new Date(nextSeance.start_at)) }}</div>
-                  <div>
-                  </div>
-                </div>
-              </template>
             </div>
         </div>
     </section>
