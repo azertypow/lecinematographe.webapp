@@ -200,9 +200,6 @@ regular styles
     transition: background .5s 1s ease-in;
 }
 
-.v-app__footer-container {
-}
-
 .v-app__player {
     position: fixed;
     background: rgba(0, 0, 0, 0.5);
