@@ -24,7 +24,7 @@ export default defineNuxtConfig({
             mode: 'out-in',
         },
         head: {
-            title: 'Le Cinematographe'
+            title: 'Le Cinématographe'
         },
     },
     ssr: false,
