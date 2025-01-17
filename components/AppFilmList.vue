@@ -52,8 +52,8 @@
       </div>
       <div  class="app-flex__shrink-0 v-app-film-list__films-container__item"
             style="
-              width: 25vw!important;
-              flex-basis: 25vw!important;
+              width:      5vw!important;
+              flex-basis: 5vw!important;
             "
       ></div>
     </div>
