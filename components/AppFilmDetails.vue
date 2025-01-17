@@ -82,7 +82,6 @@
             <div class="v-app-film-details__details__header app-flex app-flex--nowrap">
                 <h3 class="lc-typo-with-dot">{{ticketFilm.films[0].title.original}}</h3>
             </div>
-            <div class="v-app-film-details__details__author">{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</div>
             <div class="v-app-film-details__details__info">
                 <div class="v-app-film-details__details__info__item">
                     <div>date</div>
