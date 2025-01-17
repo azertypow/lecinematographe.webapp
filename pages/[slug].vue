@@ -24,6 +24,8 @@ onMounted(() => {
 
 
 <style lang="scss">
+@use '@/assets/style/typography';
+
 .v-slug {
 
     h1, h2, h3, h4, h5, h6 {
@@ -58,6 +60,12 @@ onMounted(() => {
         a {
             color: inherit;
         }
+    }
+
+    p,
+    ol,
+    li {
+      @extend .lc-font-inter;
     }
 }
 

@@ -177,12 +177,6 @@ regular styles
     overflow: hidden;
     padding-top: calc( var(--lc-header-height) + 1rem);
     min-height: calc(100vh + 5rem);
-
-    p,
-    ol,
-    li {
-        @extend .lc-font-inter;
-    }
 }
 
 .v-app__loader-container {
