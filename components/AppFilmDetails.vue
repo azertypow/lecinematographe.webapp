@@ -285,14 +285,6 @@ async function setGradientColor(targetElement: EventTarget | null) {
     text-transform: uppercase;
 }
 
-.v-app-film-details__details__author {
-    margin-top: .65rem;
-    padding-left: 2rem;
-
-    @media (max-width: scss-params.$fp-breakpoint-sm) {
-        padding-left: 0;
-    }
-}
 
 .v-app-film-details__details__info {
     padding-left: 2rem;
