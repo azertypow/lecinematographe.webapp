@@ -98,10 +98,15 @@
                     <div>titre original</div>
                     <div>{{ticketFilm.films[0].title.original}}</div>
                 </div>
-                <template v-for="people of translateActivities(ticketFilm.films[0].opaque.people)">
+                <template v-for="(peoplesByActivity, activityName) of groupeAPIPeoplesByActivity(translateActivities(ticketFilm.films[0].opaque.people))">
                     <div class="v-app-film-details__details__info__item">
-                        <div>{{people.activity}}</div>
-                        <div>{{people.firstname}} {{people.lastname}}</div>
+                        <div>{{activityName}}</div>
+                        <div>
+                          <template v-for="(people, key) of peoplesByActivity">
+                            <template v-if="key > 0">, </template>
+                            {{people.firstname}} {{people.lastname}}
+                          </template>
+                        </div>
                     </div>
                 </template>
                 <div class="v-app-film-details__details__info__item" v-if="ticketFilm.films[0].opaque.duration">
@@ -142,6 +147,7 @@ import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {proxyUrl} from "~/_utils/proxyUrl";
 import {apiGetSeancesOfFilm} from "~/_utils/ticketackFetch";
 import {translateActivities} from "~/_utils/translateArray";
+import {groupeAPIPeoplesByActivity} from "~/_utils/groupeAPIPeoplesByActivity";
 
 const props = defineProps<{
     ticketFilm: ApiTicketack_screening
