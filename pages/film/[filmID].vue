@@ -95,6 +95,10 @@ async function loadData() {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    > * {
+      width: 100%;
+    }
 }
 
 .v-film-id__info__header-image {

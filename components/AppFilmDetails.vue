@@ -273,6 +273,7 @@ async function setGradientColor(targetElement: EventTarget | null) {
     width: min(100%, var(--lc-max-width--reg));
     font-size: 1.75rem;
     line-height: 1em;
+    word-wrap: break-word;
 
     @media (width < 1000px) {
         font-size: 1.2rem;
