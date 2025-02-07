@@ -207,6 +207,7 @@ async function setGradientColor(targetElement: EventTarget | null) {
 
 <style lang="scss" scoped >
 @use "@/assets/style/scss-params";
+@use "@/assets/style/typography";
 
 .v-app-film-details {
     position: relative;
@@ -287,6 +288,7 @@ async function setGradientColor(targetElement: EventTarget | null) {
     width: min(100%, var(--lc-max-width--reg));
 }
 .v-app-film-details__details {
+    @extend .app-font-p;
     margin: 0;
     width: min(100%, var(--lc-max-width--sm));
 }
