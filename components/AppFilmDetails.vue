@@ -11,7 +11,12 @@
         ></div>
 <!--        <h3 class="v-app-film-details__date">À partir du {{ new Date(ticketFilm.da_depart).toLocaleDateString('fr-FR', dateOptionsDayOnly) }}</h3>-->
         <h1 class="v-app-film-details__title">{{ticketFilm.films[0].title.original}}</h1>
-        <h5 class="v-app-film-details__subtitle">{{ticketFilm.films[0].opaque.people[0]?.firstname}} {{ticketFilm.films[0].opaque.people[0]?.lastname}}</h5>
+        <h5 class="v-app-film-details__subtitle">
+          <template v-for="(director, key) of ticketFilm.films[0].opaque.people.filter(value => value.activity === 'director')">
+            <template v-if="key > 0">, </template>
+            {{director.firstname}} {{director.lastname}}
+          </template>
+        </h5>
         <div class="v-app-film-details__cover">
 
             <div
