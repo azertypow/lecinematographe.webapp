@@ -10,6 +10,7 @@
 
     <div class="v-app-film-list__arrow-nav"
          v-if="showArrowUI"
+         @click="scrollToLeft"
     >
       <svg xmlns="http://www.w3.org/2000/svg"
            height="24px" viewBox="0 -960 960 960"
@@ -19,6 +20,7 @@
       </svg>
     </div>
     <div class="v-app-film-list__films-container app-flex app-flex--gap_regular app-flex--nowrap"
+         ref="scrollContainer"
          @scroll="containerIsScroller"
     >
       <div class="app-flex__shrink-0 app-flex__basis-1-4 v-app-film-list__films-container__item"
@@ -80,15 +82,28 @@ const showArrowUI: ComputedRef<boolean> = computed(() =>
     window.innerWidth > containerScrollLeftValue.value
 )
 
-function containerIsScroller(element: Event) {
-    const scrollContainer = element.target
+const scrollContainer: Ref<null | HTMLElement> = ref(null)
 
-    if( ! (scrollContainer instanceof HTMLElement) ) {
+function containerIsScroller() {
+
+    if( ! (scrollContainer.value instanceof HTMLElement) ) {
         console.error('scrollContainer is not an HTMLElement')
         return
     }
 
-    containerScrollLeftValue.value = scrollContainer.scrollLeft
+    containerScrollLeftValue.value = scrollContainer.value.scrollLeft
+}
+
+function scrollToLeft() {
+    if( ! (scrollContainer.value instanceof HTMLElement) ) {
+        console.error('scrollContainer is not an HTMLElement')
+        return
+    }
+
+    scrollContainer.value.scrollTo({
+        left: scrollContainer.value.scrollLeft + 500,
+        behavior: "smooth"
+    })
 }
 </script>
 
@@ -147,7 +162,7 @@ function containerIsScroller(element: Event) {
     position: relative;
     padding-left: var(--app-gutter_regular);
     box-sizing: border-box;
-
+    user-select: none;
 }
 
 .v-app-film-list__films-container__item {
@@ -172,12 +187,13 @@ function containerIsScroller(element: Event) {
   position: absolute;
   right: var(--app-gutter_regular);
   top: calc(50% + 1.5rem);
-  z-index: 10;
+  z-index: 1000;
   background: black;
   border-radius: 1rem;
-  width:  1.25rem;
-  height: 1.25rem;
+  width:  1.5rem;
+  height: 1.5rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
+  cursor: pointer;
 
   svg {
     display: block;
