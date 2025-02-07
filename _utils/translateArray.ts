@@ -2,8 +2,8 @@
 const translations: Record<string, string> = {
     director: 'cinéaste(s)',
     actor: 'avec',
-    producer: 'producteur.ice.xs',
-    photography: 'photographe',
+    producer: 'production',
+    photography: 'image',
 };
 
 export function translateActivities(
