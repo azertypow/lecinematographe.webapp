@@ -277,7 +277,7 @@ async function setGradientColor(targetElement: EventTarget | null) {
 }
 .v-app-film-details__details {
     margin: 0;
-    width: min(100%, var(--lc-max-width--reg));
+    width: min(100%, var(--lc-max-width--sm));
 }
 
 .v-app-film-details__details__header {
