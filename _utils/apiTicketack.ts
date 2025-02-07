@@ -277,23 +277,11 @@ export type ApiTicketack_screening = {
                     name: { fr: 'événement' | string }
                     _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
                 }[],
-                "people": [
-                    {
-                        "activity": string,
-                        "firstname": string,
-                        "lastname": string
-                    },
-                    {
-                        "activity": string,
-                        "firstname": string,
-                        "lastname": string
-                    },
-                    {
-                        "activity": string,
-                        "firstname": string,
-                        "lastname": string
-                    }
-                ],
+                "people":                     {
+                    "activity": string,
+                    "firstname": string,
+                    "lastname": string
+                }[],
                 "duration": number,
                 "countries": [
                     string
