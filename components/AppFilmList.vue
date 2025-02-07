@@ -29,6 +29,7 @@
                 line-height: 1em;
                 overflow: hidden;
                 position: relative;
+                z-index: 0;
               "
         >
           <div  style="
