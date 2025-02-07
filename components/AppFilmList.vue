@@ -171,7 +171,7 @@ function containerIsScroller(element: Event) {
   align-items: center;
   position: absolute;
   right: var(--app-gutter_regular);
-  top: 50%;
+  top: calc(50% + 1.5rem);
   z-index: 10;
   background: black;
   border-radius: 1rem;
