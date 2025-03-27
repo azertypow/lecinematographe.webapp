@@ -217,7 +217,9 @@ async function setGradientColor(targetElement: EventTarget | null) {
     transform: translate3d(0, 0, 0);
     overflow: hidden;
     box-sizing: border-box;
-    max-width: 1800px;
+    max-width: 1700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .v-app-film-details__background-img {
