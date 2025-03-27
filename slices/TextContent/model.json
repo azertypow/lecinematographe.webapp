@@ -1,0 +1,50 @@
+{
+  "id": "text_content",
+  "type": "SharedSlice",
+  "name": "TextContent",
+  "description": "TextContent",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "body": {
+          "type": "StructuredText",
+          "config": {
+            "label": "corps de texte",
+            "placeholder": "lorem…",
+            "allowTargetBlank": true,
+            "multi": "paragraph,heading2,heading3,strong,em,hyperlink,list-item,o-list-item"
+          }
+        }
+      },
+      "items": {}
+    },
+    {
+      "id": "blockContent",
+      "name": "blockContent",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "filmList": {
+          "type": "Select",
+          "config": {
+            "label": "list de films",
+            "placeholder": "",
+            "options": [
+              "séniors",
+              "juniors"
+            ]
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

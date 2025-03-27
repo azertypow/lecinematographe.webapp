@@ -1,3 +1,4 @@
+import { repositoryName } from "./slicemachine.config.json";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: { enabled: true },
@@ -27,6 +28,11 @@ export default defineNuxtConfig({
             title: 'Le Cinématographe'
         },
     },
+
     ssr: false,
-    modules: ["@nuxt/content"]
+    modules: ["@nuxt/content", "@nuxtjs/prismic"],
+
+    prismic: {
+        endpoint: repositoryName
+    }
 })

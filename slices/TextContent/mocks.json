@@ -1,0 +1,37 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"body": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Non Lorem laborum culpa incididunt officia fugiat cupidatat eu laborum esse irure. Veniam adipisicing excepteur exercitation esse."
+						}
+					}
+				]
+			}
+		},
+		"items": []
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "blockContent",
+		"primary": {
+			"filmList": {
+				"__TYPE__": "FieldContent",
+				"value": "juniors",
+				"type": "Select"
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
+	}
+]
