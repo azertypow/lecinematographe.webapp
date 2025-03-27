@@ -213,91 +213,7 @@ export type ApiTicketack_screening = {
             "capacity": string
         }
     },
-    "films": [
-        {
-            "_id": string,
-            "title": {
-                "fr": string,
-                "original": string
-            },
-            "sections": {
-                name: { fr: 'événement' | string }
-                _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
-            }[],
-            "opaque": {
-                "type": "movie" | "poster" | "banner",
-                "service_type": null,
-                "description": {
-                    "fr": string
-                },
-                "suisa": string,
-                "year": number,
-                "distributor": {
-                    "id": string,
-                    "created_at": string,
-                    "updated_at": string,
-                    "created_by": null | string,
-                    "updated_by": null | string,
-                    "name": string,
-                    "address": string,
-                    "zip": string,
-                    "city": string,
-                    "country": string,
-                    "maccsbox_id": string,
-                    "contact_mail": "",
-                    "report_mail": ""
-                },
-                "l_min_age": string,
-                "s_min_age": string,
-                "a_min_age": string,
-                "free_text_1": {
-                    "fr": string
-                },
-                "free_text_2": {
-                    "fr": string
-                },
-                "free_text_3": {
-                    "fr": string
-                },
-                "free_text_4": [],
-                "free_text_5": [],
-                "free_text_6": [],
-                "posters": {
-                    "url": string
-                    "type": "movie" | "poster" | "banner"
-                }[],
-                "trailers": [
-                    {
-                        "url": string,
-                        "image": string
-                    }
-                ],
-                "genre": string,
-                "sections": {
-                    name: { fr: 'événement' | string }
-                    _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
-                }[],
-                "people":                     {
-                    "activity": string,
-                    "firstname": string,
-                    "lastname": string
-                }[],
-                "duration": number,
-                "countries": [
-                    string
-                ],
-                "languages": {
-                    "original": [
-                        string
-                    ],
-                    "audio": [
-                        string
-                    ],
-                    "subtitles": []
-                }
-            }
-        }
-    ],
+    "films": ApiTickettack_film[],
     "sections": {
                 name: {fr: 'événement' | string}
                 _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
@@ -323,5 +239,91 @@ export type ApiTicketack_screening = {
         }
     }
 }
+
+
+export type ApiTickettack_film = {
+    "_id": string,
+    "title": {
+        "fr": string,
+        "original": string
+    },
+    "sections": {
+        name: { fr: 'événement' | string }
+        _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
+    }[],
+    "opaque": {
+        "type": "movie" | "poster" | "banner",
+        "service_type": null,
+        "description": {
+            "fr": string
+        },
+        "suisa": string,
+        "year": number,
+        "distributor": {
+            "id": string,
+            "created_at": string,
+            "updated_at": string,
+            "created_by": null | string,
+            "updated_by": null | string,
+            "name": string,
+            "address": string,
+            "zip": string,
+            "city": string,
+            "country": string,
+            "maccsbox_id": string,
+            "contact_mail": "",
+            "report_mail": ""
+        },
+        "l_min_age": string,
+        "s_min_age": string,
+        "a_min_age": string,
+        "free_text_1": {
+            "fr": string
+        },
+        "free_text_2": {
+            "fr": string
+        },
+        "free_text_3": {
+            "fr": string
+        },
+        "free_text_4": [],
+        "free_text_5": [],
+        "free_text_6": [],
+        "posters": {
+            "url": string
+            "type": "movie" | "poster" | "banner"
+        }[],
+        "trailers": [
+            {
+                "url": string,
+                "image": string
+            }
+        ],
+        "genre": string,
+        "sections": {
+            name: { fr: 'événement' | string }
+            _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
+        }[],
+        "people":                     {
+            "activity": string,
+            "firstname": string,
+            "lastname": string
+        }[],
+        "duration": number,
+        "countries": [
+            string
+        ],
+        "languages": {
+            "original": [
+                string
+            ],
+            "audio": [
+                string
+            ],
+            "subtitles": []
+        }
+    }
+}
+
 
 export type ApiTicketack_bookingMode = "other" | string | 'free'
