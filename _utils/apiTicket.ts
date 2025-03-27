@@ -28,7 +28,7 @@ export async function apiGetFilmList(): Promise<ApiTicketack_screening[]> {
     currentDateFrom0Hour.setMinutes(0)
 
     return (await apiGetListOfFilmByDate(currentDateFrom0Hour, 90)).filter((value, index, array) => {
-        return index === array.findIndex((item) => item.title.fr === value.title.fr)
+        return index === array.findIndex((item) => item.title.fr.toLowerCase() === value.title.fr.toLowerCase())
     })
 }
 
