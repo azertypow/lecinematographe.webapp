@@ -51,10 +51,8 @@
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
 import {
-    apiGetFilmById,
     apiGetFilmList,
     apiGetListOfScreeningByDate_filterByTag_event,
-    type IFilmListResponse
 } from "~/_utils/apiTicket";
 import {ticketackApi_screening_byID} from "~/_utils/ticketackFetch";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";

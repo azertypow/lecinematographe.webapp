@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import {apiGetFilmList, type IFilmListResponse} from "~/_utils/apiTicket";
+import {apiGetFilmList} from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const data: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)

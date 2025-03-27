@@ -90,7 +90,7 @@
 <script setup lang="ts">
 import {type Ref, type UnwrapRef} from 'vue'
 import {getDatesRange} from "~/_utils/getDatesRange";
-import {apiGetListOfFilmByDate, type ISeance,} from "~/_utils/apiTicket";
+import {apiGetListOfFilmByDate} from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {doesDateMatch} from "~/_utils/doesDateMatch";
 

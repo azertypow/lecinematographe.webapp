@@ -42,7 +42,6 @@
 
 <script setup lang="ts">
 import {defineProps, type Ref, type UnwrapRef} from 'vue'
-import type {ITicketFilm} from "~/_utils/apiTicket";
 import {average} from 'color.js'
 import {type ICardEffectOption, onMouseLeave, onMouseOver} from "~/_utils/shineEffect";
 import {proxyUrl} from "~/_utils/proxyUrl";

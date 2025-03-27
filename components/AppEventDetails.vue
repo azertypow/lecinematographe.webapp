@@ -31,7 +31,6 @@
 
 <script setup lang="ts">
 import {defineProps} from 'vue'
-import type {ITicketFilm} from "~/_utils/apiTicket";
 //1.618
 // const props = defineProps<{
 // }>()
