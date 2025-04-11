@@ -313,14 +313,10 @@ export type ApiTickettack_film = {
         "countries": [
             string
         ],
-        "languages": {
-            "original": [
-                string
-            ],
-            "audio": [
-                string
-            ],
-            "subtitles": []
+        "languages"?: {
+            "original"?: string[] | string,
+            "audio"?: string[] | string,
+            "subtitles"?: string[] | string,
         }
     }
 }

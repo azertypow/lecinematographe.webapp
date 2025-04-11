@@ -37,4 +37,4 @@ All. Ernest-Ansermet 3
 Rez inférieur gauche du Casino de Montbenon 
 1003 Lausanne
 
-info@lecinematographe.ch
+contact@lecinematographe.ch

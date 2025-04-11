@@ -96,7 +96,7 @@
                     <div>pays</div>
                     <div>
                       <template v-for="(country,number) of ticketFilm.films[0].opaque.countries"
-                      ><template v-if="number > 0">, </template>{{country}}</template>
+                      ><template v-if="number > 0">, </template>{{getCountryName(country).value}}</template>
                     </div>
                 </div>
                 <div class="v-app-film-details__details__info__item">
@@ -134,6 +134,48 @@
                     <div>genre</div>
                     <div>{{ticketFilm.films[0].opaque.genre}}</div>
                 </div>
+                <div class="v-app-film-details__details__info__item"
+                     v-if="
+                      ticketFilm.films[0].opaque.languages?.original
+                      && Array.isArray(ticketFilm.films[0].opaque.languages.original)
+                      && ticketFilm.films[0].opaque.languages.original.length
+                     "
+                >
+                  <div>langue originale</div>
+                  <div>
+                    <div v-for="item of ticketFilm.films[0].opaque.languages.original">
+                      {{getLanguageName(item).value}}
+                    </div>
+                  </div>
+                </div>
+                <div class="v-app-film-details__details__info__item"
+                     v-if="
+                      ticketFilm.films[0].opaque.languages?.audio
+                      && Array.isArray(ticketFilm.films[0].opaque.languages.audio)
+                      && ticketFilm.films[0].opaque.languages.audio.length
+                     "
+                >
+                  <div>audio</div>
+                  <div>
+                    <div v-for="item of ticketFilm.films[0].opaque.languages.audio">
+                      {{getLanguageName(item).value}}
+                    </div>
+                  </div>
+                </div>
+              <div class="v-app-film-details__details__info__item"
+                   v-if="
+                    ticketFilm.films[0].opaque.languages?.subtitles
+                    && Array.isArray(ticketFilm.films[0].opaque.languages.subtitles)
+                    && ticketFilm.films[0].opaque.languages.subtitles.length
+                   "
+              >
+                <div>sous-titre</div>
+                <div>
+                  <div v-for="item of ticketFilm.films[0].opaque.languages.subtitles">
+                    {{getLanguageName(item).value}}
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     </section>
@@ -153,6 +195,8 @@ import {proxyUrl} from "~/_utils/proxyUrl";
 import {apiGetSeancesOfFilm} from "~/_utils/ticketackFetch";
 import {translateActivities} from "~/_utils/translateArray";
 import {groupeAPIPeoplesByActivity} from "~/_utils/groupeAPIPeoplesByActivity";
+import {getCountryName} from "~/_utils/getCountryName";
+import {getLanguageName} from "~/_utils/getLanguageName";
 
 const props = defineProps<{
     ticketFilm: ApiTicketack_screening
