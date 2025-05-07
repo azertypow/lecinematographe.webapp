@@ -10,12 +10,6 @@ export default defineNuxtConfig({
       '~/assets/style/_main.scss'
   ],
 
-  content: {
-      experimental: {
-          clientDB: true,
-      },
-  },
-
   app: {
       // baseURL: '/lecinematographe.webapp/',
       baseURL: '/',
@@ -29,6 +23,5 @@ export default defineNuxtConfig({
   },
 
   ssr: false,
-  modules: ["@nuxt/content"],
   compatibilityDate: '2025-03-27'
 })
