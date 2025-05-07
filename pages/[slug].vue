@@ -2,7 +2,26 @@
     <section
         class="v-slug"
     >
-        <ContentDoc/>
+      <div>
+        <h1>
+          {{pagesContent?.title}}
+        </h1>
+      </div>
+
+      <template v-for="block in pageContent">
+        <div v-if="block.type === 'textWithTitle'"
+             v-html="block.content.text"
+        />
+
+        <template v-else-if="block.type === 'film-list'" >
+          <AppFilmListJunior v-if="block.content.category === 'kids'"/>
+          <AppFilmListSenior v-else-if="block.content.category === 'senior'"/>
+          <AppFilmListTravelling v-else-if="block.content.category === 'all'"/>
+        </template>
+        <div v-else-if="block.type === 'location'" style="width: min(100%, var(--lc-max-width--lg)); margin-left: auto; margin-right: auto;">
+          <AppMap/>
+        </div>
+      </template>
     </section>
 </template>
 
@@ -11,10 +30,29 @@
 
 
 <script setup lang="ts">
+import {type Api_ContentBlock, KQL_Admin} from "~/_utils/apiCms";
+import AppFilmListJunior from "~/components/AppFilmListJunior.vue";
+
 const route = useRoute()
 
-onMounted(() => {
-    // console.log(route.query)
+const pagesContent: Ref< {
+        slug: string,
+        contenu: string,
+        title: string,
+    } | null> = ref(null)
+
+const pageContent: ComputedRef<Api_ContentBlock[]> = computed(
+    () => pagesContent.value ?
+        JSON.parse( pagesContent.value.contenu )
+        : []
+)
+
+onMounted(async () => {
+    pagesContent.value = (await KQL_Admin({
+        query: `site().page('${route.params.slug}')`,
+        select: ['title', 'slug', 'contenu']
+    })).result
+
 })
 
 </script>

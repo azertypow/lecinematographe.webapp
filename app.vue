@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import AppNav from "~/components/AppNav.vue";
 import AppIntroAnimation from "~/components/AppIntroAnimation.vue";
-import {usePlayerLink} from "~/composables/states";
+import {usePagesData, usePlayerLink} from "~/composables/states";
+import {type Api_ContentBlock, KQL_Admin, type KQL_Admin_response} from "~/_utils/apiCms";
 
 const menuIsOpen = useMenuIsOpen()
 
@@ -11,8 +12,56 @@ useRouter().beforeEach((to, from) => {
 
 const appIsLoading = ref(true)
 
-onMounted(() => {
+onMounted(async () => {
     setTimeout( () => appIsLoading.value = false, 1_000)
+
+    const pages: {
+        contenu: string
+        slug: string
+        title: string
+    }[] = (
+        await KQL_Admin({
+            query: 'site().children',
+            select: ['title', 'slug', 'contenu']
+        })
+    ).result
+
+    console.log(pages)
+
+    usePagesData().value = {
+        pages: pages.map(page => {
+                const pageContent = JSON.parse(page.contenu) as Api_ContentBlock[]
+
+                return ({
+                    slug: page.slug,
+                    title: page.title,
+                    subsections: []
+                })
+            }
+        )
+    }
+
+
+
+    // const pagesContent: {
+    //     slug: string,
+    //     contenu: string,
+    //     title: string,
+    // }[]
+    //     = (await KQL_Admin({
+    //     query: 'site().children',
+    //     select: ['title', 'slug', 'contenu']
+    // })).result
+    //
+    // for(const page of pagesContent) {
+    //
+    //
+    //     const pageContent = JSON.parse( page.contenu ) as Api_ContentBlock[]
+    //
+    //     for(const block of pageContent) {
+    //       console.log(block.content)
+    //     }
+    // }
 })
 
 

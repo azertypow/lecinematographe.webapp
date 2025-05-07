@@ -81,7 +81,7 @@ a {
 .v-app-nav__pages-link {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     justify-items: start;
     align-items: start;
 
