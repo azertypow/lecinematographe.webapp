@@ -2,7 +2,7 @@
     <nav class="v-app-nav"
     >
         <div class="v-app-nav__pages-link"
-             v-for="page of pagesData.pages"
+             v-for="page of pagesData.pages.filter(item => item.show_in_nav === 'true')"
              :class="{
                  'is-active': currentPageInfoOverSlug === page.slug
              }"

@@ -6,6 +6,7 @@ export interface IApiCmsPage {
     title: string
     slug: string
     subsections: string[]
+    show_in_nav: 'true' | 'false'
 }
 
 export type KQL_Admin_response = {

@@ -2,7 +2,7 @@
 import AppNav from "~/components/AppNav.vue";
 import AppIntroAnimation from "~/components/AppIntroAnimation.vue";
 import {usePagesData, usePlayerLink} from "~/composables/states";
-import {type Api_ContentBlock, KQL_Admin, type KQL_Admin_response} from "~/_utils/apiCms";
+import {type Api_ContentBlock, type IApiCmsPage, KQL_Admin, type KQL_Admin_response} from "~/_utils/apiCms";
 
 const menuIsOpen = useMenuIsOpen()
 
@@ -19,10 +19,11 @@ onMounted(async () => {
         contenu: string
         slug: string
         title: string
+        show_in_nav: 'true' | 'false'
     }[] = (
         await KQL_Admin({
             query: 'site().children',
-            select: ['title', 'slug', 'contenu']
+            select: ['title', 'slug', 'contenu', 'show_in_nav']
         })
     ).result
 
@@ -35,8 +36,9 @@ onMounted(async () => {
                 return ({
                     slug: page.slug,
                     title: page.title,
-                    subsections: []
-                })
+                    subsections: [],
+                    show_in_nav: page.show_in_nav
+                } satisfies IApiCmsPage)
             }
         )
     }
