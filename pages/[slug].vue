@@ -73,15 +73,14 @@ onMounted(async () => {
     }
 
     > div {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
 
         > * {
             width: min(100%, var(--lc-max-width--reg));
             box-sizing: border-box;
             padding-left: var(--app-gutter_regular);
             padding-right: var(--app-gutter_regular);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         > section {
