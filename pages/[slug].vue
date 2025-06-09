@@ -8,17 +8,18 @@
         </h1>
       </div>
 
-      <template v-for="block in pageContent">
-        <div v-if="block.type === 'textWithTitle'"
-             v-html="block.content.text"
+      <template v-for="block in pagesContent?.content">
+        <div v-if="block.content.type === 'textWithTitle'"
+             v-html="block.content.content.text"
         />
 
-        <template v-else-if="block.type === 'film-list'" >
-          <AppFilmListJunior v-if="block.content.category === 'kids'"/>
-          <AppFilmListSenior v-else-if="block.content.category === 'senior'"/>
-          <AppFilmListTravelling v-else-if="block.content.category === 'all'"/>
+        <template v-else-if="block.content.type === 'film-list'" >
+          <AppFilmListJunior v-if="block.content.content.category === 'kids'"/>
+          <AppFilmListSenior v-else-if="block.content.content.category === 'senior'"/>
+          <AppFilmListTravelling v-else-if="block.content.content.category === 'all'"/>
         </template>
-        <div v-else-if="block.type === 'location'" style="width: min(100%, var(--lc-max-width--lg)); margin-left: auto; margin-right: auto;">
+
+        <div v-else-if="block.content.type === 'location'" style="width: min(100%, var(--lc-max-width--lg)); margin-left: auto; margin-right: auto;">
           <AppMap/>
         </div>
       </template>
@@ -30,7 +31,7 @@
 
 
 <script setup lang="ts">
-import {type Api_ContentBlock, KQL_Admin} from "~/_utils/apiCms";
+import {type Api_blocks, type Api_blocks_content, KQL_Admin} from "~/_utils/apiCms";
 import AppFilmListJunior from "~/components/AppFilmListJunior.vue";
 
 const route = useRoute()
@@ -39,9 +40,10 @@ const pagesContent: Ref< {
         slug: string,
         contenu: string,
         title: string,
+        content: Api_blocks[]
     } | null> = ref(null)
 
-const pageContent: ComputedRef<Api_ContentBlock[]> = computed(
+const pageContent: ComputedRef<Api_blocks_content[]> = computed(
     () => pagesContent.value ?
         JSON.parse( pagesContent.value.contenu )
         : []
@@ -50,8 +52,15 @@ const pageContent: ComputedRef<Api_ContentBlock[]> = computed(
 onMounted(async () => {
     pagesContent.value = (await KQL_Admin({
         query: `site().page('${route.params.slug}')`,
-        select: ['title', 'slug', 'contenu']
+        select: {
+            'title' : true,
+            'slug' : true,
+            'contenu' : true,
+            'content': 'page.content.contenu.toBlocks_custom',
+        },
     })).result
+
+    console.log( "premier: ", pagesContent.value )
 
 })
 

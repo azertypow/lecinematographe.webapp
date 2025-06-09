@@ -41,7 +41,18 @@ export async function KQL_Admin({ query, select }: { query: string; select: stri
 }
 
 
-export type Api_ContentBlock = {
+export type Api_blocks = {
+    content: Api_blocks_content,
+    "img_srcset": {
+        "tiny":     string | null
+        "small":    string | null
+        "reg":      string | null
+        "large":    string | null
+        "xxl":      string | null
+    }
+}
+
+export type Api_blocks_content = {
     type: "textWithTitle"
     id: string
     isHidden: boolean
@@ -60,6 +71,13 @@ export type Api_ContentBlock = {
     content: {
         category: 'kids' | 'all' | 'senior'
     }
+} | {
+    type: "image"
+    id: string,
+    isHidden: boolean,
+    content: {
+        "image": string[]
+    },
 }
 
 export type FilmList = {
