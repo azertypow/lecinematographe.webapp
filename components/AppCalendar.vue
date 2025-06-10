@@ -42,11 +42,29 @@
                     style="display: flex; align-items: center; justify-content: center"
                 >
                     <div>
-                        {{(selectedDate && doesDateMatch(selectedDate, [
-                            "2024-12-24",
-                            "2024-12-25",
-                            "2024-12-31",
-                        ])) ? 'Cinématographe fermé ' : 'programmation à venir :)'}}
+                      <template v-if='
+                            selectedDate
+                            && doesDateMatch(selectedDate,
+                            [
+                                "2025-12-24",
+                                "2025-12-25",
+                                "2025-12-31",
+                                ]) '
+                      >
+                        Cinématographe fermé
+                      </template>
+                      <template v-else-if='
+                            selectedDate
+                            && doesDateMatch(selectedDate,
+                            [
+                                "2025-06-14",
+                                ]) '
+                      >
+                        Grève féministe : cinéma fermé
+                      </template>
+                      <template v-else>
+                        programmation à venir :)
+                      </template>
                     </div>
                 </div>
                 <div
