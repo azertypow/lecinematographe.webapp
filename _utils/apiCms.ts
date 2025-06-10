@@ -17,13 +17,8 @@ export type KQL_Admin_response = {
 
 export async function KQL_Admin({ query, select }: { query: string; select: {[key: string]: string | boolean} }): Promise<KQL_Admin_response> {
     const api = "https://cms.lecinematographe.ch/api/query";
-    const username = "api";
-    const password = "empty_password";
-
-    const authHeader = "Basic " + btoa(`${username}:${password}`);
 
     const headers = {
-        // Authorization: authHeader,
         "Content-Type": "application/json",
         Accept: "application/json",
     };
