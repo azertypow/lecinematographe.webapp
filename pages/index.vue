@@ -1,6 +1,12 @@
 <template>
     <div class="lc-page"
     >
+      <div class="app-flex app-flex--justify_center app-flex--align_center">
+        <div class="lc-page__newsletter app-width-gutter">
+          <AppNewsletter/>
+        </div>
+      </div>
+
         <div v-if="data === null"
              class="app-flex app-flex--justify_center app-flex--align_center"
         >
@@ -167,6 +173,10 @@ onMounted(async () => {
     width: min(100%, var(--lc-max-width--lg));
     margin: auto;
     box-sizing: border-box;
+}
+
+.lc-page__newsletter {
+  width: min(var(--lc-max-width--reg), 100%);
 }
 
 .v-index__section {
