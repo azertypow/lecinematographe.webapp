@@ -22,6 +22,12 @@
         <div v-else-if="block.content.type === 'location'" style="width: min(100%, var(--lc-max-width--lg)); margin-left: auto; margin-right: auto;">
           <AppMap/>
         </div>
+
+        <div class="v-slug__image">
+          <img v-if="block.content.type === 'image'"
+               :src="block.img_srcset.reg || ''"
+          />
+        </div>
       </template>
     </section>
 </template>
@@ -113,6 +119,19 @@ onMounted(async () => {
     li {
       @extend .lc-font-inter;
     }
+}
+
+.v-slug__image {
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  > img {
+    display: block;
+  }
 }
 
 </style>
