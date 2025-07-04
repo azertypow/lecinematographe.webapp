@@ -62,6 +62,19 @@
                       >
                         Grève féministe : cinéma fermé
                       </template>
+                      <template v-else-if='
+                            selectedDate
+                            && doesDateMatch(selectedDate,
+                            [
+                                "2025-07-02",
+                                "2025-07-03",
+                                "2025-07-04",
+                                "2025-07-05",
+                                "2025-07-06",
+                                ]) '
+                      >
+                        fermé durant le Festival de la Cité :)
+                      </template>
                       <template v-else>
                         programmation à venir :)
                       </template>
