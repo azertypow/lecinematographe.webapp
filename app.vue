@@ -3,6 +3,7 @@ import AppNav from "~/components/AppNav.vue";
 import AppIntroAnimation from "~/components/AppIntroAnimation.vue";
 import {usePagesData, usePlayerLink} from "~/composables/states";
 import {type Api_blocks_content, type IApiCmsPage, KQL_Admin, type KQL_Admin_response} from "~/_utils/apiCms";
+import type {Ref} from "vue";
 
 const menuIsOpen = useMenuIsOpen()
 
@@ -11,6 +12,8 @@ useRouter().beforeEach((to, from) => {
 })
 
 const appIsLoading = ref(true)
+
+const scrollToButtonStatus: Ref<'hidde' | 'show'> = ref('show')
 
 onMounted(async () => {
     setTimeout( () => appIsLoading.value = false, 1_000)
@@ -46,27 +49,10 @@ onMounted(async () => {
         )
     }
 
-
-
-    // const pagesContent: {
-    //     slug: string,
-    //     contenu: string,
-    //     title: string,
-    // }[]
-    //     = (await KQL_Admin({
-    //     query: 'site().children',
-    //     select: ['title', 'slug', 'contenu']
-    // })).result
-    //
-    // for(const page of pagesContent) {
-    //
-    //
-    //     const pageContent = JSON.parse( page.contenu ) as Api_ContentBlock[]
-    //
-    //     for(const block of pageContent) {
-    //       console.log(block.content)
-    //     }
-    // }
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 250) scrollToButtonStatus.value = 'hidde'
+        else scrollToButtonStatus.value = 'show'
+    })
 })
 
 
@@ -99,10 +85,33 @@ const vimeoEmbedLink: ComputedRef<string | null> = computed(() => {
 })
 
 
+function scrollToNewsletter() {
+    const newsletter = document.querySelector('#newsletter')
+    if( ! newsletter ) return
+    const scrollTo = window.scrollY + newsletter.getBoundingClientRect().top - window.innerHeight/2
+
+    window.scrollTo({top: scrollTo, behavior: 'smooth'})
+}
+
 </script>
 
 <template>
     <main class="v-app">
+      <img src="/images/newsletter_button_computer.svg"
+           class="lc-page__button-newsletter"
+           alt="image pour scroller jusqu'à la newsletter"
+           :class="{ 'lc-page__button-newsletter--hidde': scrollToButtonStatus === 'hidde' }"
+           draggable="true"
+           @click="scrollToNewsletter"
+      />
+      <img src="/images/newsletter_button_phone.svg"
+           class="lc-page__button-newsletter lc-page__button-newsletter--mobile"
+           alt="image pour scroller jusqu'à la newsletter"
+           :class="{ 'lc-page__button-newsletter--hidde': scrollToButtonStatus === 'hidde' }"
+           draggable="true"
+           @click="scrollToNewsletter"
+      />
+
         <transition>
             <div class="v-app__player"
                  v-if="usePlayerLink().value"
@@ -192,6 +201,42 @@ page transition
 /*
 regular styles
 */
+
+.lc-page__button-newsletter {
+  display: block;
+  position: fixed;
+  width: 4rem;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+
+  &.lc-page__button-newsletter--hidde {
+    opacity: 0;
+    pointer-events: none;
+    transform: rotate(90deg);
+  }
+
+  &.lc-page__button-newsletter--mobile {
+    display: none;
+    width: 3rem;
+    bottom: auto;
+    top: 3rem;
+  }
+
+  @media (max-width: scss-params.$fp-breakpoint-sm) {
+    display: none;
+
+    &.lc-page__button-newsletter--mobile {
+      display: block;
+    }
+  }
+}
+
+
 .v-app__info-container {
     position: fixed;
     bottom: 0;
