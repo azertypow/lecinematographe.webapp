@@ -1,12 +1,6 @@
 <template>
     <div class="lc-page"
     >
-      <div class="app-flex app-flex--justify_center app-flex--align_center">
-        <div class="lc-page__newsletter app-width-gutter">
-          <AppNewsletter/>
-        </div>
-      </div>
-
         <div v-if="data === null"
              class="app-flex app-flex--justify_center app-flex--align_center"
         >
