@@ -99,6 +99,15 @@
                       >
                         Reprise le 27 août
                       </template>
+                      <template v-else-if='
+                            selectedDate
+                            && doesDateMatch(selectedDate,
+                            [
+                                "2025-09-04", "2025-09-05", "2025-09-06", "2025-09-07",
+                            ])'
+                      >
+                        Tourne-Films Festival Lausanne <a href="https://tffl.ch">tffl.ch</a>
+                      </template>
                       <template v-else>
                         programmation à venir :)
                       </template>
@@ -258,6 +267,15 @@ async function updateSelectedDate(date: Date) {
 
     > * {
         border-bottom: dotted 2px;
+    }
+
+    a {
+      border-bottom: none;
+
+      &:after {
+        content: ' 🔗';
+        font-size: .8em;
+      }
     }
 }
 
