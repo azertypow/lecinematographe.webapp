@@ -57,56 +57,15 @@
                             selectedDate
                             && doesDateMatch(selectedDate,
                             [
-                                "2025-06-14",
-                                ]) '
-                      >
-                        Grève féministe : cinéma fermé
-                      </template>
-                      <template v-else-if='
-                            selectedDate
-                            && doesDateMatch(selectedDate,
-                            [
-                                "2025-07-02",
-                                "2025-07-03",
-                                "2025-07-04",
-                                "2025-07-05",
-                                "2025-07-06",
-                                ]) '
-                      >
-                        fermé durant le Festival de la Cité :)
-                      </template>
-                      <template v-else-if='
-                            selectedDate
-                            && doesDateMatch(selectedDate,
-                            [
-                                "2025-07-16", "2025-07-17", "2025-07-18", "2025-07-19", "2025-07-20",
-                                "2025-07-21", "2025-07-22", "2025-07-23", "2025-07-24", "2025-07-25",
-                                "2025-07-26", "2025-07-27", "2025-07-28", "2025-07-29", "2025-07-30",
-                                "2025-07-31", "2025-08-01", "2025-08-02", "2025-08-03", "2025-08-04",
-                                "2025-08-05", "2025-08-06", "2025-08-07", "2025-08-08", "2025-08-09",
-                                "2025-08-10", "2025-08-11", "2025-08-12", "2025-08-13"
+                                "2025-10-16",
+                                "2025-10-17",
+                                "2025-10-18",
+                                "2025-10-19",
                             ])'
                       >
-                        Horaires réduits durant l'été ☀️
-                      </template>
-                      <template v-else-if='
-                            selectedDate
-                            && doesDateMatch(selectedDate,
-                            [
-                                "2025-08-20", "2025-08-21", "2025-08-22", "2025-08-23", "2025-08-24",
-                                "2025-08-25", "2025-08-26"
-                            ])'
-                      >
-                        Reprise le 27 août
-                      </template>
-                      <template v-else-if='
-                            selectedDate
-                            && doesDateMatch(selectedDate,
-                            [
-                                "2025-09-04", "2025-09-05", "2025-09-06", "2025-09-07",
-                            ])'
-                      >
-                        Tourne-Films Festival Lausanne <a href="https://tffl.ch">tffl.ch</a>
+                        <a href="https://2025.luff.ch">
+                        LAUSANNE UNDERGROUND FILM & MUSIC FESTIVAL
+                        </a>
                       </template>
                       <template v-else>
                         programmation à venir :)
