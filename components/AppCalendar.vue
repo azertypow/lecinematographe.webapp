@@ -71,8 +71,8 @@
                             selectedDate
                             && doesDateMatch(selectedDate,
                             [
+                                "2025-11-14",
                                 "2025-11-15",
-                                "2025-11-16",
                             ])'
                       >
                         <a href="https://www.lanuitdesgriffes.com/">
