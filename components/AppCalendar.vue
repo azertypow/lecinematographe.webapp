@@ -67,6 +67,18 @@
                         LAUSANNE UNDERGROUND FILM & MUSIC FESTIVAL
                         </a>
                       </template>
+                      <template v-else-if='
+                            selectedDate
+                            && doesDateMatch(selectedDate,
+                            [
+                                "2025-11-15",
+                                "2025-11-16",
+                            ])'
+                      >
+                        <a href="https://www.lanuitdesgriffes.com/">
+                          LA NUIT DES GRIFFES
+                        </a>
+                      </template>
                       <template v-else>
                         programmation à venir :)
                       </template>
