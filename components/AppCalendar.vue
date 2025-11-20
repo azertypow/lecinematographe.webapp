@@ -38,50 +38,11 @@
                     chargement…
                 </div>
                 <div class="v-app-calendar__film-list"
-                     v-else-if="seancesDataOnSelectedDate?.length < 1"
+                     v-else-if="seancesDataOnSelectedDate?.length < 1 && !doesDateMatch(selectedDate,listOfMessageByDates.map(item => item.date))"
                     style="display: flex; align-items: center; justify-content: center"
                 >
                     <div>
-                      <template v-if='
-                            selectedDate
-                            && doesDateMatch(selectedDate,
-                            [
-                                "2025-12-24",
-                                "2025-12-25",
-                                "2025-12-31",
-                                ]) '
-                      >
-                        Cinématographe fermé
-                      </template>
-                      <template v-else-if='
-                            selectedDate
-                            && doesDateMatch(selectedDate,
-                            [
-                                "2025-10-16",
-                                "2025-10-17",
-                                "2025-10-18",
-                                "2025-10-19",
-                            ])'
-                      >
-                        <a href="https://2025.luff.ch">
-                        LAUSANNE UNDERGROUND FILM & MUSIC FESTIVAL
-                        </a>
-                      </template>
-                      <template v-else-if='
-                            selectedDate
-                            && doesDateMatch(selectedDate,
-                            [
-                                "2025-11-14",
-                                "2025-11-15",
-                            ])'
-                      >
-                        <a href="https://www.lanuitdesgriffes.com/">
-                          LA NUIT DES GRIFFES
-                        </a>
-                      </template>
-                      <template v-else>
                         programmation à venir :)
-                      </template>
                     </div>
                 </div>
                 <div
@@ -97,6 +58,18 @@
                             year: 'numeric',
                         })}}
                     </div>
+
+                  <template
+                         v-for="msgItem of listOfMessageByDates"
+                  >
+                    <div class="v-app-calendar__film-list__note"
+                         v-if='selectedDate
+                                && doesDateMatch(selectedDate, [msgItem.date])'
+                         v-html="msgItem.msg"
+                    />
+
+                  </template>
+
                     <div
                         v-for="seanceData of seancesDataOnSelectedDate"
                     >
@@ -111,6 +84,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </template>
       </template>
@@ -129,7 +104,7 @@ import {apiGetListOfFilmByDate} from "~/_utils/apiTicket";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {doesDateMatch} from "~/_utils/doesDateMatch";
 
-const selectedDate: Ref<UnwrapRef<Date | null>> = ref(null)
+const selectedDate = ref<Date>(new Date())
 
 const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
@@ -155,6 +130,33 @@ async function updateSelectedDate(date: Date) {
     selectedDate.value = date
     seancesDataOnSelectedDate.value = await apiGetListOfFilmByDate(new Date(date.toISOString().split('T')[0]))
 }
+
+const listOfMessageByDates = [
+  {
+    date: "2025-11-26",
+    msg: `<a href="https://festivalcinemajeunepublic.ch">
+            FESTIVAL CINEMA JEUNE PUBLIC
+          </a>`,
+  },
+  {
+    date: "2025-11-28",
+    msg: `<a href="https://festivalcinemajeunepublic.ch">
+            FESTIVAL CINEMA JEUNE PUBLIC
+          </a>`,
+  },
+  {
+    date: "2025-11-29",
+    msg: `10h30 <a href="https://festivalcinemajeunepublic.ch">
+            FESTIVAL CINEMA JEUNE PUBLIC
+          </a>`,
+  },
+  {
+    date: "2025-11-30",
+    msg: `10h30 et 14h <a href="https://festivalcinemajeunepublic.ch">
+            FESTIVAL CINEMA JEUNE PUBLIC
+          </a>`,
+  }
+]
 
 </script>
 
@@ -239,16 +241,18 @@ async function updateSelectedDate(date: Date) {
     > * {
         border-bottom: dotted 2px;
     }
-
-    a {
-      border-bottom: none;
-
-      &:after {
-        content: ' 🔗';
-        font-size: .8em;
-      }
-    }
 }
+
+:global(.v-app-calendar__film-list__note > a) {
+  border-bottom: none;
+}
+
+:global(.v-app-calendar__film-list__note > a:after) {
+  content: ' 🔗';
+  font-size: .8em;
+}
+
+
 
 .v-app-calendar__film-list__title {
     width: 100%;
@@ -256,6 +260,12 @@ async function updateSelectedDate(date: Date) {
     text-transform: uppercase;
     padding-bottom: .5em;
     box-sizing: border-box;
+}
+
+.v-app-calendar__film-list__note {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: center;
 }
 
 .v-app-calendar__film-list__info {
