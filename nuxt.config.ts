@@ -6,6 +6,12 @@ export default defineNuxtConfig({
       port: 3001
   },
 
+  nitro: {
+    output: {
+      dir: 'dist',
+    }
+  },
+
   css: [
       '~/assets/style/_main.scss'
   ],
