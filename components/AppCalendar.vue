@@ -65,7 +65,7 @@
                     <div class="v-app-calendar__film-list__note"
                          v-if='selectedDate
                                 && doesDateMatch(selectedDate, [msgItem.date])'
-                         v-html="msgItem.msg"
+                         v-html="msgItem.description"
                     />
 
                   </template>
@@ -110,6 +110,8 @@ const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
 
 const seancesDataOnSelectedDate: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 
+const listOfMessageByDates = useListOfMessageByDates()
+
 const calendarIsDisable = false
 
 onMounted(() => {
@@ -130,34 +132,6 @@ async function updateSelectedDate(date: Date) {
     selectedDate.value = date
     seancesDataOnSelectedDate.value = await apiGetListOfFilmByDate(new Date(date.toISOString().split('T')[0]))
 }
-
-const listOfMessageByDates = [
-  {
-    date: "2025-11-26",
-    msg: `<a href="https://festivalcinemajeunepublic.ch">
-            FESTIVAL CINEMA JEUNE PUBLIC
-          </a>`,
-  },
-  {
-    date: "2025-11-28",
-    msg: `<a href="https://festivalcinemajeunepublic.ch">
-            FESTIVAL CINEMA JEUNE PUBLIC
-          </a>`,
-  },
-  {
-    date: "2025-11-29",
-    msg: `10h30 <a href="https://festivalcinemajeunepublic.ch">
-            FESTIVAL CINEMA JEUNE PUBLIC
-          </a>`,
-  },
-  {
-    date: "2025-11-30",
-    msg: `10h30 et 14h <a href="https://festivalcinemajeunepublic.ch">
-            FESTIVAL CINEMA JEUNE PUBLIC
-          </a>`,
-  }
-]
-
 </script>
 
 

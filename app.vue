@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import AppNav from "~/components/AppNav.vue";
 import AppIntroAnimation from "~/components/AppIntroAnimation.vue";
-import {usePagesData, usePlayerLink} from "~/composables/states";
+import {useListOfMessageByDates, usePagesData, usePlayerLink} from "~/composables/states";
 import {type Api_blocks_content, type IApiCmsPage, KQL_Admin, type KQL_Admin_response} from "~/_utils/apiCms";
 import type {Ref} from "vue";
 
@@ -53,6 +53,26 @@ onMounted(async () => {
         if(window.scrollY > 250) scrollToButtonStatus.value = 'hidde'
         else scrollToButtonStatus.value = 'show'
     })
+
+  const agendaData =         await KQL_Admin({
+    query: 'site().dates_infos.toStructure()',
+    select: {
+      'date' : true,
+      'description' : true,
+    }
+  })
+
+  const agendaDataResult: {
+    [key: number]: {"date": string,
+    "description": string
+  }} | null | undefined = agendaData.result
+
+  if(agendaDataResult) {
+    useListOfMessageByDates().value = Object.values(agendaDataResult)
+
+    console.log(useListOfMessageByDates().value)
+  }
+
 })
 
 

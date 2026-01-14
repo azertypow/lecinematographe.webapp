@@ -10,3 +10,8 @@ export const usePagesData = () => useState<IApiCmsPagesList>('pagesData', () => 
     return {
         pages: []    }
 })
+
+export const useListOfMessageByDates = () => useState<{
+  "date": string,
+  "description": string
+}[]>('listOfMessageByDates', () => [])

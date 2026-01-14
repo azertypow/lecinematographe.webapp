@@ -15,7 +15,7 @@ export type KQL_Admin_response = {
     status: string
 }
 
-export async function KQL_Admin({ query, select }: { query: string; select: {[key: string]: string | boolean} }): Promise<KQL_Admin_response> {
+export async function KQL_Admin({ query, select }: { query: string; select: {[key: string]: string | boolean | { query: string, select: boolean }} }): Promise<KQL_Admin_response> {
     const api = "https://cms.lecinematographe.ch/api/query";
 
     const headers = {
