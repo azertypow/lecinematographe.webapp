@@ -11,7 +11,7 @@
                  @mouseover="currentPageInfoOverSlug = page.slug"
             >
                 <nuxt-link class="v-app-nav__pages-link__page-title__value"
-                           :href="page.slug"
+                           :href="`/${page.slug}`"
                 >
                     {{ page.title }}
                 </nuxt-link>
@@ -22,7 +22,7 @@
             >
                 <nuxt-link class="v-app-nav__pages-link__page-subtitle__values"
                            v-for="subsection of page.subsections"
-                           :href="`${page.slug}/?a=${subsection}`"
+                           :href="`/${page.slug}/?a=${subsection}`"
                 >
                     {{ subsection }}
                 </nuxt-link>
