@@ -12,7 +12,6 @@
             <div class="date-day-day">{{['di', 'lu', 'ma', 'me', 'je', 've', 'sa'][date.getDay()]}}</div>
             <div class="date-day-number">{{date.getDate()}}</div>
         </div>
-      <div class="v-app-calendar-button-date__triangle" ></div>
     </div>
 </template>
 
@@ -67,23 +66,6 @@ const props = defineProps<{
     }
 }
 
-.v-app-calendar-button-date__triangle {
-  width: 0;
-  height: 0;
-  border-left: .35rem solid transparent;
-  border-right: .35rem solid transparent;
-  border-bottom: .35rem solid;
-  border-bottom-color: transparent;
-  position: relative;
-
-  .is-active & {
-    border-bottom-color: var(--lc-color--blue-light);
-  }
-
-    @media (max-width: 700px) {
-        display: none;
-    }
-}
 .date-day-day {
     text-transform: uppercase;
     padding-bottom: .15rem;
