@@ -6,6 +6,10 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "deploy:prepare": "bash ./scripts/build-release.sh",
+    "deploy:infomaniak": "bash ./scripts/deploy-infomaniak.sh",
+    "deploy:infomaniak:dry": "bash ./scripts/deploy-infomaniak.sh --dry-run",
+    "deploy:infomaniak:safe": "bash ./scripts/deploy-infomaniak.sh --safe",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
