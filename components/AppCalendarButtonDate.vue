@@ -75,7 +75,7 @@ const props = defineProps<{
 
 .date-day-day {
     text-transform: uppercase;
-    padding-bottom: .15rem;
+    padding-bottom: .13rem;
 
     @media (max-width: 800px) {
         font-size: .3rem;
@@ -84,10 +84,10 @@ const props = defineProps<{
 }
 
 .date-day-number {
-    font-size: .85rem;
+    font-size: .7rem;
 
     @media (max-width: 800px) {
-        font-size: .65rem;
+        font-size: .6rem;
     }
 }
 </style>
