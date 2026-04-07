@@ -17,16 +17,41 @@
             <div class="v-app-calendar__layout">
                 <div class="v-app-calendar__dates"
                 >
-                    <div class="v-app-calendar__nav-button app-flex app-flex__basis-24-24 app-flex--justify_space-between app-flex--align_flex-start app-flex--nowrap">
-                        <button class="v-app-calendar__nav-button__item v-app-calendar__nav-button__item--left"><<</button>
-                        <div v-for="date of dateRange">
-                            <AppCalendarButtonDate
-                                @click="updateSelectedDate(date)"
-                                :date="date"
-                                :is-active="selectedDate === date"
-                            />
+                    <div class="v-app-calendar__nav-button app-flex app-flex__basis-24-24 app-flex--justify_space-between app-flex--align_flex-start">
+                        <button
+                            v-if="canGoPrev"
+                            class="v-app-calendar__nav-button__item v-app-film-list__arrow-nav v-app-film-list__arrow-nav--left"
+                            @click="goToPrevPage"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 height="24px" viewBox="0 -960 960 960"
+                                 width="24px"
+                            >
+                                <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/>
+                            </svg>
+                        </button>
+                        <div class="v-app-calendar__dates-grid">
+                            <div v-for="date of visibleDateRange">
+                                <AppCalendarButtonDate
+                                    @click="updateSelectedDate(date)"
+                                    :date="date"
+                                    :is-active="selectedDate === date"
+                                    :is-coming-soon="isComingSoonDate(date)"
+                                />
+                            </div>
                         </div>
-                        <button class="v-app-calendar__nav-button__item v-app-calendar__nav-button__item--right">>></button>
+                        <button
+                            v-if="canGoNext"
+                            class="v-app-calendar__nav-button__item v-app-film-list__arrow-nav"
+                            @click="goToNextPage"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 height="24px" viewBox="0 -960 960 960"
+                                 width="24px"
+                            >
+                                <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
@@ -105,12 +130,24 @@ import {doesDateMatch} from "~/_utils/doesDateMatch";
 const selectedDate = ref<Date>(new Date())
 
 const dateRange: Ref<UnwrapRef<Date[]>> = ref([])
+const pageIndex = ref(0)
+const comingSoonDateKeys = ref<Set<string>>(new Set())
+
+const PAGE_SIZE = 10
+const MAX_GROUPS = 3
 
 const seancesDataOnSelectedDate: Ref<UnwrapRef<null | ApiTicketack_screening[]>> = ref(null)
 
 const listOfMessageByDates = useListOfMessageByDates()
 
 const calendarIsDisable = false
+const visibleDateRange = computed(() => {
+    const start = pageIndex.value * PAGE_SIZE
+    const end = start + PAGE_SIZE
+    return dateRange.value.slice(start, end)
+})
+const canGoPrev = computed(() => pageIndex.value > 0)
+const canGoNext = computed(() => pageIndex.value < MAX_GROUPS - 1)
 
 onMounted(() => {
     if(calendarIsDisable) return
@@ -119,16 +156,56 @@ onMounted(() => {
 })
 
 async function setDateRange(date: Date) {
-    const dateRage = getDatesRange(date, 10)
+    const dateRage = getDatesRange(date, PAGE_SIZE * MAX_GROUPS)
 
     dateRange.value = dateRage
+    pageIndex.value = 0
+    await preloadComingSoonDates(dateRage)
 
     updateSelectedDate( dateRage[0] )
+}
+
+async function goToNextPage() {
+    if(!canGoNext.value) return
+
+    pageIndex.value += 1
+    updateSelectedDate(visibleDateRange.value[0])
+}
+
+async function goToPrevPage() {
+    if(!canGoPrev.value) return
+
+    pageIndex.value -= 1
+    updateSelectedDate(visibleDateRange.value[0])
 }
 
 async function updateSelectedDate(date: Date) {
     selectedDate.value = date
     seancesDataOnSelectedDate.value = await apiGetListOfFilmByDate(new Date(date.toISOString().split('T')[0]))
+}
+
+function isComingSoonDate(date: Date) {
+    return comingSoonDateKeys.value.has(getDateKey(date))
+}
+
+function getDateKey(date: Date) {
+    return date.toISOString().split('T')[0]
+}
+
+async function preloadComingSoonDates(dates: Date[]) {
+    const messageDates = listOfMessageByDates.value.map(item => item.date)
+
+    const checks = await Promise.all(
+        dates.map(async (date) => {
+            if (doesDateMatch(date, messageDates)) return null
+
+            const dateKey = getDateKey(date)
+            const data = await apiGetListOfFilmByDate(new Date(dateKey))
+            return data.length < 1 ? dateKey : null
+        })
+    )
+
+    comingSoonDateKeys.value = new Set(checks.filter((key): key is string => key !== null))
 }
 </script>
 
@@ -140,6 +217,7 @@ async function updateSelectedDate(date: Date) {
 
 .v-app-calendar {
     container: app-calendar / inline-size;
+    padding: var(--app-gutter_regular);
 }
 
 .v-app-calendar__is-disable-msg {
@@ -163,42 +241,127 @@ async function updateSelectedDate(date: Date) {
     align-items: center;
     flex-direction: column;
 
-    @media (max-width: 700px) {
-        flex-direction: row;
-        gap: .5rem;
+    @media (max-width: 800px) {
+        flex-direction: column;
+        gap: .4rem;
         padding-left: .5rem;
         padding-right: .5rem;
     }
 }
 
 .v-app-calendar__nav-button {
-    @media (max-width: 700px) {
-        flex-direction: column;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    @media (max-width: 800px) {
+        align-items: flex-start;
     }
 }
 
 .v-app-calendar__nav-button__item {
-    font-size: .85rem;
-    letter-spacing: -.2em;
-    height: 1rem;
-    width: 1rem;
+    border: none;
+    padding: 0;
+}
 
-    &.v-app-calendar__nav-button__item--left {
-        padding-left: 0;
-    }
+.v-app-calendar__dates,
+.v-app-calendar-date {
+  width: min(100%, 35em);
+    max-width: 35em;
 
-    &.v-app-calendar__nav-button__item--right {
-        padding-right: 0;
+    @media (max-width: 800px) {
+        width: min(100%, 35em);
     }
 }
 
-.v-app-calendar__dates {
-  width: 100%;
-    max-width: 950px;
+.v-app-calendar__dates-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    width: auto;
+    gap: 0.4rem;
+    justify-content: space-between;
+    flex-shrink: 0;
 
-    @media (max-width: 700px) {
-        width: auto;
+    > div {
+        flex: 1 1 0;
+        display: flex;
+        justify-content: center;
+        min-width: 0;
     }
+
+    @media (max-width: 660px) {
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 7.8rem;
+        gap: 0.2rem;
+
+        > div {
+            flex: 0 0 auto;
+        }
+    }
+
+    @media (max-width: 390px) {
+        display: grid;
+        grid-template-columns: repeat(5, max-content);
+        justify-content: center;
+        width: auto;
+        max-width: calc((5 * 1.2rem) + (4 * 0.2rem));
+        gap: 0.2rem;
+
+        > div {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
+
+.v-app-calendar__dates-grid :deep(.v-app-calendar-button-date__button) {
+    width: 50px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+
+    @media (max-width: 800px) {
+        width: 40px;
+    }
+
+    @media (max-width: 400px) {
+        width: 35px;
+    }
+}
+
+.v-app-film-list__arrow-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 100%;
+  width:  50px;
+  height: 50px;
+  box-shadow: none;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  svg {
+    display: block;
+    width: 1.1em;
+    height: auto;
+    fill: black;
+  }
+
+  @media (max-width: 800px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  @media (max-width: 400px) {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.v-app-film-list__arrow-nav--left {
+    transform: rotate(180deg);
 }
 
 .v-app-calendar__film-list {

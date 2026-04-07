@@ -2,7 +2,8 @@
     <div
             class="v-app-calendar-button-date app-flex app-flex--align_center app-flex--column"
             :class="{
-              'is-active': isActive
+              'is-active': isActive,
+              'is-coming-soon': isComingSoon
             }"
     >
         <div
@@ -25,6 +26,7 @@ import { defineProps } from 'vue'
 const props = defineProps<{
     date: Date
     isActive: boolean
+    isComingSoon?: boolean
 }>()
 </script>
 
@@ -64,13 +66,18 @@ const props = defineProps<{
     .is-active & {
         background: var(--lc-color--orange);
     }
+
+    .is-coming-soon & {
+        background: white;
+        opacity: .5;
+    }
 }
 
 .date-day-day {
     text-transform: uppercase;
     padding-bottom: .15rem;
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         font-size: .3rem;
         line-height: 1em;
     }
@@ -79,7 +86,7 @@ const props = defineProps<{
 .date-day-number {
     font-size: .85rem;
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         font-size: .65rem;
     }
 }

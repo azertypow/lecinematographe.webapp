@@ -187,7 +187,7 @@ onMounted(async () => {
 }
 
 .v-index__section--calendar {
-  grid-column: 5 / span 16;
+  
 }
 
 .v-index__section--fil-event {
