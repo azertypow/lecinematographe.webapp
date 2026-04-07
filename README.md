@@ -9,6 +9,14 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 npm run generate
 ```
 
+## Variables d'environnement
+
+Créer un fichier `.env` (non versionné) en partant de `.env.example` :
+
+```
+NUXT_PUBLIC_LECINEMATOGRAPHE_ENGINE_TOKEN=...
+```
+
 
 ## appel a l'api lié au service de ticketatck
 

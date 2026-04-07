@@ -1,4 +1,3 @@
-import {LECINEMATOGRAPHE_ENGINE_TOKEN} from "~/_utils/LECINEMATOGRAPHE_ENGINE_TOKEN";
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 import {apiGetListOfFilmByDate} from "~/_utils/apiTicket";
 
@@ -9,6 +8,7 @@ export async function ticketackApi_screenings(queries: {
     query: 'start_at_gte' | 'stop_at_lte' | 'sections_ids'
     value: string
 }[]) {
+    const {public: {lecinematographeEngineToken}} = useRuntimeConfig()
 
     const queryString = queries
         .map(option => `${option.query}=${encodeURIComponent(option.value)}`)
@@ -20,7 +20,7 @@ export async function ticketackApi_screenings(queries: {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'x-api-key': LECINEMATOGRAPHE_ENGINE_TOKEN,
+            'x-api-key': lecinematographeEngineToken,
         },
     };
 
@@ -34,6 +34,7 @@ export async function ticketackApi_screenings(queries: {
 }
 
 export async function ticketackApi_screening_byID(UUID: string) {
+    const {public: {lecinematographeEngineToken}} = useRuntimeConfig()
 
     const url = `${ticketackApiBaseUrl}/screenings/${UUID}`;
 
@@ -41,7 +42,7 @@ export async function ticketackApi_screening_byID(UUID: string) {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'x-api-key': LECINEMATOGRAPHE_ENGINE_TOKEN,
+            'x-api-key': lecinematographeEngineToken,
         },
     };
 

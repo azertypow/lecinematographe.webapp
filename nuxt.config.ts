@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  runtimeConfig: {
+      public: {
+          lecinematographeEngineToken: process.env.NUXT_PUBLIC_LECINEMATOGRAPHE_ENGINE_TOKEN || ''
+      }
+  },
 
   devServer: {
       port: 3001
