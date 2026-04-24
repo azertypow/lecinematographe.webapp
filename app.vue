@@ -78,32 +78,9 @@ onMounted(async () => {
 
 const playerLink = usePlayerLink()
 
-const youtubeEmbedLink: ComputedRef<string | null> = computed(() => {
-    //format: https://www.youtube.com/watch?v=C9OtlkJk1Oo
-
-    if( playerLink.value === null ) return null
-
-    const parsedUrl = new URL(playerLink.value)
-
-    if( ! parsedUrl.hostname.includes('youtube')) return null
-
-    const videoId = parsedUrl.searchParams.get("v")
-
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&color=white`
-})
-
-const vimeoEmbedLink: ComputedRef<string | null> = computed(() => {
-    //format: https://player.vimeo.com/video/992877888
-
-    if( playerLink.value === null ) return null
-
-    const parsedUrl = new URL(playerLink.value)
-
-    if( ! parsedUrl.hostname.includes('vimeo')) return null
-
-    return playerLink.value
-})
-
+const formatedVideoLink = computed<null | { videoPlatform: "vimeo" | "youtube", src: string }>(
+    () => playerLink.value ? videoPlatformUrlFormat(playerLink.value): null
+)
 
 function scrollToNewsletter() {
     const newsletter = document.querySelector('#newsletter')
@@ -134,25 +111,25 @@ function scrollToNewsletter() {
 
         <transition>
             <div class="v-app__player"
-                 v-if="usePlayerLink().value"
+                 v-if="formatedVideoLink"
             >
                 <div class="v-app__player__cache"
-                     @click="usePlayerLink().value = null"
+                     @click="playerLink = null"
                 ></div>
                 <div class="v-app__player__container"
                 >
-                    <template v-if="vimeoEmbedLink">
+                    <template v-if="formatedVideoLink.videoPlatform === 'vimeo'">
                         <div style="padding:56.25% 0 0 0;position:relative;">
-                            <iframe :src="vimeoEmbedLink"
+                            <iframe :src="formatedVideoLink.src"
                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                                     style="position:absolute;top:0;left:0;width:100%;height:100%;"
                                     title="All We Imagine As Light"></iframe>
                         </div>
                     </template>
-                    <template v-else-if="youtubeEmbedLink">
+                    <template v-else-if="formatedVideoLink.videoPlatform === 'youtube'">
                         <iframe class="v-app__youtube-player"
                                 type="text/html"
-                                :src="youtubeEmbedLink"
+                                :src="formatedVideoLink.src"
                                 frameborder="0" allowfullscreen
                         />
                     </template>
