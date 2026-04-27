@@ -66,8 +66,6 @@ onMounted(async () => {
         },
     })).result
 
-    console.log( "premier: ", pagesContent.value )
-
 })
 
 </script>

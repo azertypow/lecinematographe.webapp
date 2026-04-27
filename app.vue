@@ -69,8 +69,6 @@ onMounted(async () => {
 
   if(agendaDataResult) {
     useListOfMessageByDates().value = Object.values(agendaDataResult)
-
-    console.log(useListOfMessageByDates().value)
   }
 
 })

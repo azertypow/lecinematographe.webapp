@@ -36,9 +36,6 @@ import { defineProps } from 'vue'
 
 const fromNewsletterValidated = useRouter().currentRoute.value.query.newsletter === 'ok'
 
-onBeforeMount(() => {
-    console.log( useRouter().currentRoute.value.query.newsletter === 'ok' )
-})
 </script>
 
 
