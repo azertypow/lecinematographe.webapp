@@ -3,7 +3,7 @@
  * @param code - Code pays sur 2 lettres (ex: "FR", "US")
  * @returns Nom du pays en français ou nom traduit si inconnu dans la base
  */
-export function getCountryName(code: string): {translated: boolean, value: string} {
+export function getCountryName(code?: string): {translated: boolean, value: string} {
     const countries: Record<string, string> = {
         // Europe
         FR: "France",
@@ -89,6 +89,10 @@ export function getCountryName(code: string): {translated: boolean, value: strin
         NZ: "Nouvelle-Zélande",
         PF: "Polynésie Française",
     };
+
+    if( !code || typeof code !== 'string')
+      return {value: "Inconnu", translated: false}
+
 
     // Retourne le nom ou undefined si le code n'existe pas
     return countries[code.toUpperCase()] ? {
