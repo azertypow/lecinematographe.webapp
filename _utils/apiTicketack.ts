@@ -314,9 +314,9 @@ export type ApiTickettack_film = {
             string
         ],
         "languages"?: {
-            "original"?: string[] | string,
-            "audio"?: string[] | string,
-            "subtitles"?: string[] | string,
+            "original"?:  string[] | string | {de: string, en: string, fr: string, iso2: string}[],
+            "audio"?:     string[] | string | {de: string, en: string, fr: string, iso2: string}[],
+            "subtitles"?: string[] | string | {de: string, en: string, fr: string, iso2: string}[],
         }
     }
 }
