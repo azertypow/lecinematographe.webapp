@@ -155,6 +155,9 @@ onMounted(() => {
     setDateRange(new Date())
 })
 
+watch(listOfMessageByDates, () => preloadComingSoonDates(dateRange.value))
+
+
 async function setDateRange(date: Date) {
     const dateRage = getDatesRange(date, PAGE_SIZE * MAX_GROUPS)
 
@@ -162,7 +165,7 @@ async function setDateRange(date: Date) {
     pageIndex.value = 0
     await preloadComingSoonDates(dateRage)
 
-    updateSelectedDate( dateRage[0] )
+    await updateSelectedDate(dateRage[0])
 }
 
 async function goToNextPage() {
