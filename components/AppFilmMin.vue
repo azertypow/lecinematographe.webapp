@@ -27,6 +27,7 @@
               </p>
             </div>
             <img class="v-app-film-min__cover__img"
+                 v-if="ticketFilm.films[0].opaque.posters[0]?.url"
                 :alt="`image de couverture de ${ticketFilm.films[0].title.original}`"
                 :src="ticketFilm.films[0].opaque.posters[0]?.url"
                 @load="(e) => setGradientColor(e.target)"
