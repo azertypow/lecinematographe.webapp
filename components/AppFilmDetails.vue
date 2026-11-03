@@ -17,7 +17,12 @@
             {{director.firstname}} {{director.lastname}}
           </template>
         </h5>
-        <div class="v-app-film-details__cover">
+        <div class="v-app-film-details__cover"
+             :class="{
+                'v-app-film-details__cover--without-fil-cover': !coverImage,
+             }"
+
+        >
 
             <div
                 v-if="youtubeLink"
@@ -26,6 +31,7 @@
                 <img class="v-app-film-details__cover__icon-player"
                      alt="lancer le player pour visualiser la bande annonce du film"
                      src="@/assets/icons/play_circle_FILL0_wght400_GRAD0_opsz24.svg"
+                     role="button"
                 />
             </div>
 
@@ -36,11 +42,13 @@
                 <img class="v-app-film-details__cover__icon-player"
                      alt="lancer le player pour visualiser la bande annonce du film"
                      src="@/assets/icons/play_circle_FILL0_wght400_GRAD0_opsz24.svg"
+                     role="button"
                 />
             </div>
 
             <img alt="image de couverture pour le film"
-                 :src="ticketFilm.films[0].opaque.posters.find(value => value.type === 'banner')?.url || ticketFilm.films[0].opaque.posters[0].url"
+                 v-if="coverImage"
+                 :src="coverImage"
                  @load="(e) => setGradientColor(e.target)"
             />
         </div>
@@ -219,6 +227,10 @@ const dateOptionsDayOnly: Intl.DateTimeFormatOptions = {
     month: 'long', // Mois au format long (ex: "janvier")
 }
 
+const coverImage = computed(() => {
+    return props.ticketFilm.films[0].opaque.posters.find(value => value.type === 'banner')?.url || props.ticketFilm.films[0]?.opaque.posters[0]?.url || null
+})
+
 const youtubeLink = computed(() => props.ticketFilm.films[0]?.opaque.trailers.find(thrailer => {
     return thrailer.url.match('youtube.')
 }))
@@ -384,8 +396,12 @@ div.v-app-film-details__details__info__item {
 }
 
 .v-app-film-details__cover {
-    display: block;
-    width: min(100%, var(--lc-max-width--sm));
+  display: block;
+  width: min(100%, var(--lc-max-width--sm));
+
+  &.v-app-film-details__cover--without-fil-cover {
+    height: 10rem;
+  }
 }
 
 .v-app-film-details__details__info__item__ticket {
