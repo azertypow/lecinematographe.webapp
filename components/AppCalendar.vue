@@ -184,7 +184,12 @@ async function goToPrevPage() {
 
 async function updateSelectedDate(date: Date) {
     selectedDate.value = date
-    seancesDataOnSelectedDate.value = await apiGetListOfFilmByDate(new Date(date.toISOString().split('T')[0]))
+    seancesDataOnSelectedDate.value = filterSeances_toBeDefined(await apiGetListOfFilmByDate(new Date(date.toISOString().split('T')[0])))
+}
+
+function filterSeances_toBeDefined(seances: ApiTicketack_screening[]) {
+    // séances sans la section "à définir" (ID unique)
+    return seances.filter(film => !film.films[0]?.sections?.some(section => section._id === 'd464d8d4-d418-4a6f-aa51-90f92f162420'))
 }
 
 function isComingSoonDate(date: Date) {
@@ -203,7 +208,7 @@ async function preloadComingSoonDates(dates: Date[]) {
             if (doesDateMatch(date, messageDates)) return null
 
             const dateKey = getDateKey(date)
-            const data = await apiGetListOfFilmByDate(new Date(dateKey))
+            const data = filterSeances_toBeDefined(await apiGetListOfFilmByDate(new Date(dateKey)))
             return data.length < 1 ? dateKey : null
         })
     )
