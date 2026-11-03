@@ -68,7 +68,6 @@
 
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import type {ApiTicketack_screening} from "~/_utils/apiTicketack";
 
 const props = withDefaults(defineProps<{
