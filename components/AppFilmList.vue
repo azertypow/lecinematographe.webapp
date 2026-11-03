@@ -24,7 +24,7 @@
          @scroll="containerIsScroller"
     >
       <div class="app-flex__shrink-0 app-flex__basis-1-4 v-app-film-list__films-container__item"
-           v-for="film of ticketFilmArray">
+           v-for="film of filteredFilms">
         <div  style="
                 text-align: center;
                 padding-bottom: .5em;
@@ -80,6 +80,11 @@ const containerScrollLeftValue = ref(0)
 const showArrowUI: ComputedRef<boolean> = computed(() =>
     window.innerWidth > containerScrollLeftValue.value
 )
+
+const filteredFilms: ComputedRef<ApiTicketack_screening[]> = computed(() => {
+    // film sans la section "à définir" (ID unique)
+    return props.ticketFilmArray.filter(film => !film.films[0]?.sections?.some(section => section._id === 'd464d8d4-d418-4a6f-aa51-90f92f162420'))
+})
 
 const scrollContainer: Ref<null | HTMLElement> = ref(null)
 
