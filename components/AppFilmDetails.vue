@@ -186,7 +186,7 @@
 
 
 <script setup lang="ts">
-import {defineProps, type Ref, type UnwrapRef} from 'vue'
+import {type Ref, type UnwrapRef} from 'vue'
 import {average} from "color.js";
 import {formatDateFromDate} from "~/_utils/dateFormatHelper";
 import {usePlayerLink} from "~/composables/states";
