@@ -247,10 +247,13 @@ export type ApiTickettack_film = {
         "fr": string,
         "original": string
     },
-    "sections": {
-        name: { fr: 'événement' | string }
-        _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0" | string
-    }[],
+    "sections": ({
+        name: { fr: 'événement' }
+        _id: "47958d1d-272f-4106-8dd5-eff93f45d8f0"
+    } | {
+        name: { "fr": "à définir" }
+        _id: "d464d8d4-d418-4a6f-aa51-90f92f162420",
+    })[],
     "opaque": {
         "type": "movie" | "poster" | "banner",
         "service_type": null,
